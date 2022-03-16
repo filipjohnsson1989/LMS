@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Lms.Web.Views.Home;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 #nullable disable
 
