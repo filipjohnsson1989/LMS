@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Module>
+    <ul>
+                @foreach (var item in Model)
+                {
+                    <li class="row">
+                        <p>&#x1F6C8 @Html.DisplayFor(model => item.Name) </p>
+                    </li>
+                }
+    </ul>
+</div>

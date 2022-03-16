@@ -1,0 +1,13 @@
+﻿
+
+<div>
+    <h2>Modules</h2>
+    @{
+        var userId = userManager.GetUserId(User);
+    }
+    @await Component.InvokeAsync("ModulesVC", new {userId})
+</div>
+<div>
+    <h2>Activities</h2>
+    
+</div>

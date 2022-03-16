@@ -1,8 +1,12 @@
 ﻿
-
-@{
-    ViewData["Title"] = "Home Page";
+@if (User.Identity!.IsAuthenticated)
+{
+    <partial name="IndexPartial"/>
+}
+else
+{
+    <p>Please Sign in to View Data!</p>
 }
 
-<partial name="IndexActivityPartial" />
-<partial name="IndexModulePartial" />
+  
+
