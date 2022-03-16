@@ -9,6 +9,6 @@ public class Module
     public DateTime EndDate { get; set; }
     public int CourseId { get; set; }
     public ICollection<Activity> Activities { get; set; } = default!;
-    public Document Document { get; set; } = default!;
+    public ICollection<Document> Documents { get; set; } = default!;
 
 }

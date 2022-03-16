@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lms.Data.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
+    public class ApplicationDbContext : IdentityDbContext
     {
         public DbSet<Course> Courses => Set<Course>();
         public DbSet<Module> Modules => Set<Module>();

@@ -7,5 +7,5 @@ public class Course
     public string Description { get; set; } = default!;
     public DateTime StartDate { get; set; }
     public ICollection<Module> Modules { get; set; } = default!;
-    public Document Document { get; set; } = default!;
+    public ICollection<Document> Documents { get; set; } = default!;
 }

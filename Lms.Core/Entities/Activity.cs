@@ -9,5 +9,5 @@ public class Activity
     public DateTime EndDate { get; set; }
     public ActivityType ActivityTypeId { get; set; } = default!;
     public int ModuleId { get; set; }
-    public Document Document { get; set; } = default!;
+    public ICollection<Document> Documents { get; set; } = default!;
 }
