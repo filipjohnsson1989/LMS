@@ -1,0 +1,13 @@
+﻿@page
+@model ModuleNavPartialModel
+
+<div class="container">
+    <ul>
+                @foreach (var item in Model.Modules)
+                {
+                    <li class="row">
+                        <a asp-page="Activities" asp-route-id="@item.Id">&#x1F6C8 @Html.Display(item.Name) </a>
+                    </li>
+                }
+    </ul>
+</div>
