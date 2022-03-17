@@ -21,9 +21,4 @@
     <ProjectReference Include="..\Lms.Data\Lms.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\ViewModels\" />
-    <Folder Include="Views\Home\Components\ActivitiesVC\" />
-  </ItemGroup>
-
 </Project>

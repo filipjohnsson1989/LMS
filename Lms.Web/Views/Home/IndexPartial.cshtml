@@ -1,4 +1,5 @@
 ﻿
+@model IEnumerable<Module>
 
 <div>
     <h2>Modules</h2>
@@ -9,6 +10,6 @@
 </div>
 <div>
     <h2>Activities</h2>
-    @RenderBody()
+    <partial name="ActivityPartial" model="(@Model.Activities)" />
     
 </div>
