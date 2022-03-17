@@ -1,7 +1,7 @@
-﻿@model Course
+﻿@model IndexCourseViewModel
 @if (User.Identity!.IsAuthenticated)
 {
-    <partial name="IndexPartial model="(@Model.Modules)"/>
+    <partial name="IndexPartial" model="@Model.Modules" />
 }
 else
 {
