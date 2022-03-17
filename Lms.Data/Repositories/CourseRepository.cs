@@ -39,9 +39,10 @@ namespace Lms.Data.Repositories
         }
         public async Task<IEnumerable<Course>> GetAll()
         {
-            return await db.Courses.Include(m=>m.Modules)
-                .ThenInclude(a=>a.Activities)
-                .ThenInclude(d=>d.Documents)
+            return await db.Courses
+                .Include(m=>m.Modules)
+                .Include(a=>a.Activities.Select(d=>d.Documents))
+                .Include(a=>a.Activities.Select(a=>a.ActivityType))
                 .ToListAsync();
         }
         public async Task<IEnumerable<Course>> GetAllCourses()
