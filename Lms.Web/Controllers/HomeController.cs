@@ -1,10 +1,7 @@
-﻿using Lms.Core.Entities;
-using Lms.Web.Models;
+﻿using Lms.Web.Models;
 using Lms.Web.Models.ViewModels;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace Lms.Web.Controllers
 {
@@ -24,12 +21,11 @@ namespace Lms.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await userManager.GetUserAsync(User);
-            if (user != null)
-            {
+            if (user == null) return View();
 
-            }
             var course = await db.Courses.Where(c => c.Users.Any(u => u.Id == user.Id)).Include(c => c.Modules).ThenInclude(m => m.Activities).FirstOrDefaultAsync();
-            if(course == null) throw new NullReferenceException(nameof(course));
+
+            if (course == null) throw new NullReferenceException(nameof(course));
             var model = new IndexCourseViewModel
             {
                 Modules = course.Modules,
@@ -42,12 +38,6 @@ namespace Lms.Web.Controllers
             }
 
             return View(model);
-        }
-        public async Task<IActionResult> Activities(int moduleId)
-        {
-            var activities = await db.Activities.Where(a => a.ModuleId == moduleId).ToListAsync();
-
-            return PartialView(activities);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

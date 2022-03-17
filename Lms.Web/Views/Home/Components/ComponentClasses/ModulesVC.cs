@@ -24,7 +24,7 @@ namespace Lms.Web.Views.Home.Components.ComponentClasses
             {
                 throw new NullReferenceException(nameof(user));
             }
-            
+
         }
     }
 }

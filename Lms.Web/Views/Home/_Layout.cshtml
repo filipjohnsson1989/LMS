@@ -1,0 +1,35 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = (string)parentLayout;
+    }
+    else
+    {
+        Layout = "/Home/_Layout.cshtml";
+    }
+}
+
+
+
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+       <h2>Modules</h2>
+        var userId = userManager.GetUserId(User);
+
+        @await Component.InvokeAsync("ModulesVC", new {userId})
+
+        
+        <div class="col-md-9">
+            <h2>Activities</h2>
+            @RenderBody()
+        </div>
+   
+       
+    }
+    else
+    {
+        <p>You must be signed in to view this content.</p>
+    }
+</div>
+

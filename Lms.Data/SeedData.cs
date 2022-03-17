@@ -12,7 +12,7 @@ public class SeedData
 {
     private static RoleManager<IdentityRole> roleManager = default!;
     private static UserManager<ApplicationUser> userManager = default!;
-    private static Faker faker = new Faker("sv");
+    private static readonly Faker faker = new Faker("sv");
     const int defaultNumberOfInitializingRecords = 20;
 
     public static async Task InitAsync(ApplicationDbContext context, IServiceProvider services, string adminPW)

@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 #nullable disable
 
-namespace Lms.Web.Areas.Course.Pages.Index;
+namespace Lms.Web.Views.Home;
 
 public class ActivitiesModel : PageModel
 {
@@ -14,23 +14,18 @@ public class ActivitiesModel : PageModel
     {
         if (logger == null) throw new NullReferenceException(nameof(logger));
         if (db == null) throw new NullReferenceException(nameof(db));
-        
+
         this.logger = logger;
         this.db = db;
-        
+
     }
-    [Display(Name = "Title")]
-    public string Name { get; set; }
-    [Display(Name = "Start Date")]
-    public DateTime StartDate { get; set; }
-    [Display(Name = "End Date")]
-    public DateTime EndDate { get; set; }
 
     public List<Activity> Activities { get; set; } = new List<Activity>();
 
-    public void OnGet(int id)
+    public async Task<IActionResult> OnGetAsync(int id)
     {
-        Activities = db.Activities.Where(a => a.ModuleId == id).ToList();
+        Activities = await db.Activities.Where(a => a.ModuleId == id).ToListAsync();
+        return Page();
     }
 
 }

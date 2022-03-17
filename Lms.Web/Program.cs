@@ -1,9 +1,4 @@
-﻿using Lms.Core.Entities;
-
-using Lms.Data.Data;
-
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
