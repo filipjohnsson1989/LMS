@@ -386,20 +386,24 @@ namespace Lms.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lms.Core.Entities.Module", null)
+                    b.HasOne("Lms.Core.Entities.Module", "Module")
                         .WithMany("Activities")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ActivityType");
+
+                    b.Navigation("Module");
                 });
 
             modelBuilder.Entity("Lms.Core.Entities.ApplicationUser", b =>
                 {
-                    b.HasOne("Lms.Core.Entities.Course", null)
+                    b.HasOne("Lms.Core.Entities.Course", "Course")
                         .WithMany("Users")
                         .HasForeignKey("CourseId");
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("Lms.Core.Entities.Document", b =>
@@ -425,11 +429,13 @@ namespace Lms.Data.Migrations
 
             modelBuilder.Entity("Lms.Core.Entities.Module", b =>
                 {
-                    b.HasOne("Lms.Core.Entities.Course", null)
+                    b.HasOne("Lms.Core.Entities.Course", "Course")
                         .WithMany("Modules")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
