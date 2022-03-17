@@ -8,36 +8,16 @@ namespace Lms.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext db;
-        private readonly UserManager<ApplicationUser> userManager;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            this.db = db;
-            this.userManager = userManager;
+            
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var user = await userManager.GetUserAsync(User);
-            if (user == null) return View();
-
-            var course = await db.Courses.Where(c => c.Users.Any(u => u.Id == user.Id)).Include(c => c.Modules).ThenInclude(m => m.Activities).FirstOrDefaultAsync();
-
-            if (course == null) throw new NullReferenceException(nameof(course));
-            var model = new IndexCourseViewModel
-            {
-                Modules = course.Modules,
-                Name = course.Name
-            };
-
-            if (course == null)
-            {
-                return View();
-            }
-
-            return View(model);
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

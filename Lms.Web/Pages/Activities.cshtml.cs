@@ -19,7 +19,6 @@ public class ActivitiesModel : PageModel
         this.db = db;
 
     }
-
     public List<Activity> Activities { get; set; } = new List<Activity>();
 
     public async Task<IActionResult> OnGetAsync(int id)
