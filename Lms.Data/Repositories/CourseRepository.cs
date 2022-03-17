@@ -41,8 +41,16 @@ namespace Lms.Data.Repositories
         {
             return await db.Courses
                 .Include(m=>m.Modules)
-                .Include(a=>a.Activities.Select(d=>d.Documents))
-                .Include(a=>a.Activities.Select(a=>a.ActivityType))
+                    .ThenInclude(a=>a.Activities)
+                      .ThenInclude(a=>a.ActivityType)
+                .Include(m => m.Modules)
+                     .ThenInclude(a => a.Activities)
+                          .ThenInclude(a => a.Documents)
+                .Include(m =>m.Modules)
+                    .ThenInclude(a=>a.Documents)
+                .Include(m => m.Documents)
+                //.Include(m => m.Users)
+                //    .ThenInclude(u => u.Documents)
                 .ToListAsync();
         }
         public async Task<IEnumerable<Course>> GetAllCourses()
