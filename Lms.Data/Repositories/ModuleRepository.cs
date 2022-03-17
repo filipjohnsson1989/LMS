@@ -13,7 +13,7 @@ namespace Lms.Data.Repositories
     public class ModuleRepository : IModuleRepository
     {
 
-        private ApplicationDbContext db;
+        private readonly ApplicationDbContext db;
         public ModuleRepository(ApplicationDbContext db)
         {
             this.db = db ?? throw new ArgumentNullException(nameof(db));
@@ -28,7 +28,7 @@ namespace Lms.Data.Repositories
             var module = await db.Modules.FirstOrDefaultAsync(m => m.Id == id);
             if (module == null)
             {
-                throw new ArgumentNullException(nameof(module));
+                throw new NullReferenceException(nameof(module));
             }
             db.Modules.Remove(module);
         }
@@ -37,6 +37,10 @@ namespace Lms.Data.Repositories
         {
             return await db.Modules.ToListAsync();
         }
+        public async Task<IEnumerable<Module>> GetAllModulesByCourseId(int courseId)
+        {
+            return await db.Modules.Where(m => m.CourseId == courseId).ToListAsync();
+        }
 
 
         public async Task<Module> GetModuleById(int id)
@@ -44,7 +48,7 @@ namespace Lms.Data.Repositories
             var module = await db.Modules.FirstOrDefaultAsync(m => m.Id == id);
             if (module == null)
             {
-                throw new ArgumentNullException(nameof(module));
+                throw new NullReferenceException(nameof(module));
             }
             return module;
         }
