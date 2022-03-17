@@ -1,12 +1,5 @@
-﻿@model IndexCourseViewModel
-@if (User.Identity!.IsAuthenticated)
-{
-    <partial name="_IndexPartial" model="@Model.Modules" />
-}
-else
-{
-    <p>Please Sign in to View Data!</p>
-}
+﻿<partial name="/Pages/ActivityPartial.cshtml" />
+
 
   
 

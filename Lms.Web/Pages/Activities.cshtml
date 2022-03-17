@@ -1,0 +1,25 @@
+﻿@page "{id}"
+@model ActivitiesModel
+
+@{
+    Layout = "_Layout.cshtml";
+    ViewData["Title"] = "Activities";
+}
+
+<p>Activities Razor Page</p>
+<div class="container">
+    <ul class="row">
+
+        @{
+            foreach (var activity in Model.Activities)
+            {
+                <li class="card">
+                    <p class="card-header">@Html.DisplayFor(model => activity.Name)</p>
+                    <p class="card-header">@Html.DisplayFor(model => activity.StartDate)</p>
+                    <p class="card-header">@Html.DisplayFor(model => activity.EndDate)</p>
+                </li>
+            }
+        }
+    </ul>
+</div>
+

@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Module>
+    <ul class="col">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a class="btn row btn-dark" asp-page="/Activities" asp-route-id="@item.Id">&#x1F6C8 @Html.DisplayFor(model => item.Name)</a>
+                    </li>
+                }
+    </ul>

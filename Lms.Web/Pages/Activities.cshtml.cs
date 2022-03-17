@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 #nullable disable
 
-namespace Lms.Web.Views.Home;
+namespace Lms.Web.Pages.Module;
 
 public class ActivitiesModel : PageModel
 {
