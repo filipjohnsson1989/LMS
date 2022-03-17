@@ -53,6 +53,25 @@ namespace Lms.Data.Repositories
                 //    .ThenInclude(u => u.Documents)
                 .ToListAsync();
         }
+        public async Task <Course> GetAllbyId(int id)
+        {
+            var course = await db.Courses
+                .Include(m => m.Modules)
+                    .ThenInclude(a => a.Activities)
+                      .ThenInclude(a => a.ActivityType)
+                .Include(m => m.Modules)
+                     .ThenInclude(a => a.Activities)
+                          .ThenInclude(a => a.Documents)
+                .Include(m => m.Modules)
+                    .ThenInclude(a => a.Documents)
+                .Include(m => m.Documents).FirstOrDefaultAsync(c=>c.Id==id);
+
+            if(course==null)
+                throw new ArgumentException(nameof(course));
+                //.Include(m => m.Users)
+                //    .ThenInclude(u => u.Documents)
+                return course;
+        }
         public async Task<IEnumerable<Course>> GetAllCourses()
         {
             return await db.Courses.ToListAsync();

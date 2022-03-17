@@ -1,8 +1,12 @@
 ﻿using Lms.Core.Entities;
 using Lms.Data;
 using Lms.Data.Data;
+using Lms.Data.Repositories;
+using Lms.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Lms.Data.MapperProfile;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +20,12 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddAutoMapper(typeof(LMSMappings));
+   
 
 var app = builder.Build();
 
@@ -41,6 +51,7 @@ using (var scope = app.Services.CreateScope())
         throw;
     }
 
+
 }
 
 // Configure the HTTP request pipeline.
@@ -65,7 +76,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=ActivityTypes}/{action=CourseOverView}/{id?}");
 app.MapRazorPages();
 
 app.Run();

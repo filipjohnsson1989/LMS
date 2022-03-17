@@ -1,0 +1,82 @@
+﻿@model Lms.Core.Models.CourseOverViewModel
+<div class="container">
+<div class="card" style="width:80%">
+
+                <div class="card-header bdgcolor fwcolor ">
+                   <div class="row">
+                    <div class="col-sm-8">
+                    @Html.DisplayNameFor(model=>model.Name) :
+                    @Html.DisplayFor(model=>model.Name )
+                    </div>
+                    <div class="col-sm-4" style="text-align:right">
+                    @Html.DisplayNameFor(model=>model.Modules) :
+                    @Html.DisplayFor(model=>model.ModuleCount ) 
+                    </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-sm-12" style="text-align:right">
+                    @Html.DisplayNameFor(model=>model.StartDate) :
+                    @Html.DisplayFor(model=>model.StartDate )
+                    </div>
+                   </div>
+                </div>
+
+                <div class="card-body bgcolor fwcolor">
+                    @Html.DisplayFor(model=>model.Description )
+                </div>
+                <div class="card-footer bdgcolor ">
+                    <a href="#" class="card-link fwcolor ">Files</a>
+                    <a href="#" class="card-link fwcolor">Modules</a>
+                    <a href="#" class="card-link fwcolor">Students</a>
+                </div>
+            
+ </div>
+ 
+ <div class="card" style="width:80%">
+
+     <table class="table tbl">
+    <thead>
+        <tr class="tbr fwcolor">
+            <th class="t1 fwcolor">
+                @Html.DisplayNameFor(model => model.Modules.First().Name)
+            </th>
+            <th class="t1 fwcolor">
+                @Html.DisplayNameFor(model => model.Modules.First().Description)
+            </th>
+            <th class="t1 fwcolor">
+                @Html.DisplayNameFor(model => model.Modules.First().StartDate)
+            </th>
+            <th class="t1 fwcolor">
+                @Html.DisplayNameFor(model => model.Modules.First().EndDate)
+            </th>
+            <th class="t1 fwcolor">
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Modules) {
+        <tr class="tbr fwcolor">
+            <td class="t1 fwcolor">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="t1 fwcolor">
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td class="t1 fwcolor">
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td class="t1 fwcolor">
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td class="t1 fwcolor">
+                <a class="fwcolor" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a class="fwcolor" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a class="fwcolor" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+ </div>

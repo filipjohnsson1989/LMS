@@ -14,6 +14,7 @@ namespace Lms.Core.Interfaces
         Task DeleteCourse(int id);
         bool CourseExists(int id);
         Task<Course> GetCourseById(int id);
+        Task<Course> GetAllbyId(int id);
         Task<IEnumerable<Course>> GetAll();
         Task<IEnumerable<Course>> GetAllCourses();
 
