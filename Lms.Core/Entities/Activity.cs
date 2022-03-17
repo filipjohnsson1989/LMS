@@ -8,6 +8,7 @@ public class Activity
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public ActivityType ActivityType { get; set; } = default!;
+    public Module Module { get; set; } = default!;
     public int ModuleId { get; set; }
     public ICollection<Document> Documents { get; set; } = default!;
 }
