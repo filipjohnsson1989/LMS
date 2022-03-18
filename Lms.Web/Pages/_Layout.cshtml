@@ -1,11 +1,14 @@
 ﻿@{
     Layout = "/Views/Shared/_MasterLayout.cshtml"; 
 }
+<head>
+    <link rel="stylesheet" href="~/css/IndexStyle.css" asp-append-version="true" />
+</head>
 
 <p>>_Layout</p>
 <div class="sidenav">
     
-    @if (User.Identity.IsAuthenticated)
+    @if (User.Identity!.IsAuthenticated)
     {
         var userId = userManager.GetUserId(User);
 
@@ -18,7 +21,7 @@
 </div>
 
 <div class="container-fluid mainBody">
-    <h2>Activities</h2>
+    
     @RenderBody()
 </div>
 

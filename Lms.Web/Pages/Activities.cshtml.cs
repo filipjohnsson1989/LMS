@@ -23,7 +23,7 @@ public class ActivitiesModel : PageModel
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        Activities = await db.Activities.Where(a => a.ModuleId == id).ToListAsync();
+        Activities = await db.Activities.Where(a => a.ModuleId == id).OrderBy(a => a.EndDate).Include(a => a.ActivityType).ToListAsync();
         return Page();
     }
 

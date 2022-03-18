@@ -8,16 +8,44 @@
 
 
 <div class="container">
-    <ul class="row">
+    <ul id="activities" class="col">
+        <li>
+            <h2>Activities</h2>
+        </li>
+
+
+
 
         @{
             foreach (var activity in Model.Activities)
             {
-                <li class="card">
-                    <p class="card-header">@Html.DisplayFor(model => activity.Name)</p>
-                    <p class="card-header">@Html.DisplayFor(model => activity.StartDate)</p>
-                    <p class="card-header">@Html.DisplayFor(model => activity.EndDate)</p>
-                </li>
+                if (activity.EndDate.CompareTo(DateTime.Now) > 0)
+                {
+                    var due = activity.EndDate - DateTime.Now;
+                    string startDate = $"{activity.StartDate.ToShortDateString()}, {activity.StartDate.ToShortTimeString()}";
+                    string endDate = $"{activity.EndDate.ToShortDateString()}, {activity.EndDate.ToShortTimeString()}";
+                    string dueTime = $"{@due.Days} day(s), {@due.Hours}h & {@due.Minutes}m";
+
+                    if (activity.ActivityType.Id == 2)
+                    {
+                        <li class="card p-1">
+                            <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
+                            <p class="card-header"><strong>Starts:</strong> @startDate</p>
+                            <p class="card-header"><strong>Ends:</strong> @endDate </p>
+                            <div class="card-header"><strong>Due in: </strong>@dueTime</div>
+                            <div class="card-footer row"><div class="btn btn-primary col-3">TestBtn</div><div class="btn btn-primary col-3">TestUploadBtn</div></div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="card card-assignment p-1">
+                            <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
+                            <p class="card-header"><strong>Starts:</strong> @startDate</p>
+                            <p class="card-header"><strong>Ends:</strong> @endDate </p>
+                            <div class="card-footer col"><div class="btn btn-primary col-6">TestBtn</div></div>
+                        </li>
+                    }
+                }
             }
         }
     </ul>
