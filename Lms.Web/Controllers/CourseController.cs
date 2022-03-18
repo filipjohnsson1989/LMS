@@ -26,9 +26,9 @@ namespace Lms.Web.Controllers
             return View();
         }
 
-        public IActionResult LoadModulePartial(int courseid=1)
+        public async Task<IActionResult> LoadModulePartial(int courseid=1)
         {
-            var course = uow.courseRepo.GetAllbyId(courseid);
+            var course = await uow.courseRepo.GetAllbyId(courseid);
             return PartialView("_ModuleView", course);
         }
 
