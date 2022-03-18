@@ -15,7 +15,7 @@ namespace Lms.Core.Interfaces
         bool ModuleExists(int id);
         Task<Module> GetModuleById(int id);
         Task<IEnumerable<Module>> GetAllModules();
-        Task <Course> GetAllModulesBy_courseId(int courseid);
+        
 
     }
 }

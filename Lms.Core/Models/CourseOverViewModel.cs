@@ -15,5 +15,7 @@ namespace Lms.Core.Models
         public DateTime StartDate { get; set; }
         public int ModuleCount { get; set; }
         public ICollection<Module> Modules { get; set; } = default!;
+        public List<string> UserName { get; set; }
+        public List<string> Email { get; set; }
     }
 }

@@ -45,3 +45,7 @@ body {
 .tbr:nth-child(odd) {
     background-color: black;
 }
+
+.bbcolor {
+    background-color: #623D2F;
+}

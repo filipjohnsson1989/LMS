@@ -37,15 +37,7 @@ namespace Lms.Data.Repositories
         {
             return await db.Modules.ToListAsync();
         }
-        public async Task<Course> GetAllModulesBy_courseId(int courseid)
-        {
-            var module = await db.Courses.Include(m=>m.Modules).FirstOrDefaultAsync(c => c.Id == courseid);
-            if (module == null)
-            {
-                throw new ArgumentNullException(nameof(module));
-            }
-            return module;
-        }
+       
         public async Task<Module> GetModuleById(int id)
         {
             var module = await db.Modules.FirstOrDefaultAsync(m => m.Id == id);

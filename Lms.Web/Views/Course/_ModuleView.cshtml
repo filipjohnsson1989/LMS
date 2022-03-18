@@ -1,0 +1,52 @@
+﻿@model Lms.Core.Entities.Course
+
+<div class="card" style="width:90%">
+    <div class="card-header tbr fwcolor">
+        <h1>Modules Information</h1>
+    </div>
+     <table class="table tbl">
+    <thead>
+        <tr class="tbr fwcolor">
+            <th class="t1 fwcolor">
+                @Html.DisplayNameFor(model => model.Modules.First().Name)
+            </th>
+            <th class="t1 fwcolor">
+                @Html.DisplayNameFor(model => model.Modules.First().Description)
+            </th>
+            <th class="t1 fwcolor">
+                @Html.DisplayNameFor(model => model.Modules.First().StartDate)
+            </th>
+            <th class="t1 fwcolor">
+                @Html.DisplayNameFor(model => model.Modules.First().EndDate)
+            </th>
+            <th class="t1 fwcolor">
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Modules) {
+        <tr class="tbr fwcolor">
+            <td class="t1 fwcolor">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="t1 fwcolor">
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td class="t1 fwcolor">
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td class="t1 fwcolor">
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td class="t1 fwcolor">
+                <a class="btn bbcolor fwcolor" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                <a class="btn bbcolor fwcolor" asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                <a class="btn btn-danger fwcolor" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+

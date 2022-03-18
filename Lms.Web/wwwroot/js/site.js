@@ -1,4 +1,24 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿////$(document).ready(function () {
+////    $('#documents').click(function () {
+////        let newpartial = "<partial name=\"_DocumentView\" />";
+////        $('#partial') = "";
+////        $('#partial').add(newpartial);
+////    });
 
-// Write your JavaScript code.
+    //$('#modules').click(function () {
+    //    let newpartial = "<partial name=\"_ModuleView\" />";
+    //    $('#partial') = "";
+    //    $('#partial').add(newpartial);
+    //});
+
+    //$('#documents').click(function () {
+    //    $('#partial').load("/Course/LoadModulePartial");
+    //});
+
+    //$('#modules').click(function () {
+    //    $('#partial').load("/Course/LoadStudentPartial");
+    //});
+
+
+
+});

@@ -49,6 +49,7 @@ namespace Lms.Data.Repositories
                 .Include(m =>m.Modules)
                     .ThenInclude(a=>a.Documents)
                 .Include(m => m.Documents)
+                .Include(u=>u.Users)
                 //.Include(m => m.Users)
                 //    .ThenInclude(u => u.Documents)
                 .ToListAsync();
@@ -64,7 +65,10 @@ namespace Lms.Data.Repositories
                           .ThenInclude(a => a.Documents)
                 .Include(m => m.Modules)
                     .ThenInclude(a => a.Documents)
-                .Include(m => m.Documents).FirstOrDefaultAsync(c=>c.Id==id);
+                .Include(m => m.Documents)
+                .Include(u=>u.Users)
+                .FirstOrDefaultAsync(c => c.Id == id);
+                
 
             if(course==null)
                 throw new ArgumentException(nameof(course));
@@ -108,6 +112,9 @@ namespace Lms.Data.Repositories
                 return course;
             }
         }
+       
+
+       
 
         public void UpdateCourse(Course course)
         {
