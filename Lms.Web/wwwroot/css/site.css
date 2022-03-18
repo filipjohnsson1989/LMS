@@ -28,8 +28,11 @@ body {
     z-index: 2;
     position: fixed;
     width: 100%;
+    border-block-end: none;
+    border-block-color: none;
     border-block: none;
     margin-bottom: 1rem;
+    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.5) !important;
 }
 .logo {
     height: 60px;

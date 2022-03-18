@@ -17,8 +17,13 @@
 
 
         @{
+            int i = 1;
             foreach (var activity in Model.Activities)
             {
+                i++;
+                var activityId = $"activity{i}";
+                var hiddenId = $"hidden{i}";
+
                 if (activity.EndDate.CompareTo(DateTime.Now) > 0)
                 {
                     var due = activity.EndDate - DateTime.Now;
@@ -28,17 +33,21 @@
 
                     if (activity.ActivityType.Id == 2)
                     {
-                        <li class="card p-1">
+                        //Assignment
+                        <li class="card card-assignment p-1" id="@activityId" onclick="">
                             <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
                             <p class="card-header"><strong>Starts:</strong> @startDate</p>
                             <p class="card-header"><strong>Ends:</strong> @endDate </p>
                             <div class="card-header"><strong>Due in: </strong>@dueTime</div>
                             <div class="card-footer row"><div class="btn btn-primary col-3">TestBtn</div><div class="btn btn-primary col-3">TestUploadBtn</div></div>
+                            <div id="@hiddenId"></div>
                         </li>
+                        
                     }
                     else
                     {
-                        <li class="card card-assignment p-1">
+                        //not assignment
+                        <li class="card p-1" id="@activityId">
                             <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
                             <p class="card-header"><strong>Starts:</strong> @startDate</p>
                             <p class="card-header"><strong>Ends:</strong> @endDate </p>
@@ -50,4 +59,18 @@
         }
     </ul>
 </div>
+
+<script type="text/javascript"> 
+
+   
+  
+            
+  
+        
+
+
+
+
+
+</script>
 

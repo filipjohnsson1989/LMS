@@ -15,6 +15,7 @@ namespace Lms.Web.Views.Home.Components.ComponentClasses
         public async Task<IViewComponentResult> InvokeAsync(string userId)
         {
             var user = await userManager.FindByIdAsync(userId);
+            
             if (user != null)
             {
                 var modules = await iuw.moduleRepo.GetAllModulesByCourseId((int)user.CourseId!);

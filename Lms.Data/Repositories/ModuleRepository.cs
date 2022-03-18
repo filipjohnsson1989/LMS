@@ -37,6 +37,7 @@ namespace Lms.Data.Repositories
         {
             return await db.Modules.ToListAsync();
         }
+
         public async Task<IEnumerable<Module>> GetAllModulesByCourseId(int courseId)
         {
             return await db.Modules.Where(m => m.CourseId == courseId).ToListAsync();
