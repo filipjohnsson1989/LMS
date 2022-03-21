@@ -32,7 +32,7 @@ public class ActivitiesModel : PageModel
         DateSort = sortOrder == "Date" ? "date_desc" : "Date";
 
 
-        Activities = await db.Activities.Where(a => a.ModuleId == id).OrderBy(a => a.EndDate).Include(a => a.ActivityType).ToListAsync();
+        Activities = await db.Activities.Where(a => a.ModuleId == id).OrderBy(a => a.EndDate).Include(a => a.ActivityType).Include(a => a.Documents).ToListAsync();
 
 
         switch (sortOrder)
