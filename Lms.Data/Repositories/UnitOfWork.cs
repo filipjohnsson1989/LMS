@@ -10,6 +10,7 @@ namespace Lms.Data.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public IUserRepository userRepo { get; set; }
         public ICourseRepository courseRepo { get; set; }
         public IModuleRepository moduleRepo { get;  set; }
         public IActivityRepository activityRepo { get; set; }
@@ -26,6 +27,7 @@ namespace Lms.Data.Repositories
             activityRepo = new ActivityRepository(db);
             documentRepo = new DocumentRepository(db);
             activityTypeRepo = new ActivityTypeRepository(db);
+            userRepo = new UserRepository(db);
         }
         public async Task CompleteAsync()
         {

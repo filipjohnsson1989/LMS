@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using Lms.Core.Entities;
 using Lms.Core.Interfaces;
 using Lms.Core.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lms.Web.Controllers
@@ -11,13 +14,21 @@ namespace Lms.Web.Controllers
 
         //private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork uow;
-        public CourseController(IMapper mapper, IUnitOfWork unitofwork)
+        private readonly UserManager<ApplicationUser> userManager;
+
+        public CourseController(IMapper mapper, IUnitOfWork unitofwork, UserManager<ApplicationUser> userManager)
         {
             this.mapper = mapper;
             this.uow = unitofwork;
+            this.userManager = userManager;
         }
-        public async Task<IActionResult> CourseOverView(int courseid=1)
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> CourseOverView()
         {
+            var userid =userManager.GetUserId(User);
+
+            int courseid=uow.userRepo.GetCourse_By_UserId(userid);
+
             var course = await uow.courseRepo.GetAllbyId(courseid);
             return View(mapper.Map<CourseOverViewModel>(course));
         }
@@ -25,21 +36,22 @@ namespace Lms.Web.Controllers
         {
             return View();
         }
-
-        public async Task<IActionResult> LoadModulePartial(int courseid=1)
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> LoadModulePartial(int id)
         {
-            var course = await uow.courseRepo.GetAllbyId(courseid);
+            var course = await uow.courseRepo.GetAllbyId(id);
             return PartialView("_ModuleView", course);
         }
-
-        public async Task<IActionResult> LoadStudentPartial(int courseid=1)
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> LoadStudentPartial(int id)
         {
-            var course = await uow.courseRepo.GetAllbyId(courseid);
+            var course = await uow.courseRepo.GetAllbyId(id);
             return PartialView("_StudentView", course);
         }
-        public async Task<IActionResult> LoadDocumentsPartial(int courseid=1)
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> LoadDocumentsPartial(int id)
         {
-            var course = await uow.courseRepo.GetAllbyId(courseid);
+            var course = await uow.courseRepo.GetAllbyId(id);
             return PartialView("_DocumentView", course);
         }
     }

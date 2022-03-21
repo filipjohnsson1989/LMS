@@ -22,6 +22,7 @@ namespace Lms.Data.Repositories
             await db.Courses.AddAsync(course);
         }
 
+        
         public bool CourseExists(int id)
         {
             return db.Courses.Any(e => e.Id == id);

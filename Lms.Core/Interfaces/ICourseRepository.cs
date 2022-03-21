@@ -9,6 +9,7 @@ namespace Lms.Core.Interfaces
 {
      public interface ICourseRepository
     {
+        
         Task AddCourse(Course course);
         void UpdateCourse(Course course);
         Task DeleteCourse(int id);
