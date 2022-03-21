@@ -20,10 +20,40 @@ public class ActivitiesModel : PageModel
 
     }
     public List<Activity> Activities { get; set; } = new List<Activity>();
+    public string NameSort { get; set; }
+    public string DateSort { get; set; }
+    public string CurrentSort { get; set; }
 
-    public async Task<IActionResult> OnGetAsync(int id)
+
+    public async Task<IActionResult> OnGetAsync(int id, string sortOrder)
     {
+        CurrentSort = sortOrder;
+        NameSort = sortOrder == "Name" ? "name_desc" : "Name";
+        DateSort = sortOrder == "Date" ? "date_desc" : "Date";
+
+
         Activities = await db.Activities.Where(a => a.ModuleId == id).OrderBy(a => a.EndDate).Include(a => a.ActivityType).ToListAsync();
+
+
+        switch (sortOrder)
+        {
+            case "name_desc":
+                Activities = Activities.OrderByDescending(s => s.Name).ToList();
+                break;
+            case "Name":
+                Activities = Activities.OrderBy(s => s.Name).ToList();
+                break;
+            case "date_desc":
+                Activities = Activities.OrderByDescending(s => s.EndDate).ToList();
+                break;
+
+            case "Date":
+                Activities = Activities.OrderBy(s => s.EndDate).ToList();
+                break;
+            default:
+                Activities = Activities.OrderBy(s => s.EndDate).ToList();
+                break;
+        }
         return Page();
     }
 
