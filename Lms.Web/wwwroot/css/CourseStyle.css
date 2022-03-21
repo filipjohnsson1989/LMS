@@ -1,0 +1,54 @@
+﻿html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.bdgcolor {
+    background-color: #484948;
+}
+
+.fwcolor {
+    color: white;
+}
+
+.bgcolor {
+    background-color: gray;
+}
+
+.tbl {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.t1 {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.tbr:nth-child(even) {
+    background-color: grey;
+}
+
+.tbr:nth-child(odd) {
+    background-color: black;
+}
+
+.bbcolor {
+    background-color: #623D2F;
+}
