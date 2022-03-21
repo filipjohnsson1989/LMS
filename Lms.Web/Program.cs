@@ -1,10 +1,15 @@
 ﻿using Lms.Core.Entities;
+using Lms.Core.Interfaces;
 using Lms.Data;
 using Lms.Data.Data;
+using Lms.Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddTransient<IRepository<ActivityType>, ActivityTypeRepository>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

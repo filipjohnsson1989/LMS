@@ -10,49 +10,10 @@ using System.Threading.Tasks;
 
 namespace Lms.Data.Repositories
 {
-    public class ActivityTypeRepository : IActivityTypeRepository
+    public class ActivityTypeRepository : GenericRepository<ActivityType>
     {
-
-        private ApplicationDbContext db;
-        public ActivityTypeRepository(ApplicationDbContext db)
+        public ActivityTypeRepository(ApplicationDbContext context) : base(context)
         {
-            this.db = db ?? throw new ArgumentNullException(nameof(db));
-        }
-        public async Task AddActivityType(ActivityType activitytype)
-        {
-            await db.ActivityTypes.AddAsync(activitytype);
-        }
-        public void UpdateActivityType(ActivityType activitytype)
-        {
-            db.ActivityTypes.Update(activitytype);
-        }
-        public async Task DeleteActivityType(int id)
-        {
-            var activitytype = await db.ActivityTypes.FirstOrDefaultAsync(a => a.Id == id);
-            if (activitytype == null)
-            {
-                throw new ArgumentNullException(nameof(activitytype));
-            }
-            db.ActivityTypes.Remove(activitytype);
-        }
-
-        public bool ActivityTypeExists(int id)
-        {
-            return db.ActivityTypes.Any(e => e.Id == id);
-        }
-        public async Task<ActivityType> GetActivityTypeById(int id)
-        {
-            var activitytype = await db.ActivityTypes.FirstOrDefaultAsync(m => m.Id == id);
-            if (activitytype == null)
-            {
-                throw new ArgumentNullException(nameof(activitytype));
-            }
-            return activitytype;
-        }
-
-        public async Task<IEnumerable<ActivityType>> GetAllActivityTypes()
-        {
-            return await db.ActivityTypes.ToListAsync();
         }
 
     }
