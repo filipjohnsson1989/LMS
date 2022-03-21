@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Lms.Core.Entities;
 using Lms.Data.Data;
+using Lms.Web.Models;
 
 namespace Lms.Web.Controllers
 {
@@ -23,7 +24,13 @@ namespace Lms.Web.Controllers
         // GET: ActivityTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ActivityTypes.ToListAsync());
+            var activityTypes = await _context.ActivityTypes.ToListAsync();
+            var docs = await _context.Documents.ToListAsync();
+            UpDownLoadCombinedTestViewModel testModel = new UpDownLoadCombinedTestViewModel();
+            testModel.Documents = docs;
+            testModel.activityTypes = activityTypes;
+            return View(testModel);
+            
         }
 
         // GET: ActivityTypes/Details/5
@@ -150,5 +157,53 @@ namespace Lms.Web.Controllers
         {
             return _context.ActivityTypes.Any(e => e.Id == id);
         }
+
+        public async Task<FileResult> DownloadAsync(int id)
+        {
+            var fileToRetrieve = await _context.Documents.FirstAsync(d => d.Id == id);
+            return File(fileToRetrieve.Data, fileToRetrieve.ContentType);
+        }
+        [HttpPost]
+        public async Task<IActionResult> FormUpload(UploadFileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.Upload != null)
+                {
+                    var file = model.Upload;
+                    if (file.Length > 0)
+                    {
+                        var fileName = Path.GetFileName(file.FileName);
+
+                        var fileExtension = Path.GetExtension(fileName);
+                        var newFileName = String.Concat(Convert.ToString(Guid.NewGuid()), fileExtension);
+                        var contentType = file.ContentType;
+
+                        var objfiles = new Document()
+                        {
+                            Name = newFileName,
+                            //FileType = fileExtension,
+                            UploadDate = DateTime.Now,
+                            ContentType = contentType
+                        };
+
+
+                        using (var target = new MemoryStream())
+                        {
+                            file.CopyTo(target);
+                            objfiles.Data = target.ToArray();
+                        }
+
+                        _context.Documents.Add(objfiles);
+                        await _context.SaveChangesAsync();
+
+                    }
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+
+
     }
 }

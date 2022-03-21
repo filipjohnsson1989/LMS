@@ -1,0 +1,12 @@
+﻿@model UploadFileViewModel
+
+@using (Html.BeginForm("FormUpload", "ActivityTypes", 
+                       FormMethod.Post, 
+                       new { enctype = "multipart/form-data" }))
+
+{
+    <div class="form-group">
+        @Html.TextBoxFor(m => m.Upload, new { type = "file" })
+    </div>
+    <input type="submit" name="submit" value="Submit" />
+}
