@@ -311,7 +311,7 @@ public class SeedData
                     var temp = new Activity
                     {
                         Name = faker.Company.CatchPhrase(),
-                        Description = faker.Hacker.Verb(),
+                        Description = faker.Lorem.Sentences(2),
                         StartDate = startDate,
                         EndDate = faker.Date.Between(startDate.AddDays(30), startDate.AddDays(90)),
                         ActivityType = activityType,

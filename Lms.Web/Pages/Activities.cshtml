@@ -52,10 +52,29 @@
                             </div>
 
                             <div class="card-footer container hidden">
-                            <strong>About:</strong> @activity.Description
-                            <div class="documents"><div class="btn btn-primary uploadBtn  col-3">TestUploadBtn</div>
-                            <ul class="list-group"></ul></div></div>
+                                <strong>About:</strong> @activity.Description
+                                   <div class="documents">
+                                      <div class="btn btn-primary uploadBtn  col-3">
+                                      TestUploadBtn
+                                      </div>
+                                    <ul class="list-group">
+                                    @foreach(var doc in activity.Documents)
+                                    {
+                                        <li>
+                                        <p>Name: @doc.Name</p>
+                                        <p>Type:  @doc.ContentType</p>
+                                        <p>Upload Time: @doc.UploadDate</p>
+                                        <span>&#x2717</span>
+                                        
+                                        </li>
+
+                                    }
+                                    </ul>
+                                    
+                           </div>
+                           </div>
                         </li>
+                        
 
                     }
                     else
