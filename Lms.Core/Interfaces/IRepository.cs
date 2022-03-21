@@ -9,9 +9,9 @@ public interface IRepository<T> where T : class
     void Delete(T entity);
     Task<bool> ExistAsync(int id);
     Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
-    Task<T> GetAsync(int id);
+    Task<T?> GetAsync(int id);
     Task<IEnumerable<T>> GetAllAsync();
     Task SaveChangesAsync();
-    Task<T> UpdateAsync(T entity);
+    T Update(T entity);
 
 }

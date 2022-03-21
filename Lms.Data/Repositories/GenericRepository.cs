@@ -1,5 +1,6 @@
 ﻿using Lms.Core.Interfaces;
 using Lms.Data.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 
@@ -8,59 +9,29 @@ namespace Lms.Data.Repositories;
 public class GenericRepository<T> : IRepository<T> where T : class
 {
     private protected ApplicationDbContext context;
+    private DbSet<T> DbSet => context.Set<T>();
 
-    public GenericRepository(ApplicationDbContext context)
-    {
-        context = context;
-    }
-    public async Task<T> AddAsync(T entity)
-    {
-        var result = await context
-                .AddAsync(entity);
-        return result.Entity;
-    }
+    public GenericRepository(ApplicationDbContext context) => this.context = context ?? throw new ArgumentNullException(nameof(context));
+    public virtual async Task<T> AddAsync(T entity) => (await context.AddAsync(entity)).Entity;
 
+    public virtual void Delete(T entity) => context.Remove(entity);
 
+    public virtual async Task<bool> ExistAsync(int id) => await DbSet.AnyAsync();
 
-    public void Delete(T entity)
-    {
-        context
-            .Remove(entity);
+    public virtual async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+        => await DbSet.AsQueryable()
+                      .Where(predicate)
+                      .ToListAsync();
 
+    public virtual async Task<T?> GetAsync(int id) => await context.FindAsync<T>(id);
 
-    }
+    public virtual async Task<IEnumerable<T>> GetAllAsync()
+        => await DbSet.AsQueryable()
+                      .ToListAsync();
 
-    public async Task<bool> ExistAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public virtual async Task SaveChangesAsync() => await context.SaveChangesAsync();
 
-    public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
-    {
-        return context.Set<T>()
-                .AsQueryable()
-                .Where(predicate).ToList();
-    }
-
-    public async Task<T>? GetAsync(int id)
-    {
-        return context.Find<T>(id);
-    }
-
-    public async Task<IEnumerable<T>> GetAllAsync()
-    {
-        return context.Set<T>()
-                .AsQueryable()
-                .ToList();
-    }
-
-    public async Task SaveChangesAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<T> UpdateAsync(T entity)
-    {
-        throw new NotImplementedException();
-    }
+    public T Update(T entity)
+        => context.Update(entity)
+                  .Entity;
 }
