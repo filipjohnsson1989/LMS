@@ -47,10 +47,14 @@
                             <p class="card-header"><strong>Ends:</strong> @endDate </p>
                             <div class="card-header"><strong>Due in: </strong>@dueTime</div>
                             <div class="card-body row">
-                                <span class="btn btn-primary infoButton col-6">Expand &#8595</span>
-                                <div class="btn btn-primary col-3">TestUploadBtn</div>
+                                <span class="btn btn-primary infoButton col-3">Expand &#8595</span>
+                                
                             </div>
-                            <div class="card-footer hidden"><strong>About:</strong> @activity.Description</div>
+
+                            <div class="card-footer container hidden">
+                            <strong>About:</strong> @activity.Description
+                            <div class="documents"><div class="btn btn-primary uploadBtn  col-3">TestUploadBtn</div>
+                            <ul class="list-group"></ul></div></div>
                         </li>
 
                     }

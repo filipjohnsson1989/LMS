@@ -38,9 +38,16 @@ public class SeedData
 
         var activityTypes = await ActivityTypeInitAsync(context);
 
-        await ActivityInitAsync(context, activityTypes, modules);
+        var activities = await ActivityInitAsync(context, activityTypes, modules);
+
+        await DocumentsInitAsync(context, activities);
 
         await context.SaveChangesAsync();
+    }
+
+    private static Task DocumentsInitAsync(ApplicationDbContext context, IEnumerable<Activity> activities)
+    {
+        string 
     }
 
     private static async Task RoleInitAsync(ApplicationDbContext db)

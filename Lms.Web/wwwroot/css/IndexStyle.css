@@ -69,7 +69,7 @@ li {
     align-content: center;
     text-align: center;
     width: 8rem !important;
-    flex:content;
+   /* flex:content;*/
 }
 
 .btn-dark {
@@ -80,3 +80,4 @@ li {
     margin-right: 1rem;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
