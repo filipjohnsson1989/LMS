@@ -4,7 +4,6 @@ using Lms.Data.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Lms.Data;
 
@@ -40,14 +39,47 @@ public class SeedData
 
         var activities = await ActivityInitAsync(context, activityTypes, modules);
 
-        await DocumentsInitAsync(context, activities);
+        await DocumentsInitAsync(context, activities, courses);
 
         await context.SaveChangesAsync();
     }
 
-    private static Task DocumentsInitAsync(ApplicationDbContext context, IEnumerable<Activity> activities)
+    private static async Task DocumentsInitAsync(ApplicationDbContext context, IEnumerable<Activity> activities, IEnumerable<Course> courses)
     {
-        string 
+        string Name = "dummyDoc";
+        var docs = new List<Document>();
+        var data = new Byte[50];
+        for (int i = 0; i < 50; i++)
+        {
+            data[i] = faker.System.Random.Byte();
+        }
+        foreach (var course in courses)
+        {
+            for (int i = 0; i < faker.Random.Number(1, 5); i++)
+            {
+                var doc = new Document()
+                {
+                    Name = Name,
+                    Course = course,
+                    Data = data,
+                    ContentType = "Dummy"
+                };
+                docs.Add(doc);
+            }
+        }
+
+        foreach (var activity in activities)
+        {
+            var doc = new Document()
+            {
+                Name = Name,
+                Activity = activity,
+                Data = data,
+                ContentType = "Dummy"
+            };
+            docs.Add(doc);
+        }
+        await context.AddRangeAsync(docs);
     }
 
     private static async Task RoleInitAsync(ApplicationDbContext db)
