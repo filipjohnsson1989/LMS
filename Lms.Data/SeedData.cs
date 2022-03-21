@@ -4,7 +4,6 @@ using Lms.Data.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Lms.Data;
 
@@ -12,7 +11,7 @@ public class SeedData
 {
     private static RoleManager<IdentityRole> roleManager = default!;
     private static UserManager<ApplicationUser> userManager = default!;
-    private static Faker faker = new Faker("sv");
+    private static readonly Faker faker = new Faker("sv");
     const int defaultNumberOfInitializingRecords = 20;
 
     public static async Task InitAsync(ApplicationDbContext context, IServiceProvider services, string adminPW)
@@ -38,9 +37,49 @@ public class SeedData
 
         var activityTypes = await ActivityTypeInitAsync(context);
 
-        await ActivityInitAsync(context, activityTypes, modules);
+        var activities = await ActivityInitAsync(context, activityTypes, modules);
+
+        await DocumentsInitAsync(context, activities, courses);
 
         await context.SaveChangesAsync();
+    }
+
+    private static async Task DocumentsInitAsync(ApplicationDbContext context, IEnumerable<Activity> activities, IEnumerable<Course> courses)
+    {
+        string Name = "dummyDoc";
+        var docs = new List<Document>();
+        var data = new Byte[50];
+        for (int i = 0; i < 50; i++)
+        {
+            data[i] = faker.System.Random.Byte();
+        }
+        foreach (var course in courses)
+        {
+            for (int i = 0; i < faker.Random.Number(1, 5); i++)
+            {
+                var doc = new Document()
+                {
+                    Name = Name,
+                    Course = course,
+                    Data = data,
+                    ContentType = "Dummy"
+                };
+                docs.Add(doc);
+            }
+        }
+
+        foreach (var activity in activities)
+        {
+            var doc = new Document()
+            {
+                Name = Name,
+                Activity = activity,
+                Data = data,
+                ContentType = "Dummy"
+            };
+            docs.Add(doc);
+        }
+        await context.AddRangeAsync(docs);
     }
 
     private static async Task RoleInitAsync(ApplicationDbContext db)
@@ -272,7 +311,7 @@ public class SeedData
                     var temp = new Activity
                     {
                         Name = faker.Company.CatchPhrase(),
-                        Description = faker.Hacker.Verb(),
+                        Description = faker.Lorem.Sentences(2),
                         StartDate = startDate,
                         EndDate = faker.Date.Between(startDate.AddDays(30), startDate.AddDays(90)),
                         ActivityType = activityType,
