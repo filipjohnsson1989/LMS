@@ -1,6 +1,10 @@
 ﻿.divider {
     margin: 2rem;
 }
+.hidden
+{
+    display: none !important;
+}
 
 .sidenav {
     color: white;
@@ -20,9 +24,11 @@
     margin-bottom: 1rem;
     box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
 }
+
 li {
     list-style: none;
 }
+
 .card {
     background: linear-gradient(#6D6D6D, #373737) !important;
     background-image: none;
@@ -30,10 +36,12 @@ li {
     margin: 0.2rem;
     box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
 }
+
     .card:hover {
         background: linear-gradient(#484948, #484948) !important;
         box-shadow: 3px 3px 2px 1px rgba(0, 0, 0, 0.5) !important;
     }
+
 .card-assignment {
     background: linear-gradient(#368DA9, #16637C) !important;
     color: white;
@@ -41,33 +49,34 @@ li {
     box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
 }
 
-
 .mainBody {
     margin-top: 50px !important;
     margin: 1rem;
     margin-left: 12rem;
     width: 600px;
 }
+
 .btn-primary:hover {
     background-color: #724C3E !important;
 }
+
 .btn-primary {
     background-color: #56433C;
     border-block: none;
-    border-block-start:none;
+    border-block-start: none;
     border-inline: none;
-    margin:0.5rem;
-    align-content:center;
-    text-align:center;
+    margin: 0.5rem;
+    align-content: center;
+    text-align: center;
     width: 8rem !important;
-    flex:auto;
+    flex:content;
 }
 
 .btn-dark {
-        background-color: #56433C;
-        width: 98%;
-        font-size: 10px;
-        margin: 1px;
-        margin-right: 1rem;
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: #56433C;
+    width: 98%;
+    font-size: 10px;
+    margin: 1px;
+    margin-right: 1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
