@@ -80,4 +80,9 @@ li {
     margin-right: 1rem;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+.docs {
+    background: linear-gradient(#ffff, #ffff) !important;
+    color: black !important;
+    font-size: 0.8rem;
+}
 
