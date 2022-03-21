@@ -5,6 +5,7 @@ using Lms.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+#nullable disable
 
 namespace Lms.Web.Controllers
 {
@@ -23,13 +24,12 @@ namespace Lms.Web.Controllers
             this.userManager = userManager;
         }
         [Authorize(Roles = "Student")]
-        public async Task<IActionResult> CourseOverView()
+        public async Task<IActionResult> Student_CourseOverView()
         {
-            var userid =userManager.GetUserId(User);
+            var user = await userManager.GetUserAsync(User);
 
-            int courseid=uow.userRepo.GetCourse_By_UserId(userid);
+            var course = await uow.courseRepo.GetAllbyId((int)user.CourseId);
 
-            var course = await uow.courseRepo.GetAllbyId(courseid);
             return View(mapper.Map<CourseOverViewModel>(course));
         }
         public IActionResult Index()
