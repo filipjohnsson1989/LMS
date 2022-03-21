@@ -178,14 +178,22 @@ namespace Lms.Web.Controllers
                         var fileExtension = Path.GetExtension(fileName);
                         var newFileName = String.Concat(Convert.ToString(Guid.NewGuid()), fileExtension);
                         var contentType = file.ContentType;
+                        var course = model.Course;
+                        var module = model.Module;
+                        var activity = model.Activity;
+                        var applicationUser = model.User;
 
                         var objfiles = new Document()
                         {
                             Name = newFileName,
                             //FileType = fileExtension,
                             UploadDate = DateTime.Now,
-                            ContentType = contentType
-                        };
+                            ContentType = contentType,
+                            Course = course,
+                            Module = module,
+                            Activity = activity,
+                            User = applicationUser
+    };
 
 
                         using (var target = new MemoryStream())
