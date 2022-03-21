@@ -1,6 +1,7 @@
 ﻿using Lms.Web.Models;
+using Lms.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lms.Web.Controllers
 {
@@ -11,6 +12,7 @@ namespace Lms.Web.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            
         }
 
 
@@ -22,15 +24,10 @@ namespace Lms.Web.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
