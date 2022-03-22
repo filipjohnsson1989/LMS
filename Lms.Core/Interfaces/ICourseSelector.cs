@@ -1,10 +1,12 @@
-﻿using System.Web.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Lms.Core.Interfaces
 {
     public interface ICourseSelector
     {
-        public int Course_Id { get; set; }
+        public static int Course_Id { get; set; }
         public Task<IEnumerable<SelectListItem>> GetSelectList();
+        
     }
 }

@@ -1,7 +1,8 @@
 ﻿using Lms.Core.Interfaces;
 using Lms.Data.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Web.Mvc;
+
 namespace Lms.Data.Repositories
 {
     public class CourseSelector : ICourseSelector
@@ -12,16 +13,25 @@ namespace Lms.Data.Repositories
             this.db = db;
         }
 
-        public int Course_Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public static int Course_Id { get; set; } = default!;
 
         public async Task<IEnumerable<SelectListItem>> GetSelectList()
         {
             return await db.Courses.Select(c => new SelectListItem
             {
                 Text = c.Name,
-                Value = c.Name
+                Value = c.Id.ToString(),
             })
                 .ToListAsync();
         }
+
+    
+
+
+     
+
+       
+
+        
     }
 }

@@ -68,70 +68,20 @@ namespace Lms.Web.Controllers
 
             return PartialView("_DocumentView", doc);
         }
-        [Authorize(Roles = "Teacher")]
-        public async Task<IActionResult> LoadModules(int id)
-        {
-            var course = await uow.courseRepo.GetAllbyId(id);
-            return View(course);
-        }
-        [Authorize(Roles = "Teacher")]
-        public async Task<IActionResult> EditCourse(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        
+       
+   
 
-            var course = await uow.courseRepo.GetCourseById((int)id);
-            if (course == null)
-            {
-                return NotFound();
-            }
-            return View(course);
-        }
-        [Authorize(Roles = "Teacher")]
-        [HttpPost]
-        public async Task<IActionResult> EditCourse(int id, EditCourseModel course)
-        {
-            var courseobj = mapper.Map<Course>(course);
-            if (id != courseobj.Id)
-            {
-                return NotFound();
-            }
+      
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    uow.courseRepo.UpdateCourse(courseobj);
-                    await uow.CompleteAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!uow.courseRepo.CourseExists(courseobj.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Teacher_CourseOverview));
-            }
-            return View(courseobj);
-        }
-        [Authorize(Roles = "Teacher")]
-        public async Task<IActionResult> DeleteCourse(int id)
+        [HttpPost, ActionName("DeleteDocument")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteDocument(int id)
         {
-            await uow.courseRepo.DeleteCourse(id);
+            await uow.documentRepo.DeleteDocument(id);
             await uow.CompleteAsync();
-            return RedirectToAction(nameof(Teacher_CourseOverview));
-        }
-
-        public IActionResult TestAction(string test)
-        {
-            return View("Index");
+            
+            return RedirectToAction(nameof(Student_CourseOverview));
         }
     }
 }

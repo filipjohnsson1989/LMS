@@ -20,9 +20,10 @@
             <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.UploadDate)</td>
             <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.UserId)</td>
             <td class="t1 fwcolor">
-                <a class="btn bbcolor fwcolor" asp-action="Edit" asp-route-id="@item.Id">Open</a> 
-                <a class="btn bbcolor fwcolor" asp-action="Details" asp-route-id="@item.Id">Download</a> 
-                <a class="btn btn-danger fwcolor" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <form asp-action=""> 
+                    <a class="btn bbcolor fwcolor" asp-controller = "ActivityTypes" asp-action="Download" asp-route-id="@item.Id">Download</a> 
+                    <input type="submit" value="Delete" class="btn btn-danger" asp-action="DeleteDocument" asp-route-id="@item.Id" />
+                </form>
             </td>
         </tr>
 }
