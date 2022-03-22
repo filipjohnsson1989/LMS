@@ -185,10 +185,20 @@ li {
     width: 2rem;
     height: 1.6rem;
     text-align: center;
-    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    border-style: outset;
+    border-radius: 5px;
+    border-color: #7B0202;
+    user-select:none;
 }
     .deleteDoc:hover {
         background: linear-gradient(red, red) !important;
+        border-color: red;
+    }
+    .deleteDoc:active {
+        background: linear-gradient(red, red) !important;
+        border-color: firebrick;
     }
 
 
