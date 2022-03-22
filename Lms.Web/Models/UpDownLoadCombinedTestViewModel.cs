@@ -4,10 +4,10 @@ namespace Lms.Web.Models
 {
     public class UpDownLoadCombinedTestViewModel
     {
-      
 
-            public UploadFileViewModel UploadFileViewModel { get; set; }
-            public ICollection<Document> Documents { get; set; }
-        public List<Lms.Core.Entities.ActivityType> activityTypes { get; set; }
+
+        public UploadFileViewModel UploadFileViewModel { get; set; }
+        public IEnumerable<Document> Documents { get; set; }
+        public IEnumerable<ActivityType> ActivityTypes { get; set; }
     }
 }

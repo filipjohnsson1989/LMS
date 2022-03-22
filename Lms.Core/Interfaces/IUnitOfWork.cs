@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Lms.Core.Entities;
 
-namespace Lms.Core.Interfaces
+namespace Lms.Core.Interfaces;
+
+public interface IUnitOfWork
 {
-    public interface IUnitOfWork
-    {
-        ICourseRepository courseRepo { get; }
-        IModuleRepository moduleRepo { get; }
-        IActivityRepository activityRepo { get;}
-        IActivityTypeRepository activityTypeRepo { get;}
-        IDocumentRepository documentRepo { get;}
-        Task CompleteAsync();
-    }
+    ICourseRepository courseRepo { get; }
+    IModuleRepository moduleRepo { get; }
+    IActivityRepository activityRepo { get;}
+    IRepository<ActivityType> ActivityTypeRepo { get;}
+    IDocumentRepository documentRepo { get;}
+    Task CompleteAsync();
 }
