@@ -4,9 +4,17 @@ using Lms.Data.Data;
 using Lms.Web.Conventions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Lms.Web.Data;
+using Lms.Data.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<LmsWebContext>(options =>
+
+    options.UseSqlServer(builder.Configuration.GetConnectionString("LmsWebContext")));
+
+builder.Services.AddTransient<IRepository<Course>, CourseRepositoryG>();
 builder.Services.AddTransient<IRepository<ActivityType>, ActivityTypeRepository>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
@@ -26,6 +34,9 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.Add(new GlobalTemplatePageRouteModelConvention());
 
 });
+
+builder.Services.AddAutoMapper(typeof(CourseProfile));
+
 
 var app = builder.Build();
 

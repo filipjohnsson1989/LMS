@@ -28,6 +28,20 @@ namespace Lms.Data.Repositories
                 return activityTypeRepo;
             }
         }
+
+        private IRepository<Course> courseTypeRepoG = default!;
+        public IRepository<Course> CourseRepoG
+        {
+            get
+            {
+                if (courseTypeRepoG == null)
+                {
+                    this.courseTypeRepoG = new CourseRepositoryG(this.context);
+                }
+
+                return courseTypeRepoG;
+            }
+        }
         public IDocumentRepository documentRepo { get; set; }
 
         public ApplicationDbContext context;
