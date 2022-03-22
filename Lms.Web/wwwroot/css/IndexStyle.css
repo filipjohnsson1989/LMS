@@ -51,6 +51,10 @@ li {
     margin: 0.2rem;
     box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
 }
+    .card-assignment:hover {
+        background: linear-gradient(#484948, #16637C) !important;
+        box-shadow: 3px 3px 2px 1px rgba(0, 0, 0, 0.5) !important;
+    }
 
 .mainBody {
     margin-top: 50px !important;
@@ -175,9 +179,9 @@ li {
 }
 .deleteDoc {
     position: absolute;
-    left: 87%;
-    bottom: 23%;
-    background: linear-gradient(red, red);
+    left: 89%;
+    bottom: 24%;
+    background: linear-gradient(#F60303, #7B0202);
     width: 2rem;
     height: 1.6rem;
     text-align: center;
