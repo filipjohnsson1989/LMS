@@ -42,6 +42,20 @@ namespace Lms.Data.Repositories
                 return courseTypeRepoG;
             }
         }
+
+        private IRepository<Module> moduleTypeRepoG = default!;
+        public IRepository<Module> ModuleRepoG
+        {
+            get
+            {
+                if (moduleTypeRepoG == null)
+                {
+                    this.moduleTypeRepoG = new ModuleRepositoryG(this.context);
+                }
+
+                return moduleTypeRepoG;
+            }
+        }
         public IDocumentRepository documentRepo { get; set; }
 
         public ApplicationDbContext context;

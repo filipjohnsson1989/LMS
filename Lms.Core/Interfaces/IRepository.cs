@@ -10,6 +10,8 @@ public interface IRepository<T> where T : class
     Task<bool> ExistAsync(int id);
     Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
     Task<T?> GetAsync(int id);
+
+    IQueryable<T> GetAll();
     Task<IEnumerable<T>> GetAllAsync();
     Task SaveChangesAsync();
     T Update(T entity);

@@ -9,5 +9,6 @@ public class CourseProfile : Profile
     public CourseProfile()
     {
         CreateMap<Course, CourseDto>().ReverseMap();
+        CreateMap<Course, SearchCourseDto>().ReverseMap();
     }
 }

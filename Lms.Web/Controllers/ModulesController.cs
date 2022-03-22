@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using Lms.Core.Dtos.Course;
+using Lms.Core.Dtos.Module;
 
 namespace Lms.Web.Controllers;
 
-public class CoursesController : Controller
+public class ModulesController : Controller
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly UserManager<ApplicationUser> userManager;
 
     private readonly IMapper mapper;
 
-    public CoursesController(IUnitOfWork unitOfWork,
+    public ModulesController(IUnitOfWork unitOfWork,
                              UserManager<ApplicationUser> userManager,
                              IMapper mapper)
     {
@@ -21,16 +21,17 @@ public class CoursesController : Controller
         this.mapper = mapper;
     }
 
-    // GET: Courses
+    // GET: Modules
     public async Task<IActionResult> Index()
     {
-        var courses = await unitOfWork.CourseRepoG
-                                    .GetAllAsync();
-        var coursesToReturn = mapper.Map<IEnumerable<CourseDto>>(courses);
-        return View(coursesToReturn);
+        var modules = await unitOfWork.ModuleRepoG
+                                      .GetAllAsync();
+
+        var modulesToReturn = mapper.Map<IEnumerable<ModuleDto>>(modules);
+        return View(modulesToReturn);
     }
 
-    // GET: Courses/Details/5
+    // GET: Modules/Details/5
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -38,48 +39,55 @@ public class CoursesController : Controller
             return NotFound();
         }
 
-        var course = await unitOfWork.CourseRepoG
+        var module = await unitOfWork.ModuleRepoG
                                      .GetAsync(id.Value);
-        if (course == null)
+        if (module == null)
         {
             return NotFound();
         }
 
-        var courseToReturn = mapper.Map<CourseDto>(course);
+        var moduleToReturn = mapper.Map<ModuleDto>(module);
 
-        return View(courseToReturn);
+        return View(moduleToReturn);
     }
 
-    // GET: Courses/Create
+    // GET: Modules/Create
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST: Courses/Create
+    // POST: Modules/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate")] CourseDto courseDto)
+    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleDto moduleDto)
     {
         if (ModelState.IsValid)
         {
-            var course = mapper.Map<Course>(courseDto);
+            var module = mapper.Map<Module>(moduleDto);
 
-            await unitOfWork.CourseRepoG
-                            .AddAsync(course);
+            var course = await unitOfWork.CourseRepoG.GetAsync(moduleDto.Course.Id);
+            if (course is null)
+            {
+                return BadRequest();
+            }
+            module.Course = course;
+
+            await unitOfWork.ModuleRepoG
+                            .AddAsync(module);
 
             await unitOfWork.CompleteAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        var courseToReturn = mapper.Map<CourseDto>(courseDto);
+        var moduleToReturn = mapper.Map<CreateEditModuleDto>(moduleDto);
 
-        return View(courseToReturn);
+        return View(moduleToReturn);
     }
 
-    // GET: Courses/Edit/5
+    // GET: Modules/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -87,26 +95,26 @@ public class CoursesController : Controller
             return NotFound();
         }
 
-        var course = await unitOfWork.CourseRepoG
+        var module = await unitOfWork.ModuleRepoG
                                      .GetAsync(id.Value);
-        if (course == null)
+        if (module == null)
         {
             return NotFound();
         }
 
-        var courseToReturn = mapper.Map<CourseDto>(course);
+        var moduleToReturn = mapper.Map<CreateEditModuleDto>(module);
 
-        return View(courseToReturn);
+        return View(moduleToReturn);
     }
 
-    // POST: Courses/Edit/5
+    // POST: Modules/Edit/5
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate")] CourseDto courseDto)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleDto moduleDto)
     {
-        if (id != courseDto.Id)
+        if (id != moduleDto.Id)
         {
             return NotFound();
         }
@@ -115,15 +123,22 @@ public class CoursesController : Controller
         {
             try
             {
-                var course = mapper.Map<Course>(courseDto);
+                var module = mapper.Map<Module>(moduleDto);
 
-                unitOfWork.CourseRepoG
-                          .Update(course);
+                var course = await unitOfWork.CourseRepoG.GetAsync(moduleDto.Course.Id);
+                if (course is null)
+                {
+                    return BadRequest();
+                }
+                module.Course = course;
+
+                unitOfWork.ModuleRepoG
+                          .Update(module);
                 await unitOfWork.CompleteAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await CourseExists(courseDto.Id))
+                if (!await ModuleExists(moduleDto.Id))
                 {
                     return NotFound();
                 }
@@ -134,10 +149,10 @@ public class CoursesController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(courseDto);
+        return View(moduleDto);
     }
 
-    // GET: Courses/Delete/5
+    // GET: Modules/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -145,53 +160,42 @@ public class CoursesController : Controller
             return NotFound();
         }
 
-        var course = await unitOfWork.CourseRepoG
+        var module = await unitOfWork.ModuleRepoG
                                      .GetAsync(id.Value);
 
-        if (course == null)
+        if (module == null)
         {
             return NotFound();
         }
 
-        var courseToReturn = mapper.Map<CourseDto>(course);
+        var moduleToReturn = mapper.Map<ModuleDto>(module);
 
-        return View(courseToReturn);
+        return View(moduleToReturn);
     }
 
-    // POST: Courses/Delete/5
+    // POST: Modules/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var course = await unitOfWork.CourseRepoG
+        var module = await unitOfWork.ModuleRepoG
                                      .GetAsync(id);
-        if (course == null)
+        if (module == null)
         {
             return NotFound();
         }
 
-        unitOfWork.CourseRepoG.Delete(course);
+        unitOfWork.ModuleRepoG.Delete(module);
 
-        await unitOfWork.CourseRepoG
+        await unitOfWork.ModuleRepoG
                         .SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));
     }
 
-    private async Task<bool> CourseExists(int id)
+    private async Task<bool> ModuleExists(int id)
     {
-        return await unitOfWork.CourseRepoG
+        return await unitOfWork.ModuleRepoG
                                .ExistAsync(id);
-    }
-
-    //[Produces("application/json")]
-    [HttpGet]
-    public async Task<IActionResult> Search(string term)
-    {
-        var courses = await unitOfWork.CourseRepoG.FindAsync(course => course.Name.Contains(term));
-        var coursesToReturn = mapper.Map<IEnumerable<CourseDto>>(courses);
-
-        return Json(coursesToReturn);
-
     }
 }
