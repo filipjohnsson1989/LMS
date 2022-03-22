@@ -12,7 +12,7 @@ using AutoMapper;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<IRepository<ActivityType>, ActivityTypeRepository>();
-builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -86,7 +86,8 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    //pattern: "{controller=Home}/{action=Index}/{id?}");
+pattern: "{controller=Course}/{action=Student_CourseOverview}/{id?}");
 app.MapRazorPages();
 
 app.Run();

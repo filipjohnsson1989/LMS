@@ -1,38 +1,24 @@
-﻿@model Lms.Core.Entities.Course
+﻿@model IEnumerable<Lms.Core.Models.StudentDocumentViewModel>
 
-<div class="card" style="width:90%">
+<div class="card" >
     <div class="card-header tbr fwcolor">
-        <h1>Document Information</h1>
+        <h1>Documents Information</h1>
     </div>
      <table class="table tbl">
     <thead>
         <tr class="tbr fwcolor">
-            <th class="t1 fwcolor">
-                @Html.DisplayNameFor(model => model.Documents.First().Name)
-            </th>
-            <th class="t1 fwcolor">
-                @Html.DisplayNameFor(model => model.Documents.First().UploadDate)
-            </th>
-            <th class="t1 fwcolor">
-                @Html.DisplayNameFor(model => model.Documents.First().User.Id)
-            </th>
-            <th class="t1 fwcolor">
-                Actions
-            </th>
+            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Name)</th>
+            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.UploadDate)</th>
+            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.UserId)</th>
+            <th class="t1 fwcolor">Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Documents) {
+@foreach (var item in Model) {
         <tr class="tbr fwcolor">
-            <td class="t1 fwcolor">
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td class="t1 fwcolor">
-                @Html.DisplayFor(modelItem => item.UploadDate)
-            </td>
-            <td class="t1 fwcolor">
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
+            <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Name)</td>
+            <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.UploadDate)</td>
+            <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.UserId)</td>
             <td class="t1 fwcolor">
                 <a class="btn bbcolor fwcolor" asp-action="Edit" asp-route-id="@item.Id">Open</a> 
                 <a class="btn bbcolor fwcolor" asp-action="Details" asp-route-id="@item.Id">Download</a> 

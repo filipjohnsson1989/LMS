@@ -49,6 +49,17 @@ body {
     background-color: black;
 }
 
+.tbtr:nth-child(even) {
+    background-color: grey;
+}
+
+.tbtr:nth-child(odd) {
+    background-color: #16637C;
+}
+
 .bbcolor {
     background-color: #623D2F;
+}
+.bbgcolor {
+    background-color: #484948;
 }

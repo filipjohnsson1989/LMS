@@ -30,7 +30,24 @@ namespace Lms.Data.Repositories
 
         public async Task DeleteCourse(int id)
         {
-            var course = await db.Courses.FirstOrDefaultAsync(c => c.Id == id);
+            var course = await db.Courses
+                        .Include(m=>m.Modules)
+                        .Include(d=>d.Documents)
+                        .ThenInclude(a=>a.Activity)
+                        .ThenInclude(a=>a.ActivityType)
+                       .FirstOrDefaultAsync(c => c.Id == id);
+
+            foreach (var module in course.Modules)
+            {
+                db.Remove(module);
+            }
+            foreach (var document in course.Documents)
+            {
+                db.Remove(document.Activity);
+                db.Remove(document.Activity.ActivityType);
+                db.Remove(document);
+            }
+            
             if (course == null)
             {
                 throw new NullReferenceException(nameof(course));
@@ -50,6 +67,7 @@ namespace Lms.Data.Repositories
                 .Include(m =>m.Modules)
                     .ThenInclude(a=>a.Documents)
                 .Include(m => m.Documents)
+                    .ThenInclude(u=>u.User)
                 .Include(u=>u.Users)
                 //.Include(m => m.Users)
                 //    .ThenInclude(u => u.Documents)
@@ -67,6 +85,7 @@ namespace Lms.Data.Repositories
                 .Include(m => m.Modules)
                     .ThenInclude(a => a.Documents)
                 .Include(m => m.Documents)
+                    .ThenInclude(u=>u.User)
                 .Include(u=>u.Users)
                 .FirstOrDefaultAsync(c => c.Id == id);
                 
@@ -77,9 +96,13 @@ namespace Lms.Data.Repositories
                 //    .ThenInclude(u => u.Documents)
                 return course;
         }
+
+      
+       
         public async Task<IEnumerable<Course>> GetAllCourses()
         {
-            return await db.Courses.ToListAsync();
+            return await db.Courses.Take(10)
+                .ToListAsync();
         }
 
         public async Task<Course> GetCourseById(int id)

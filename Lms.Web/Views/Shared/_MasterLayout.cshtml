@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,6 +10,8 @@
     <link rel="stylesheet" href="~/Lms.Web.styles.css" asp-append-version="true" />
 </head>
 <body>
+    @inject Lms.Core.Interfaces.IUnitOfWork service
+    
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow mb-3">
             <div class="container">
@@ -17,6 +20,19 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <a class="nav-link fwcolor" asp-controller="Course" asp-action="Student_CourseOverview" >Student Course Overview</a>
+                
+                @*<form asp-controller="Course" asp-action="TestAction">
+                    <select  class="form-control" name="test"  @*asp-items="@await service.courseSelector.GetSelectList()"*@>
+                         <option selected="selected" value="">Select Course</option>
+                    </select>
+                    <button type="submit" class="btn">Test</button>
+                </form>*@
+
+                <select  class="form-select" asp-items="@await service.courseSelector.GetSelectList()">
+                    <option selected="selected" value="">Select Course</option>
+                </select>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                     </ul>
