@@ -1,16 +1,16 @@
 ﻿.divider {
     margin: 2rem;
 }
-.hidden
-{
+
+.hidden {
     display: none !important;
 }
 
 .sidenav {
     color: white;
-    height: 95%;
+    height: 100%;
     position: fixed;
-    width: 12rem;
+    width: 15%;
     z-index: 1;
     top: 3.7rem;
     left: 0;
@@ -22,7 +22,7 @@
     transition: 0.5s;
     padding-left: 0;
     margin-bottom: 1rem;
-    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+   /* box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);*/
 }
 
 li {
@@ -30,6 +30,9 @@ li {
 }
 
 .card {
+    position: relative;
+    left: 22%;
+    width: 90%;
     background: linear-gradient(#6D6D6D, #373737) !important;
     background-image: none;
     color: white;
@@ -52,8 +55,7 @@ li {
 .mainBody {
     margin-top: 50px !important;
     margin: 1rem;
-    margin-left: 12rem;
-    width: 600px;
+    margin-left: 1rem;
 }
 
 .btn-primary:hover {
@@ -69,20 +71,120 @@ li {
     align-content: center;
     text-align: center;
     width: 8rem !important;
-   /* flex:content;*/
+    /* flex:content;*/
 }
 
 .btn-dark {
     background-color: #56433C;
     width: 98%;
-    font-size: 10px;
+    font-size: 12px;
     margin: 1px;
     margin-right: 1rem;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
 .docs {
-    background: linear-gradient(#ffff, #ffff) !important;
+    background: grey;
     color: black !important;
     font-size: 0.8rem;
+    border-style: inset;
+    border-color: grey;
+    
 }
+    .docs li {
+        margin: 1rem;
+        color: white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin-left: 1rem;
+        font-weight: 700 !important;
+    }
+
+.weeks-card {
+    position: fixed;
+    right: 20px;
+    top: 100px;
+    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+    border-style: outset;
+    border-radius: 5px;
+    border-color: grey;
+    margin-top: 2rem !important;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-size: auto;
+    margin: 0.5rem;
+    background: linear-gradient(#6D6D6D, #373737) !important;
+    color: white;
+    height: fit-content;
+    width: 12%;
+}
+
+.btn-success {
+    position: relative;
+    right: 1.5rem;
+    background-color: #56433C;
+    color: white;
+    width:fit-content;
+    margin-top: 0.3rem;
+    border-block: none;
+    border-block-start: none;
+    border-inline: none;
+    /*width: 100% !important;*/
+}
+
+    .btn-success:hover {
+        background-color: #724C3E !important;
+        color: white;
+    }
+
+.sorting {
+    background: linear-gradient(#6D6D6D, #373737) !important;
+    width: 64.5%;
+    height: 55px !important;
+    position: relative;
+    left: 18% !important;
+    border-style:outset;
+    border-radius: 5px;
+    border-color: grey;
+    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+    
+}
+    .btn-warning:hover {
+        background-color: #724C3E !important;
+        color: white;
+    }
+.btn-warning {
+    /*border-style: outset !important;
+    border-radius: 5px !important;
+    border-color: #56433C !important;*/
+    background-color: #56433C;
+    color: white;
+    width: 9rem;
+    margin-right: 1rem;
+    margin-top: 0.3rem;
+    border-block: none;
+    border-block-start: none;
+    border-inline: none;
+    float: left;
+}
+.activityType {
+    font-size: 1.2rem;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+.deleteDoc {
+    position: absolute;
+    left: 87%;
+    bottom: 23%;
+    background: linear-gradient(red, red);
+    width: 2rem;
+    height: 1.6rem;
+    text-align: center;
+    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+}
+    .deleteDoc:hover {
+        background: linear-gradient(red, red) !important;
+    }
+
 
