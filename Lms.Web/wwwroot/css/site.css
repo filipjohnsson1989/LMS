@@ -1,10 +1,10 @@
 html {
-  font-size: 14px;
+   font-size: 14px; 
 }
 
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+     font-size: 16px; 
   }
 }
 
@@ -16,36 +16,46 @@ html {
 body {
   margin-bottom: 60px;
 }
-.bdgcolor{
-    background-color:#484948;
-    
+.nav-pills {
+    background:grey !important
 }
-.fwcolor {
-    color: white;
+.nav-link {
+    color: white !important;
 }
-.bgcolor{
-    background-color:gray;
-}
-
-.tbl {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
+.navbar {
+    background: linear-gradient(#16637C, #305763) !important;
+    height: 4rem;
+    z-index: 2;
+    position: fixed;
     width: 100%;
+    border-block-end: none;
+    border-block-color: none;
+    border-block: none;
+    margin-bottom: 1rem;
+    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.5) !important;
+}
+.logo {
+    height: 60px;
 }
 
-.t1 {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
+
+::-webkit-scrollbar {
+    width: 10px;
 }
 
-.tbr:nth-child(even) {
-    background-color: grey;
-}
-.tbr:nth-child(odd) {
-    background-color: black;
+
+::-webkit-scrollbar-track {
+    background: #484948;
 }
 
-.bbcolor {
-    background-color: #623D2F;
+
+::-webkit-scrollbar-thumb {
+    background: #888;
 }
+
+      
+::-webkit-scrollbar-thumb:hover {
+        background: #555;
+}
+
+

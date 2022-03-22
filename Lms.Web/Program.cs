@@ -1,6 +1,7 @@
 ﻿using Lms.Core.Entities;
 using Lms.Data;
 using Lms.Data.Data;
+using Lms.Web.Conventions;
 using Lms.Data.Repositories;
 using Lms.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,9 @@ using Lms.Data.MapperProfile;
 using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddTransient<IRepository<ActivityType>, ActivityTypeRepository>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -20,6 +24,12 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.Add(new GlobalTemplatePageRouteModelConvention());
+
+});
 
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -76,7 +86,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Course}/{action=Student_CourseOverView}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

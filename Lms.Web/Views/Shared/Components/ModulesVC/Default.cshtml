@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Module>
+    <div class="col">
+        <h2>Modules</h2>
+                @foreach (var item in Model)
+                {
+                        <a class="btn btn-dark navButton" asp-page="/Activities" asp-route-id="@item.Id">&#x1F6C8 @Html.DisplayFor(model => item.Name)</a>
+                }
+    </div>
+    <hr class="divider" />

@@ -12,10 +12,10 @@ namespace Lms.Data.Repositories
 {
     public class CourseRepository : ICourseRepository
     {
-        private ApplicationDbContext db;
+        private readonly ApplicationDbContext db;
         public CourseRepository(ApplicationDbContext db)
         {
-            this.db = db ?? throw new ArgumentNullException(nameof(db));
+            this.db = db ?? throw new NullReferenceException(nameof(db));
         }
         public async Task AddCourse(Course course)
         {
@@ -33,7 +33,7 @@ namespace Lms.Data.Repositories
             var course = await db.Courses.FirstOrDefaultAsync(c => c.Id == id);
             if (course == null)
             {
-                throw new ArgumentNullException(nameof(course));
+                throw new NullReferenceException(nameof(course));
             }
             db.Courses.Remove(course);
 
@@ -87,7 +87,7 @@ namespace Lms.Data.Repositories
             var course = await db.Courses.FirstOrDefaultAsync(c => c.Id == id);
             if (course == null)
             {
-                throw new ArgumentNullException(nameof(course));
+                throw new NullReferenceException(nameof(course));
             }
             return (course);
         }
@@ -100,7 +100,7 @@ namespace Lms.Data.Repositories
 
             if (course == null)
             {
-                throw new ArgumentNullException(nameof(course));
+                throw new NullReferenceException(nameof(course));
             }
             if (sortOrder == "asc")
             {
