@@ -9,11 +9,13 @@ namespace Lms.Core.Interfaces
 {
      public interface ICourseRepository
     {
+        
         Task AddCourse(Course course);
         void UpdateCourse(Course course);
         Task DeleteCourse(int id);
         bool CourseExists(int id);
         Task<Course> GetCourseById(int id);
+        Task<Course> GetAllbyId(int id);
         Task<IEnumerable<Course>> GetAll();
         Task<IEnumerable<Course>> GetAllCourses();
 

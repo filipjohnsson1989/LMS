@@ -1,5 +1,4 @@
 ﻿using Lms.Core.Entities;
-
 namespace Lms.Core.Interfaces;
 
 public interface IUnitOfWork
@@ -10,4 +9,5 @@ public interface IUnitOfWork
     IRepository<ActivityType> ActivityTypeRepo { get;}
     IDocumentRepository documentRepo { get;}
     Task CompleteAsync();
+    ICourseSelector courseSelector { get; }
 }

@@ -12,6 +12,7 @@ namespace Lms.Data.Data
         public DbSet<ActivityType> ActivityTypes => Set<ActivityType>();
         public DbSet<Activity> Activities => Set<Activity>();
         public DbSet<Document> Documents => Set<Document>();
+        public DbSet<ApplicationUser> AppUsers => Set<ApplicationUser>();
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
