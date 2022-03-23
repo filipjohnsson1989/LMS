@@ -23,8 +23,4 @@
     <ProjectReference Include="..\Lms.Core\Lms.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MapperProfile\" />
-  </ItemGroup>
-
 </Project>

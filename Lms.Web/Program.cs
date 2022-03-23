@@ -6,16 +6,8 @@ using Lms.Data.Repositories;
 using Lms.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using Lms.Data.AutoMapper;
-using AutoMapper;
-using Lms.Data.AutoMapper;
->>>>>>>>> Temporary merge branch 2
-
 using Microsoft.Extensions.DependencyInjection;
 using Lms.Data.AutoMapper;
->>>>>>>>> Temporary merge branch 2
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<IRepository<Course>, CourseRepositoryG>();
@@ -32,23 +24,23 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddRazorPages(options =>
 {
-<<<<<<<<< Temporary merge branch 1
+    options.Conventions.Add(new GlobalTemplatePageRouteModelConvention());
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 });
 
-<<<<<<<<< Temporary merge branch 1
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddAutoMapper(typeof(LMSMappings));
-   
+
 
 builder.Services.AddAutoMapper(typeof(CourseProfile));
+builder.Services.AddAutoMapper(typeof(ModuleProfile));
+
 
 
 var app = builder.Build();
