@@ -82,8 +82,8 @@ public class CourseRepository : ICourseRepository
             .FirstOrDefaultAsync(c => c.Id == id);
             
 
-        if(course==null)
-            throw new ArgumentException(nameof(course));
+        //if(course==null)
+        //    throw new ArgumentException(nameof(course));
             //.Include(m => m.Users)
             //    .ThenInclude(u => u.Documents)
             return course;

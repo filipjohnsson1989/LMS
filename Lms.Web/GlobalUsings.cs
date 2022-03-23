@@ -6,3 +6,4 @@ global using Lms.Data.Repositories;
 global using Lms.Core.Interfaces;
 global using Lms.Data;
 global using Lms.Core.ViewModels;
+global using Lms.Web.Services;

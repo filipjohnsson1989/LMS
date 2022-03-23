@@ -23,6 +23,15 @@ public class CoursesController : Controller
         this.mapper = mapper;
     }
 
+    // Dynamic course id
+    public string TrackedCourseId(int id)
+    {
+        service.course_id = id;
+
+        return null;
+
+    }
+
     // GET: Courses
     public async Task<IActionResult> Index()
     {
@@ -198,37 +207,33 @@ public class CoursesController : Controller
     }
 
 
-
-
-
-
-
-    [Authorize(Roles = "Student")]
+    //[Authorize(Roles = "Student")]
     public async Task<IActionResult> Student_CourseOverview()
     {
         var user = await userManager.GetUserAsync(User);
 
-        var course = await unitOfWork.courseRepo.GetAllbyId((int)user.CourseId);
+        //var course = await unitOfWork.courseRepo.GetAllbyId((int)user.CourseId);
+        var course = await unitOfWork.courseRepo.GetAllbyId(service.course_id);
 
         return View(mapper.Map<CourseOverViewModel>(course));
     }
 
-    [Authorize(Roles = "Student")]
-    public async Task<IActionResult> LoadModulePartial(int id)
+    //[Authorize(Roles = "Student")]
+    public async Task<IActionResult> LoadModulePartial()
     {
-        var course = await unitOfWork.courseRepo.GetAllbyId(id);
+        var course = await unitOfWork.courseRepo.GetAllbyId(service.course_id);
         return PartialView("_ModuleView", course);
     }
-    [Authorize(Roles = "Student")]
-    public async Task<IActionResult> LoadStudentPartial(int id)
+    //[Authorize(Roles = "Student")]
+    public async Task<IActionResult> LoadStudentPartial()
     {
-        var course = await unitOfWork.courseRepo.GetAllbyId(id);
+        var course = await unitOfWork.courseRepo.GetAllbyId(service.course_id);
         return PartialView("_StudentView", course);
     }
-    [Authorize(Roles = "Student")]
-    public async Task<IActionResult> LoadDocumentsPartial(int id)
+    //[Authorize(Roles = "Student")]
+    public async Task<IActionResult> LoadDocumentsPartial()
     {
-        var course = await unitOfWork.courseRepo.GetAllbyId(id);
+        var course = await unitOfWork.courseRepo.GetAllbyId(service.course_id);
         
 
         return PartialView("_DocumentView", course);

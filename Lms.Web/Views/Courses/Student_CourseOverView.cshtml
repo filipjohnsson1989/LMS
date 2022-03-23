@@ -31,17 +31,17 @@
                     @Html.DisplayFor(model=>model.Description )
                 </div>
                 <div class="card-footer bdgcolor ">
-                    <a id="documents"  class="card-link fwcolor " asp-action="LoadDocumentsPartial" asp-route-id="@Model.Id"
+                    <a id="documents"  class="card-link fwcolor " asp-action="LoadDocumentsPartial" 
                             data-ajax="true"
                             data-ajax-update="#partial"
                             data-ajax-mode="replace"
                     >Files</a>
-                    <a id="modules"  class="card-link fwcolor" asp-action="LoadModulePartial" asp-route-id="@Model.Id"
+                    <a id="modules"  class="card-link fwcolor" asp-action="LoadModulePartial" 
                             data-ajax="true"
                             data-ajax-update="#partial"
                             data-ajax-mode="replace"
                             >Modules</a>
-                    <a id="students" class="card-link fwcolor" asp-action="LoadStudentPartial" asp-route-id="@Model.Id"
+                    <a id="students" class="card-link fwcolor" asp-action="LoadStudentPartial" 
                             data-ajax="true"
                             data-ajax-update="#partial"
                             data-ajax-mode="replace">Students</a>
