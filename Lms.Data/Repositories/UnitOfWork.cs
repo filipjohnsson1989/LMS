@@ -15,8 +15,6 @@ public class UnitOfWork : IUnitOfWork
             {
                 this.activityTypeRepo = new ActivityTypeRepository(this.context);
             }
-                }
-                }
 
             return activityTypeRepo;
         }
@@ -51,6 +49,7 @@ public class UnitOfWork : IUnitOfWork
     }
     public IDocumentRepository documentRepo { get; set; }
 
+    public ApplicationDbContext context;
 
     public UnitOfWork(ApplicationDbContext context)
     {
@@ -60,9 +59,6 @@ public class UnitOfWork : IUnitOfWork
         activityRepo = new ActivityRepository(this.context);
         documentRepo = new DocumentRepository(this.context);
     }
-            courseSelector = new CourseSelector(this.context);
-        }
-        }
 
 
     public async Task CompleteAsync()
