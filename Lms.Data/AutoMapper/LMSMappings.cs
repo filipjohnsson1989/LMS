@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lms.Data.MapperProfile
+namespace Lms.Data.AutoMapper
 {
     public class LMSMappings : Profile
     {
@@ -18,8 +18,8 @@ namespace Lms.Data.MapperProfile
                 dest => dest.ModuleCount,
                 opt => opt.MapFrom(src => src.Modules.Count));
 
-          //  CreateMap<Course, StudentDocumentViewModel>().ReverseMap();
-            CreateMap<Course,EditCourseModel>().ReverseMap();
+            //  CreateMap<Course, StudentDocumentViewModel>().ReverseMap();
+            CreateMap<Course, EditCourseModel>().ReverseMap();
         }
     }
 }
