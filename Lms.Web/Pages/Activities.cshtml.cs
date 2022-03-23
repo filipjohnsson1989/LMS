@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 #nullable disable
 
-namespace Lms.Web.Pages.Module;
+namespace Lms.Web.Pages;
 
 public class ActivitiesModel : PageModel
 {
@@ -52,7 +52,7 @@ public class ActivitiesModel : PageModel
 
 
 
-        if (!String.IsNullOrEmpty(searchString))
+        if (!string.IsNullOrEmpty(searchString))
         {
             Activities = Activities.Where(s => myCal.GetWeekOfYear(s.EndDate, CalendarWeekRule.FirstDay, DayOfWeek.Monday) == int.Parse(CurrentFilter)).ToList();
         }
