@@ -18,7 +18,7 @@ namespace Lms.Data.MapperProfile
                 dest => dest.ModuleCount,
                 opt => opt.MapFrom(src => src.Modules.Count));
 
-            CreateMap<Document, StudentDocumentViewModel>().ReverseMap();
+          //  CreateMap<Course, StudentDocumentViewModel>().ReverseMap();
             CreateMap<Course,EditCourseModel>().ReverseMap();
         }
     }

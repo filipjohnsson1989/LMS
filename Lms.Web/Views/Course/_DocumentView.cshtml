@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Lms.Core.Models.StudentDocumentViewModel>
+﻿@model Lms.Core.Entities.Course
 
 <div class="card" >
     <div class="card-header tbr fwcolor">
@@ -7,24 +7,24 @@
      <table class="table tbl">
     <thead>
         <tr class="tbr fwcolor">
-            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Name)</th>
-            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.UploadDate)</th>
-            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.UserId)</th>
-            <th class="t1 fwcolor">Actions</th>
+            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Documents.First().Name)</th>
+            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Documents.First().UploadDate)</th>
+            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Documents.First().ContentType)</th>
+            @*<th class="t1 fwcolor">Actions</th>*@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Documents) {
         <tr class="tbr fwcolor">
             <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Name)</td>
             <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.UploadDate)</td>
-            <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.UserId)</td>
-            <td class="t1 fwcolor">
+            <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.ContentType)</td>
+            @*<td class="t1 fwcolor">
                 <form asp-action=""> 
                     <a class="btn bbcolor fwcolor" asp-controller = "ActivityTypes" asp-action="Download" asp-route-id="@item.Id">Download</a> 
                     <input type="submit" value="Delete" class="btn btn-danger" asp-action="DeleteDocument" asp-route-id="@item.Id" />
                 </form>
-            </td>
+            </td>*@
         </tr>
 }
     </tbody>
