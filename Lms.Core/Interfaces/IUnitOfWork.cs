@@ -9,5 +9,4 @@ public interface IUnitOfWork
     IRepository<ActivityType> ActivityTypeRepo { get;}
     IDocumentRepository documentRepo { get;}
     Task CompleteAsync();
-    ICourseSelector courseSelector { get; }
 }
