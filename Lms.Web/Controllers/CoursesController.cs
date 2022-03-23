@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Lms.Core.ViewModels.Courses;
 using Microsoft.AspNetCore.Authorization;
+#nullable disable
 
 namespace Lms.Web.Controllers;
 
@@ -228,10 +229,7 @@ public class CoursesController : Controller
     public async Task<IActionResult> LoadDocumentsPartial(int id)
     {
         var course = await unitOfWork.courseRepo.GetAllbyId(id);
-        var user = userManager.GetUserId(User);
-        //var document =  unitOfWork.documentRepo.GetDocumentBy_UserId(user);
-        //var doc = mapper.Map<StudentDocumentViewModel>(document);
-        // var doc = mapper.Map<IEnumerable<StudentDocumentViewModel>>(course);
+        
 
         return PartialView("_DocumentView", course);
     }
