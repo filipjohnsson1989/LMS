@@ -1,6 +1,6 @@
 ﻿using Lms.Core.Entities;
 
-namespace Lms.Web.Models
+namespace Lms.Core.ViewModels
 {
     public class UpDownLoadCombinedTestViewModel
     {

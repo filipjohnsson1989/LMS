@@ -16,7 +16,6 @@ namespace Lms.Data.Repositories
         public IActivityRepository activityRepo { get; set; }
 
         private IRepository<ActivityType> activityTypeRepo = default!;
-         public ICourseSelector courseSelector { get; set; }
         public IRepository<ActivityType> ActivityTypeRepo
         {
             get
@@ -69,7 +68,6 @@ namespace Lms.Data.Repositories
             moduleRepo = new ModuleRepository(this.context);
             activityRepo = new ActivityRepository(this.context);
             documentRepo = new DocumentRepository(this.context);
-            courseSelector = new CourseSelector(this.context);
         }
 
 

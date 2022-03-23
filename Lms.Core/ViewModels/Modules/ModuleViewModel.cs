@@ -1,9 +1,9 @@
-﻿using Lms.Core.Dtos.Course;
+﻿using Lms.Core.ViewModels.Courses;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lms.Core.Dtos.Module;
+namespace Lms.Core.ViewModels.Modules;
 
-public class ModuleDto
+public class ModuleViewModel
 {
     public int Id { get; set; }
     public string Name { get; set; } = default!;

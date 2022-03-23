@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Lms.Core.Entities;
-using Lms.Web.Models;
+using Lms.Core.ViewModels;
 using Lms.Data.Repositories;
 using Lms.Core.Interfaces;
 

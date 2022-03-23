@@ -1,5 +1,4 @@
-﻿using Lms.Web.Models;
-using Lms.Web.Models.ViewModels;
+﻿using Lms.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

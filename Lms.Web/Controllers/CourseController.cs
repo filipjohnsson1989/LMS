@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Lms.Core.Entities;
 using Lms.Core.Interfaces;
-using Lms.Core.Models;
+using Lms.Core.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -33,14 +33,7 @@ namespace Lms.Web.Controllers
 
             return View(mapper.Map<CourseOverViewModel>(course));
         }
-        [Authorize(Roles = "Teacher")]
-        public async Task<IActionResult> Teacher_CourseOverview()
-        {
-
-            var course = await uow.courseRepo.GetAllCourses();
-
-            return View(course);
-        }
+        
         public IActionResult Index()
         {
             return View();
@@ -68,11 +61,6 @@ namespace Lms.Web.Controllers
 
             return PartialView("_DocumentView", course);
         }
-        
-       
-   
-
-      
 
         [HttpPost, ActionName("DeleteDocument")]
         [ValidateAntiForgeryToken]

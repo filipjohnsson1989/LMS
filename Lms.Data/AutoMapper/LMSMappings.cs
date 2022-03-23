@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Lms.Core.Entities;
-using Lms.Core.Models;
+using Lms.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +18,6 @@ namespace Lms.Data.AutoMapper
                 dest => dest.ModuleCount,
                 opt => opt.MapFrom(src => src.Modules.Count));
 
-            //  CreateMap<Course, StudentDocumentViewModel>().ReverseMap();
-            CreateMap<Course, EditCourseModel>().ReverseMap();
         }
     }
 }
