@@ -14,6 +14,7 @@ namespace Lms.Core.Interfaces
         Task DeleteDocument(int id);
         bool DocumentExists(int id);
         Task<Document> GetDocumentById(int id);
+        IEnumerable<Document> GetDocumentBy_UserId(string id);
         Task<IEnumerable<Document>> GetAllDocuments();
     }
 }

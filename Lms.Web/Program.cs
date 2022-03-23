@@ -2,17 +2,20 @@
 using Lms.Data;
 using Lms.Data.Data;
 using Lms.Web.Conventions;
+using Lms.Data.Repositories;
+using Lms.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Lms.Data.MapperProfile;
+using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
-using Lms.Data.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<IRepository<Course>, CourseRepositoryG>();
 builder.Services.AddTransient<IRepository<Module>, ModuleRepositoryG>();
 builder.Services.AddTransient<IRepository<ActivityType>, ActivityTypeRepository>();
-builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -30,6 +33,10 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.Add(new GlobalTemplatePageRouteModelConvention());
 
 });
+
+
+builder.Services.AddAutoMapper(typeof(LMSMappings));
+   
 
 builder.Services.AddAutoMapper(typeof(CourseProfile));
 
@@ -58,6 +65,7 @@ using (var scope = app.Services.CreateScope())
         throw;
     }
 
+
 }
 
 // Configure the HTTP request pipeline.
@@ -82,7 +90,8 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    //pattern: "{controller=Home}/{action=Index}/{id?}");
+pattern: "{controller=Course}/{action=Student_CourseOverview}/{id?}");
 app.MapRazorPages();
 
 app.Run();

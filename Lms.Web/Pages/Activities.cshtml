@@ -9,101 +9,108 @@
 
 <div class="container">
     <div class="row">
-            <ul id="activities" class="col-9">
-                <li>
-                    <a asp-route-sortOrder="@Model.DateSort">
-                        Sort By Date
-                    </a>
-                </li>
-                <li>
-                    <a asp-route-sortOrder="@Model.NameSort">
-                        Sort By Name
-                    </a>
-                </li>
+        <ul class="sorting">
+            <li>
+                <a asp-route-sortOrder="@Model.DateSort" class="btn btn-warning" data-toggle="button" aria-pressed="false">
+                    Sort By Date
+                </a>
+            </li>
+            <li>
+                <a asp-route-sortOrder="@Model.NameSort" class="btn btn-warning" data-toggle="button" aria-pressed="false">
+                    Sort By Name
+                </a>
+            </li>
+        </ul>
+        <ul id="activities" class="col-9">
 
 
 
 
-                @{
-                    var i = 1;
-                    foreach (var activity in Model.Activities)
+
+
+            @{
+                var i = 1;
+                foreach (var activity in Model.Activities)
+                {
+                    i = activity.Id;
+                    var activityId = $"activity{i}";
+
+
+                    if (activity.EndDate.CompareTo(DateTime.Now) > 0)
                     {
-                        i = activity.Id;
-                        var activityId = $"activity{i}";
+                        var due = activity.EndDate - DateTime.Now;
+                        string startDate = $"{activity.StartDate.ToShortDateString()}, {activity.StartDate.ToShortTimeString()}";
+                        string endDate = $"{activity.EndDate.ToShortDateString()}, {activity.EndDate.ToShortTimeString()}";
+                        string dueTime = $"{@due.Days} day(s), {@due.Hours}h & {@due.Minutes}m";
 
-
-                        if (activity.EndDate.CompareTo(DateTime.Now) > 0)
+                        if (activity.ActivityType.Id == 2)
                         {
-                            var due = activity.EndDate - DateTime.Now;
-                            string startDate = $"{activity.StartDate.ToShortDateString()}, {activity.StartDate.ToShortTimeString()}";
-                            string endDate = $"{activity.EndDate.ToShortDateString()}, {activity.EndDate.ToShortTimeString()}";
-                            string dueTime = $"{@due.Days} day(s), {@due.Hours}h & {@due.Minutes}m";
+                            //Assignment
+                            <li class="card card-assignment p-1" id="@activityId">
+                                <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
+                                <p class="activityType"><strong>@Html.DisplayFor(model => activity.ActivityType.Name)</strong></p>
+                                <p class="card-header"><strong>Starts:</strong> @startDate</p>
+                                <p class="card-header"><strong>Ends:</strong> @endDate </p>
+                                <div class="card-header"><strong>Due in: </strong>@dueTime</div>
+                                <div class="card-body row">
+                                    <span class="btn btn-primary infoButton col-3">Expand &#8595</span>
 
-                           if (activity.ActivityType.Id == 2)
-                    {
-                        //Assignment
-                        <li class="card card-assignment p-1" id="@activityId">
-                            <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
-                            <p class="card-header"><strong>Starts:</strong> @startDate</p>
-                            <p class="card-header"><strong>Ends:</strong> @endDate </p>
-                            <div class="card-header"><strong>Due in: </strong>@dueTime</div>
-                            <div class="card-body row">
-                                <span class="btn btn-primary infoButton col-3">Expand &#8595</span>
-                                
-                            </div>
+                                </div>
 
-                            <div class="card-footer container hidden">
-                                <strong>About:</strong> @activity.Description
-                                <hr>
-                                   <div class="documents">
-                                      <strong>Documents:</strong>         <div class="btn btn-primary uploadBtn  col-3">
-                                      TestUploadBtn
-                                      </div>
-                                    <ul class="list-group docs">
-                                    @foreach(var doc in activity.Documents)
-                                    {
-                                        <li>
-                                        <p>Name: @doc.Name</p>
-                                        <p>Type:  @doc.ContentType</p>
-                                        <p>Upload Time: @doc.UploadDate</p>
-                                        <span>&#x2717</span>
-                                        
-                                        </li>
+                                <div class="card-footer container hidden">
+                                    <strong>About:</strong> @activity.Description
+                                    <hr>
+                                    <div class="documents">
+                                        <strong>Documents:</strong>         <div class="btn btn-primary uploadBtn  col-3">
+                                            TestUploadBtn
+                                        </div>
+                                        <ul class="list-group docs">
+                                            @foreach (var doc in activity.Documents)
+                                            {
+                                                <li>
+                                                    <p>Name: @doc.Name</p>
+                                                    <hr>
+                                                    <p>Type:  @doc.ContentType</p>
+                                                    <p>Upload Time: @doc.UploadDate</p>
+                                                    <span class="deleteDoc">&#x2717</span>
 
-                                    }
-                                    </ul>
-                                    
-                           </div>
-                           </div>
-                        </li>
-                        
+                                                </li>
 
-                    }
-                           else
-                    {
-                        //not assignment
-                        <li class="card p-1" id="@activityId">
-                            <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
-                            <p class="card-header"><strong>Starts:</strong> @startDate</p>
-                            <p class="card-header"><strong>Ends:</strong> @endDate </p>
-                            <div class="card-body col"><span class="btn btn-primary infoButton col-6">Expand &#8595</span></div>
-                            <div class="card-footer hidden">
-                                <strong>About:</strong> @activity.Description
-                            </div>
-                        </li>
-                    }
+                                            }
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+                        }
+                        else
+                        {
+                            //not assignment
+                            <li class="card p-1" id="@activityId">
+                                <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
+                                <p class="activityType"><strong>@Html.DisplayFor(model => activity.ActivityType.Name)</strong></p>
+                                <p class="card-header"><strong>Starts:</strong> @startDate</p>
+                                <p class="card-header"><strong>Ends:</strong> @endDate </p>
+                                <div class="card-body col"><span class="btn btn-primary infoButton col-6">Expand &#8595</span></div>
+                                <div class="card-footer hidden">
+                                    <strong>About:</strong> @activity.Description
+                                </div>
+                            </li>
                         }
                     }
                 }
-            </ul>
-        <div class="col">
+            }
+        </ul>
+        <div class="col weeks-card">
             <ul id="weeks">
 
                 @{
                     foreach (var item in Model.Weeks)
                     {
-                        <li>
-                            <a asp-route-searchString="@item">
+                        <li class="">
+                            <a asp-route-searchString="@item" class="btn btn-success">
                                 Week: @item
                             </a>
                         </li>
@@ -112,8 +119,8 @@
             </ul>
         </div>
     </div>
- </div>
-                    
+</div>
+
 
 <script src="/js/ActivitySite.js"></script>
 

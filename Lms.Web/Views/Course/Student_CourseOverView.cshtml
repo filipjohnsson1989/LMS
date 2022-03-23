@@ -1,0 +1,55 @@
+﻿@model Lms.Core.Models.CourseOverViewModel
+
+@{
+    Layout = "_Layout.cshtml";
+}
+<br /> <br /><br /> <br />
+<div class="container" >
+<div class="card">
+
+                <div class="card-header bdgcolor fwcolor ">
+                   <div class=" h2 text-center">Course Overview</div>
+                   <div class="row">
+                    <div class="col-sm-8">
+                    <span class="h5">@Html.DisplayNameFor(model=>model.Name) :</span>
+                    @Html.DisplayFor(model=>model.Name )
+                    </div>
+                    <div class="col-sm-4" style="text-align:right">
+                    <span class="h5">@Html.DisplayNameFor(model=>model.Modules) :</span>
+                    @Html.DisplayFor(model=>model.ModuleCount ) 
+                    </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-sm-12" style="text-align:right">
+                    <span class="h5">@Html.DisplayNameFor(model=>model.StartDate) :</span>
+                    @Html.DisplayFor(model=>model.StartDate )
+                    </div>
+                   </div>
+                </div>
+
+                <div class="card-body bgcolor fwcolor">
+                    @Html.DisplayFor(model=>model.Description )
+                </div>
+                <div class="card-footer bdgcolor ">
+                    <a id="documents"  class="card-link fwcolor " asp-action="LoadDocumentsPartial" asp-route-id="@Model.Id"
+                            data-ajax="true"
+                            data-ajax-update="#partial"
+                            data-ajax-mode="replace"
+                    >Files</a>
+                    <a id="modules"  class="card-link fwcolor" asp-action="LoadModulePartial" asp-route-id="@Model.Id"
+                            data-ajax="true"
+                            data-ajax-update="#partial"
+                            data-ajax-mode="replace"
+                            >Modules</a>
+                    <a id="students" class="card-link fwcolor" asp-action="LoadStudentPartial" asp-route-id="@Model.Id"
+                            data-ajax="true"
+                            data-ajax-update="#partial"
+                            data-ajax-mode="replace">Students</a>
+                </div>
+            
+ </div>
+    
+
+ <div id="partial">
+    </div>
+ </div>

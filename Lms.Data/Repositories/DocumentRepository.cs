@@ -53,5 +53,18 @@ namespace Lms.Data.Repositories
             }
             return document;
         }
+
+        public  IEnumerable<Document> GetDocumentBy_UserId(string id)
+        {
+           var document =  db.Documents
+                                .Include(u=>u.User)
+                                .Where(d=>d.User.Id == id)
+                                 .ToList();
+            if (document == null)
+            {
+                throw new ArgumentNullException(nameof(document));
+            }
+            return document;
+        }
     }
 }
