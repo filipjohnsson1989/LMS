@@ -23,11 +23,15 @@ public class GenericRepository<T> : IRepository<T> where T : class
                       .Where(predicate)
                       .ToListAsync();
 
+
     public virtual async Task<T?> GetAsync(int id) => await context.FindAsync<T>(id);
 
+    public virtual IQueryable<T> GetAll()
+        => DbSet.AsQueryable();
+
     public virtual async Task<IEnumerable<T>> GetAllAsync()
-        => await DbSet.AsQueryable()
-                      .ToListAsync();
+        => await this.GetAll()
+                     .ToListAsync();
 
     public virtual async Task SaveChangesAsync() => await context.SaveChangesAsync();
 

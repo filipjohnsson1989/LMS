@@ -60,13 +60,13 @@ namespace Lms.Web.Controllers
         [Authorize(Roles = "Student")]
         public async Task<IActionResult> LoadDocumentsPartial(int id)
         {
-            //var course = await uow.courseRepo.GetAllbyId(id);
+            var course = await uow.courseRepo.GetAllbyId(id);
             var user =userManager.GetUserId(User);
-            var document =  uow.documentRepo.GetDocumentBy_UserId(user);
+            //var document =  uow.documentRepo.GetDocumentBy_UserId(user);
             //var doc = mapper.Map<StudentDocumentViewModel>(document);
-            var doc = mapper.Map<IEnumerable<StudentDocumentViewModel>>(document);
+           // var doc = mapper.Map<IEnumerable<StudentDocumentViewModel>>(course);
 
-            return PartialView("_DocumentView", doc);
+            return PartialView("_DocumentView", course);
         }
         
        

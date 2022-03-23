@@ -1,6 +1,8 @@
-﻿namespace Lms.Core.Entities;
+﻿using Lms.Core.Interfaces;
 
-public class Module
+namespace Lms.Core.Entities;
+
+public class Module : IEntity
 {
     public int Id { get; set; }
     public string Name { get; set; } = default!;
