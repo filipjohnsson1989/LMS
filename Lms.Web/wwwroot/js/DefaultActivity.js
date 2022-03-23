@@ -8,6 +8,6 @@ $(document).ready(start());
 
 function start() {
     if (window.location.pathname == '/')
-        window.location.pathname = '/' + 'Activities' + '/' + id;
+        window.location.pathname = '/' + 'LandingActivities' + '/' + id;
 
 }

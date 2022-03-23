@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MapperProfile\**" />
+    <EmbeddedResource Remove="MapperProfile\**" />
+    <None Remove="MapperProfile\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Bogus" Version="34.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.2" />
@@ -21,10 +27,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Lms.Core\Lms.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="MapperProfile\" />
   </ItemGroup>
 
 </Project>

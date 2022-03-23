@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using Lms.Core.Dtos.Course;
+using Lms.Core.ViewModels.Courses;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Lms.Web.Controllers;
 
@@ -26,7 +27,7 @@ public class CoursesController : Controller
     {
         var courses = await unitOfWork.CourseRepoG
                                     .GetAllAsync();
-        var coursesToReturn = mapper.Map<IEnumerable<CourseDto>>(courses);
+        var coursesToReturn = mapper.Map<IEnumerable<CourseViewModel>>(courses);
         return View(coursesToReturn);
     }
 
@@ -45,7 +46,7 @@ public class CoursesController : Controller
             return NotFound();
         }
 
-        var courseToReturn = mapper.Map<CourseDto>(course);
+        var courseToReturn = mapper.Map<CourseViewModel>(course);
 
         return View(courseToReturn);
     }
@@ -61,11 +62,11 @@ public class CoursesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate")] CourseDto courseDto)
+    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate")] CourseViewModel courseViewModel)
     {
         if (ModelState.IsValid)
         {
-            var course = mapper.Map<Course>(courseDto);
+            var course = mapper.Map<Course>(courseViewModel);
 
             await unitOfWork.CourseRepoG
                             .AddAsync(course);
@@ -74,7 +75,7 @@ public class CoursesController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        var courseToReturn = mapper.Map<CourseDto>(courseDto);
+        var courseToReturn = mapper.Map<CourseViewModel>(courseViewModel);
 
         return View(courseToReturn);
     }
@@ -94,7 +95,7 @@ public class CoursesController : Controller
             return NotFound();
         }
 
-        var courseToReturn = mapper.Map<CourseDto>(course);
+        var courseToReturn = mapper.Map<CourseViewModel>(course);
 
         return View(courseToReturn);
     }
@@ -104,9 +105,9 @@ public class CoursesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate")] CourseDto courseDto)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate")] CourseViewModel courseViewModel)
     {
-        if (id != courseDto.Id)
+        if (id != courseViewModel.Id)
         {
             return NotFound();
         }
@@ -115,7 +116,7 @@ public class CoursesController : Controller
         {
             try
             {
-                var course = mapper.Map<Course>(courseDto);
+                var course = mapper.Map<Course>(courseViewModel);
 
                 unitOfWork.CourseRepoG
                           .Update(course);
@@ -123,7 +124,7 @@ public class CoursesController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await CourseExists(courseDto.Id))
+                if (!await CourseExists(courseViewModel.Id))
                 {
                     return NotFound();
                 }
@@ -134,7 +135,7 @@ public class CoursesController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(courseDto);
+        return View(courseViewModel);
     }
 
     // GET: Courses/Delete/5
@@ -153,7 +154,7 @@ public class CoursesController : Controller
             return NotFound();
         }
 
-        var courseToReturn = mapper.Map<CourseDto>(course);
+        var courseToReturn = mapper.Map<CourseViewModel>(course);
 
         return View(courseToReturn);
     }
@@ -189,9 +190,59 @@ public class CoursesController : Controller
     public async Task<IActionResult> Search(string term)
     {
         var courses = await unitOfWork.CourseRepoG.FindAsync(course => course.Name.Contains(term));
-        var coursesToReturn = mapper.Map<IEnumerable<CourseDto>>(courses);
+        var coursesToReturn = mapper.Map<IEnumerable<CourseViewModel>>(courses);
 
         return Json(coursesToReturn);
 
+    }
+
+
+
+
+
+
+
+    [Authorize(Roles = "Student")]
+    public async Task<IActionResult> Student_CourseOverview()
+    {
+        var user = await userManager.GetUserAsync(User);
+
+        var course = await unitOfWork.courseRepo.GetAllbyId((int)user.CourseId);
+
+        return View(mapper.Map<CourseOverViewModel>(course));
+    }
+
+    [Authorize(Roles = "Student")]
+    public async Task<IActionResult> LoadModulePartial(int id)
+    {
+        var course = await unitOfWork.courseRepo.GetAllbyId(id);
+        return PartialView("_ModuleView", course);
+    }
+    [Authorize(Roles = "Student")]
+    public async Task<IActionResult> LoadStudentPartial(int id)
+    {
+        var course = await unitOfWork.courseRepo.GetAllbyId(id);
+        return PartialView("_StudentView", course);
+    }
+    [Authorize(Roles = "Student")]
+    public async Task<IActionResult> LoadDocumentsPartial(int id)
+    {
+        var course = await unitOfWork.courseRepo.GetAllbyId(id);
+        var user = userManager.GetUserId(User);
+        //var document =  unitOfWork.documentRepo.GetDocumentBy_UserId(user);
+        //var doc = mapper.Map<StudentDocumentViewModel>(document);
+        // var doc = mapper.Map<IEnumerable<StudentDocumentViewModel>>(course);
+
+        return PartialView("_DocumentView", course);
+    }
+
+    [HttpPost, ActionName("DeleteDocument")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteDocument(int id)
+    {
+        await unitOfWork.documentRepo.DeleteDocument(id);
+        await unitOfWork.CompleteAsync();
+
+        return RedirectToAction(nameof(Student_CourseOverview));
     }
 }
