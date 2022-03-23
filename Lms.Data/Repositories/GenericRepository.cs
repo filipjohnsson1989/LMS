@@ -27,7 +27,7 @@ public class GenericRepository<T> : IRepository<T> where T : class
     public virtual async Task<T?> GetAsync(int id) => await context.FindAsync<T>(id);
 
     public virtual IQueryable<T> GetAll()
-        => DbSet.AsQueryable();
+        => DbSet.Take(10).AsQueryable();
 
     public virtual async Task<IEnumerable<T>> GetAllAsync()
         => await this.GetAll()

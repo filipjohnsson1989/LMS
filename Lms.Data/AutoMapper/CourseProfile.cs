@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Lms.Core.Dtos.Course;
+using Lms.Core.Dtos.Courses;
 using Lms.Core.Entities;
 
 namespace Lms.Data.AutoMapper;

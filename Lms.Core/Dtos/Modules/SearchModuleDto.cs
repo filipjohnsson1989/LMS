@@ -1,6 +1,6 @@
-﻿namespace Lms.Core.Dtos.Course;
+﻿namespace Lms.Core.Dtos.Modules;
 
-public class SearchCourseDto
+public class SearchModuleDto
 {
     public int Id { get; set; }
     public string Name { get; set; } = default!;

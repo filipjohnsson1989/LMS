@@ -1,7 +1,7 @@
-﻿using Lms.Core.Dtos.Course;
+﻿using Lms.Core.Dtos.Courses;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lms.Core.Dtos.Module;
+namespace Lms.Core.Dtos.Modules;
 
 public class CreateEditModuleDto
 {

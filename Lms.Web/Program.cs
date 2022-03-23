@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<IRepository<Course>, CourseRepositoryG>();
 builder.Services.AddTransient<IRepository<Module>, ModuleRepositoryG>();
+builder.Services.AddTransient<IRepository<Activity>, ActivityRepositoryG>();
 builder.Services.AddTransient<IRepository<ActivityType>, ActivityTypeRepository>();
 //builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
@@ -40,6 +41,7 @@ builder.Services.AddAutoMapper(typeof(LMSMappings));
 
 builder.Services.AddAutoMapper(typeof(CourseProfile));
 builder.Services.AddAutoMapper(typeof(ModuleProfile));
+builder.Services.AddAutoMapper(typeof(ActivityProfile));
 
 
 

@@ -57,6 +57,19 @@ namespace Lms.Data.Repositories
                 return moduleTypeRepoG;
             }
         }
+        private IRepository<Activity> activityTypeRepoG = default!;
+        public IRepository<Activity> ActivityRepoG
+        {
+            get
+            {
+                if (activityTypeRepoG == null)
+                {
+                    this.activityTypeRepoG = new ActivityRepositoryG(this.context);
+                }
+
+                return activityTypeRepoG;
+            }
+        }
         public IDocumentRepository documentRepo { get; set; }
 
 

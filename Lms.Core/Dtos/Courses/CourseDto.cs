@@ -1,4 +1,4 @@
-﻿namespace Lms.Core.Dtos.Course;
+﻿namespace Lms.Core.Dtos.Courses;
 
 public class CourseDto
 {

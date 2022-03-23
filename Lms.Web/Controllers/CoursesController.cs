@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using Lms.Core.Dtos.Course;
+using Lms.Core.Dtos.Courses;
 
 namespace Lms.Web.Controllers;
 
