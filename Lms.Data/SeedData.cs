@@ -1,6 +1,5 @@
 ﻿using Bogus;
-using Lms.Core.Entities;
-using Lms.Data.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +11,7 @@ public class SeedData
     private static RoleManager<IdentityRole> roleManager = default!;
     private static UserManager<ApplicationUser> userManager = default!;
     private static readonly Faker faker = new Faker("sv");
-    const int defaultNumberOfInitializingRecords = 20;
+    const int defaultNumberOfInitializingRecords = 8;
 
     public static async Task InitAsync(ApplicationDbContext context, IServiceProvider services, string adminPW)
     {
@@ -46,23 +45,27 @@ public class SeedData
 
     private static async Task DocumentsInitAsync(ApplicationDbContext context, IEnumerable<Activity> activities, IEnumerable<Course> courses)
     {
-        string Name = "dummyDoc";
-        var docs = new List<Document>();
-        var data = new Byte[50];
-        for (int i = 0; i < 50; i++)
-        {
-            data[i] = faker.System.Random.Byte();
-        }
+        string name = "BananaCar";
+        string path = "~/BananaCar.jpg";
+        var fileName = Path.GetFileName(path);
+        var contentType = "image/jpeg";
+        if (!File.Exists(fileName)) throw new NullReferenceException(nameof(fileName));
+
+
+
+        Byte[] data = File.ReadAllBytes(fileName);
+
+        List<Document>? docs = new List<Document>();
         foreach (var course in courses)
         {
             for (int i = 0; i < faker.Random.Number(1, 5); i++)
             {
                 var doc = new Document()
                 {
-                    Name = Name,
+                    Name = name,
                     Course = course,
                     Data = data,
-                    ContentType = "Dummy"
+                    ContentType = contentType
                 };
                 docs.Add(doc);
             }
@@ -72,10 +75,10 @@ public class SeedData
         {
             var doc = new Document()
             {
-                Name = Name,
+                Name = name,
                 Activity = activity,
                 Data = data,
-                ContentType = "Dummy"
+                ContentType = contentType
             };
             docs.Add(doc);
         }
@@ -178,7 +181,7 @@ public class SeedData
             var temp = new Course
             {
                 Name = faker.Company.CatchPhrase(),
-                Description = faker.Hacker.Verb(),
+                Description = faker.Lorem.Sentences(5),
                 StartDate = DateTime.Now.AddDays(faker.Random.Int(-10, 10))
             };
 
@@ -236,18 +239,19 @@ public class SeedData
 
         foreach (var course in courses)
         {
-            for (int i = 0; i < defaultNumberOfInitializingRecords; i++)
+            var numBuffer = 1;
+            for (int i = 0; i < faker.Random.Number(8, 16); i++)
             {
                 var startDate = faker.Date.Between(DateTime.Now.AddDays(-10), DateTime.Now.AddDays(10));
                 var temp = new Module
                 {
                     Name = faker.Company.CatchPhrase(),
-                    Description = faker.Hacker.Verb(),
+                    Description = faker.Lorem.Sentences(3),
                     StartDate = startDate,
-                    EndDate = faker.Date.Between(startDate.AddDays(30), startDate.AddDays(90)),
+                    EndDate = faker.Date.Between(startDate.AddDays(numBuffer), startDate.AddDays(3)),
                     Course = course,
                 };
-
+                numBuffer += 3;
                 modules.Add(temp);
             }
         }
@@ -305,15 +309,17 @@ public class SeedData
         {
             foreach (var activityType in activityTypes)
             {
-                for (int i = 0; i < defaultNumberOfInitializingRecords; i++)
+                for (int i = 0; i < faker.Random.Number(8, 16); i++)
                 {
                     var startDate = faker.Date.Between(module.StartDate, module.EndDate);
+                    var randomDuration = faker.Random.Number(1, 48);
+
                     var temp = new Activity
                     {
                         Name = faker.Company.CatchPhrase(),
                         Description = faker.Lorem.Sentences(2),
                         StartDate = startDate,
-                        EndDate = faker.Date.Between(startDate.AddDays(30), startDate.AddDays(90)),
+                        EndDate = faker.Date.Between(startDate.AddDays(i), startDate.AddDays(i).AddHours(randomDuration)),
                         ActivityType = activityType,
                         Module = module,
                     };
