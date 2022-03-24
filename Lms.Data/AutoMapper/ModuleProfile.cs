@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Lms.Core.Dtos.Modules;
 using Lms.Core.Entities;
+using Lms.Core.ViewModels.Modules;
 
 namespace Lms.Data.AutoMapper;
 
@@ -8,9 +8,9 @@ public class ModuleProfile : Profile
 {
     public ModuleProfile()
     {
-        CreateMap<Module, ModuleDto>();
-        CreateMap<Module, CreateEditModuleDto>().ReverseMap();
-        CreateMap<Module, SearchModuleDto>().ReverseMap();
 
+        CreateMap<Module, ModuleViewModel>();
+        CreateMap<Module, CreateEditModuleViewModel>().ReverseMap();
+        CreateMap<Module, SearchModuleViewModel>().ReverseMap();
     }
 }

@@ -1,58 +1,48 @@
-﻿using Lms.Core.Entities;
-using Lms.Core.Interfaces;
-using Lms.Data.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Lms.Data.Repositories;
 
-namespace Lms.Data.Repositories
+public class UnitOfWork : IUnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    public ICourseRepository courseRepo { get; set; }
+    public IModuleRepository moduleRepo { get; set; }
+    public IActivityRepository activityRepo { get; set; }
+
+    private IRepository<ActivityType> activityTypeRepo = default!;
+    public IRepository<ActivityType> ActivityTypeRepo
     {
-        public ICourseRepository courseRepo { get; set; }
-        public IModuleRepository moduleRepo { get; set; }
-        public IActivityRepository activityRepo { get; set; }
-
-        private IRepository<ActivityType> activityTypeRepo = default!;
-         public ICourseSelector courseSelector { get; set; }
-        public IRepository<ActivityType> ActivityTypeRepo
+        get
         {
-            get
+            if (activityTypeRepo == null)
             {
-                if (activityTypeRepo == null)
-                {
-                    this.activityTypeRepo = new ActivityTypeRepository(this.context);
-                }
-
-                return activityTypeRepo;
+                this.activityTypeRepo = new ActivityTypeRepository(this.context);
             }
+
+            return activityTypeRepo;
         }
+    }
 
-        private IRepository<Course> courseTypeRepoG = default!;
-        public IRepository<Course> CourseRepoG
+    private IRepository<Course> courseTypeRepoG = default!;
+    public IRepository<Course> CourseRepoG
+    {
+        get
         {
-            get
+            if (courseTypeRepoG == null)
             {
-                if (courseTypeRepoG == null)
-                {
-                    this.courseTypeRepoG = new CourseRepositoryG(this.context);
-                }
-
-                return courseTypeRepoG;
+                this.courseTypeRepoG = new CourseRepositoryG(this.context);
             }
-        }
 
-        private IRepository<Module> moduleTypeRepoG = default!;
-        public IRepository<Module> ModuleRepoG
+            return courseTypeRepoG;
+        }
+    }
+
+    private IRepository<Module> moduleTypeRepoG = default!;
+    public IRepository<Module> ModuleRepoG
+    {
+        get
         {
-            get
+            if (moduleTypeRepoG == null)
             {
-                if (moduleTypeRepoG == null)
-                {
-                    this.moduleTypeRepoG = new ModuleRepositoryG(this.context);
-                }
+                this.moduleTypeRepoG = new ModuleRepositoryG(this.context);
+            }
 
                 return moduleTypeRepoG;
             }
@@ -72,23 +62,20 @@ namespace Lms.Data.Repositories
         }
         public IDocumentRepository documentRepo { get; set; }
 
+    public ApplicationDbContext context;
 
-        public ApplicationDbContext context;
-
-        public UnitOfWork(ApplicationDbContext context)
-        {
-            this.context = context;
-            courseRepo = new CourseRepository(this.context);
-            moduleRepo = new ModuleRepository(this.context);
-            activityRepo = new ActivityRepository(this.context);
-            documentRepo = new DocumentRepository(this.context);
-            courseSelector = new CourseSelector(this.context);
-        }
+    public UnitOfWork(ApplicationDbContext context)
+    {
+        this.context = context;
+        courseRepo = new CourseRepository(this.context);
+        moduleRepo = new ModuleRepository(this.context);
+        activityRepo = new ActivityRepository(this.context);
+        documentRepo = new DocumentRepository(this.context);
+    }
 
 
-        public async Task CompleteAsync()
-        {
-            await context.SaveChangesAsync();
-        }
+    public async Task CompleteAsync()
+    {
+        await context.SaveChangesAsync();
     }
 }

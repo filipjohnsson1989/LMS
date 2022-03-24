@@ -1,7 +1,4 @@
-﻿using Lms.Core.Interfaces;
-using Lms.Data.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Lms.Data.Repositories;

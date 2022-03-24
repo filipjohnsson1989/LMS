@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using Lms.Core.Dtos.Modules;
+using Lms.Core.ViewModels.Modules;
 
 namespace Lms.Web.Controllers;
 
@@ -27,7 +27,7 @@ public class ModulesController : Controller
         var modules = await unitOfWork.ModuleRepoG
                                       .GetAllAsync();
 
-        var modulesToReturn = mapper.Map<IEnumerable<ModuleDto>>(modules);
+        var modulesToReturn = mapper.Map<IEnumerable<ModuleViewModel>>(modules);
         return View(modulesToReturn);
     }
 
@@ -46,7 +46,7 @@ public class ModulesController : Controller
             return NotFound();
         }
 
-        var moduleToReturn = mapper.Map<ModuleDto>(module);
+        var moduleToReturn = mapper.Map<ModuleViewModel>(module);
 
         return View(moduleToReturn);
     }
@@ -62,13 +62,13 @@ public class ModulesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleDto moduleDto)
+    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleViewModel moduleViewModel)
     {
         if (ModelState.IsValid)
         {
-            var module = mapper.Map<Module>(moduleDto);
+            var module = mapper.Map<Module>(moduleViewModel);
 
-            var course = await unitOfWork.CourseRepoG.GetAsync(moduleDto.Course.Id);
+            var course = await unitOfWork.CourseRepoG.GetAsync(moduleViewModel.Course.Id);
             if (course is null)
             {
                 return BadRequest();
@@ -82,7 +82,7 @@ public class ModulesController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        var moduleToReturn = mapper.Map<CreateEditModuleDto>(moduleDto);
+        var moduleToReturn = mapper.Map<CreateEditModuleViewModel>(moduleViewModel);
 
         return View(moduleToReturn);
     }
@@ -102,7 +102,7 @@ public class ModulesController : Controller
             return NotFound();
         }
 
-        var moduleToReturn = mapper.Map<CreateEditModuleDto>(module);
+        var moduleToReturn = mapper.Map<CreateEditModuleViewModel>(module);
 
         return View(moduleToReturn);
     }
@@ -112,9 +112,9 @@ public class ModulesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleDto moduleDto)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleViewModel moduleViewModel)
     {
-        if (id != moduleDto.Id)
+        if (id != moduleViewModel.Id)
         {
             return NotFound();
         }
@@ -123,9 +123,9 @@ public class ModulesController : Controller
         {
             try
             {
-                var module = mapper.Map<Module>(moduleDto);
+                var module = mapper.Map<Module>(moduleViewModel);
 
-                var course = await unitOfWork.CourseRepoG.GetAsync(moduleDto.Course.Id);
+                var course = await unitOfWork.CourseRepoG.GetAsync(moduleViewModel.Course.Id);
                 if (course is null)
                 {
                     return BadRequest();
@@ -138,7 +138,7 @@ public class ModulesController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await ModuleExists(moduleDto.Id))
+                if (!await ModuleExists(moduleViewModel.Id))
                 {
                     return NotFound();
                 }
@@ -149,7 +149,7 @@ public class ModulesController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(moduleDto);
+        return View(moduleViewModel);
     }
 
     // GET: Modules/Delete/5
@@ -168,7 +168,7 @@ public class ModulesController : Controller
             return NotFound();
         }
 
-        var moduleToReturn = mapper.Map<ModuleDto>(module);
+        var moduleToReturn = mapper.Map<ModuleViewModel>(module);
 
         return View(moduleToReturn);
     }
@@ -204,7 +204,7 @@ public class ModulesController : Controller
     public async Task<IActionResult> Search(string term)
     {
         var modules = await unitOfWork.ModuleRepoG.FindAsync(course => course.Name.Contains(term));
-        var coursesToReturn = mapper.Map<IEnumerable<ModuleDto>>(modules);
+        var coursesToReturn = mapper.Map<IEnumerable<ModuleViewModel>>(modules);
 
         return Json(coursesToReturn);
 

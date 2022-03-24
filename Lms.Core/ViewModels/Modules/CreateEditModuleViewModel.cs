@@ -1,9 +1,9 @@
-﻿using Lms.Core.Dtos.Courses;
+﻿using Lms.Core.ViewModels.Courses;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lms.Core.Dtos.Modules;
+namespace Lms.Core.ViewModels.Modules;
 
-public class CreateEditModuleDto
+public class CreateEditModuleViewModel
 {
     public int Id { get; set; }
     public string Name { get; set; } = default!;
@@ -12,7 +12,7 @@ public class CreateEditModuleDto
     public DateTime EndDate { get; set; }
 
     [Display(Name = "Course")]
-    public SearchCourseDto Course { get; set; } = default!;
+    public SearchCourseViewModel Course { get; set; } = default!;
 
 
 

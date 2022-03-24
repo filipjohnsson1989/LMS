@@ -1,6 +1,6 @@
-﻿namespace Lms.Core.Dtos.Modules;
+﻿namespace Lms.Core.ViewModels.Modules;
 
-public class SearchModuleDto
+public class SearchModuleViewModel
 {
     public int Id { get; set; }
     public string Name { get; set; } = default!;

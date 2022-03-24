@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 #nullable disable
-namespace Lms.Core.Models
+namespace Lms.Core.ViewModels
 {
     public class StudentDocumentViewModel
     {

@@ -1,6 +1,7 @@
 ﻿using Lms.Core.Entities;
+using Microsoft.AspNetCore.Http;
 
-namespace Lms.Web.Models
+namespace Lms.Core.ViewModels
 {
     public class UploadFileViewModel
     {

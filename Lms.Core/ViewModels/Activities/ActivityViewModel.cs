@@ -1,9 +1,8 @@
-﻿using Lms.Core.Dtos.Modules;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Lms.Core.Dtos.Activities;
+namespace Lms.Core.ViewModels.Activities;
 
-public class ActivityDto
+public class ActivityViewModel
 {
     public int Id { get; set; }
     public string Name { get; set; } = default!;

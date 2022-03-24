@@ -1,4 +1,4 @@
-namespace Lms.Web.Models
+namespace Lms.Core.ViewModels
 {
     public class ErrorViewModel
     {

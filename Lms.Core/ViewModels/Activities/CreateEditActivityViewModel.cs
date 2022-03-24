@@ -1,10 +1,10 @@
-﻿using Lms.Core.Dtos.Modules;
-using Lms.Core.Entities;
+﻿using Lms.Core.Entities;
+using Lms.Core.ViewModels.Modules;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lms.Core.Dtos.Activities;
+namespace Lms.Core.ViewModels.Activities;
 
-public class CreateEditActivityDto
+public class CreateEditActivityViewModel
 {
     public int Id { get; set; }
     public string Name { get; set; } = default!;
@@ -13,7 +13,7 @@ public class CreateEditActivityDto
     public DateTime EndDate { get; set; }
 
     [Display(Name = "Module")]
-    public SearchModuleDto Module { get; set; } = default!;
+    public SearchModuleViewModel Module { get; set; } = default!;
     [Display(Name = "Activity Type")]
 
     public ActivityType ActivityType { get; set; } = default!;

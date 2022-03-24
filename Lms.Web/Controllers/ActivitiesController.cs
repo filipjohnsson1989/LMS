@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using Lms.Core.Dtos.Activities;
+using Lms.Core.ViewModels.Activities;
 
 namespace Lms.Web.Controllers;
 
@@ -27,7 +27,7 @@ public class ActivitiesController : Controller
         var activities = await unitOfWork.ActivityRepoG
                                       .GetAllAsync();
 
-        var activitiesToReturn = mapper.Map<IEnumerable<ActivityDto>>(activities);
+        var activitiesToReturn = mapper.Map<IEnumerable<ActivityViewModel>>(activities);
         return View(activitiesToReturn);
     }
 
@@ -46,7 +46,7 @@ public class ActivitiesController : Controller
             return NotFound();
         }
 
-        var activityToReturn = mapper.Map<ActivityDto>(activity);
+        var activityToReturn = mapper.Map<ActivityViewModel>(activity);
 
         return View(activityToReturn);
     }
@@ -62,7 +62,7 @@ public class ActivitiesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Module")] CreateEditActivityDto activityDto)
+    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Module")] CreateEditActivityViewModel activityDto)
     {
         if (ModelState.IsValid)
         {
@@ -82,7 +82,7 @@ public class ActivitiesController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        var activityToReturn = mapper.Map<CreateEditActivityDto>(activityDto);
+        var activityToReturn = mapper.Map<CreateEditActivityViewModel>(activityDto);
 
         return View(activityToReturn);
     }
@@ -102,7 +102,7 @@ public class ActivitiesController : Controller
             return NotFound();
         }
 
-        var activityToReturn = mapper.Map<CreateEditActivityDto>(activity);
+        var activityToReturn = mapper.Map<CreateEditActivityViewModel>(activity);
 
         return View(activityToReturn);
     }
@@ -112,7 +112,7 @@ public class ActivitiesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Module")] CreateEditActivityDto activityDto)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Module")] CreateEditActivityViewModel activityDto)
     {
         if (id != activityDto.Id)
         {
@@ -168,7 +168,7 @@ public class ActivitiesController : Controller
             return NotFound();
         }
 
-        var activityToReturn = mapper.Map<ActivityDto>(activity);
+        var activityToReturn = mapper.Map<ActivityViewModel>(activity);
 
         return View(activityToReturn);
     }
