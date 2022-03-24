@@ -234,7 +234,7 @@ public class CoursesController : Controller
     public async Task<IActionResult> LoadDocumentsPartial()
     {
         var course = await unitOfWork.courseRepo.GetAllbyId(service.course_id);
-        
+
 
         return PartialView("_DocumentView", course);
     }
@@ -248,4 +248,5 @@ public class CoursesController : Controller
 
         return RedirectToAction(nameof(Student_CourseOverview));
     }
+
 }
