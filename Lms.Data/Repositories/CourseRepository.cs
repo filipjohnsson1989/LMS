@@ -97,7 +97,7 @@ public class CourseRepository : ICourseRepository
             .ToListAsync();
     }
 
-    public async Task<Course> GetCourseById(int id)
+    public async Task<Course> GetCourseById_IncludeModulesAsync(int id)
     {
         var course = await db.Courses.Include(c => c.Modules).FirstOrDefaultAsync(c => c.Id == id);
         if (course == null)
@@ -106,7 +106,7 @@ public class CourseRepository : ICourseRepository
         }
         return (course);
     }
-    public async Task<Course> GetCourseByIdWithUsers(int id)
+    public async Task<Course> GetCourseById_IncludeUsersAsync(int id)
     {
         var course = await db.Courses.Include(c => c.Users).FirstOrDefaultAsync(c => c.Id == id);
         if (course == null)

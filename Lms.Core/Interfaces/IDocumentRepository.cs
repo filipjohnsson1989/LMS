@@ -16,6 +16,6 @@ namespace Lms.Core.Interfaces
         Task<Document> GetDocumentById(int id);
         IEnumerable<Document> GetDocumentsBy_UserId(string id);
         Task<IEnumerable<Document>> GetAllDocuments();
-        Task<IEnumerable<Document>> GetDocumentsBy_CourseIdAsync(int id);
+        Task<IEnumerable<Document>> GetDocumentsByCourseIdAsync(int id);
     }
 }

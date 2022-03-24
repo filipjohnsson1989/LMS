@@ -202,7 +202,7 @@ public class CoursesController : Controller
         if (user == null) throw new ArgumentNullException(nameof(user));
         if (User.IsInRole("Student"))
         {
-            var course = await unitOfWork.courseRepo.GetCourseById((int)user.CourseId!);
+            var course = await unitOfWork.courseRepo.GetCourseById_IncludeModulesAsync((int)user.CourseId!);
 
             return View(mapper.Map<CourseOverViewModel>(course));
 
@@ -213,20 +213,20 @@ public class CoursesController : Controller
     [Authorize(Roles = "Student")]
     public async Task<IActionResult> LoadModulePartial(int id)
     {
-        var model = await unitOfWork.moduleRepo.GetAllModulesByCourseId(id);
+        var model = await unitOfWork.moduleRepo.GetModulesByCourseIdAsync(id);
         return PartialView("_ModuleView", model);
     }
     [Authorize(Roles = "Student")]
     public async Task<IActionResult> LoadStudentPartial(int id)
     {
-        var course = await unitOfWork.courseRepo.GetCourseByIdWithUsers(id);
+        var course = await unitOfWork.courseRepo.GetCourseById_IncludeUsersAsync(id);
         var model = course.Users.ToList();
         return PartialView("_StudentView", model);
     }
     [Authorize(Roles = "Student")]
     public async Task<IActionResult> LoadDocumentsPartial(int id)
     {
-        var model = await unitOfWork.documentRepo.GetDocumentsBy_CourseIdAsync(id);
+        var model = await unitOfWork.documentRepo.GetDocumentsByCourseIdAsync(id);
 
         return PartialView("_DocumentView", model);
     }

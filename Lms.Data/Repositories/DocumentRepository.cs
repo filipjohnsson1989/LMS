@@ -58,7 +58,7 @@ public class DocumentRepository : IDocumentRepository
         }
         return document;
     }
-    public async Task<IEnumerable<Document>> GetDocumentsBy_CourseIdAsync(int id)
+    public async Task<IEnumerable<Document>> GetDocumentsByCourseIdAsync(int id)
     {
         var document = await db.Documents
                              .Include(d => d.Course)

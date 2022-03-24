@@ -21,7 +21,7 @@ namespace Lms.Web.Views.Shared.Components.ComponentClasses
           //  }
             if (user != null)
             {
-                var modules = await iuw.moduleRepo.GetAllModulesByCourseId((int)user.CourseId!);
+                var modules = await iuw.moduleRepo.GetModulesByCourseIdAsync((int)user.CourseId!);
                 return View(modules);
             }
             else

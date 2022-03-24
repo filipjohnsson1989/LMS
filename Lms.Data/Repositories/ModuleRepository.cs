@@ -27,7 +27,7 @@ public class ModuleRepository : IModuleRepository
 
     public async Task<IEnumerable<Module>> GetAllModules() => await db.Modules.ToListAsync();
 
-    public async Task<IEnumerable<Module>> GetAllModulesByCourseId(int courseId)
+    public async Task<IEnumerable<Module>> GetModulesByCourseIdAsync(int courseId)
     {
         return await db.Modules.Where(m => m.CourseId == courseId).ToListAsync();
     }
