@@ -19,7 +19,7 @@ namespace Lms.Web.Views.Shared.Components.ComponentClasses
             if (User.IsInRole("Teacher"))
             {
                 int courseId;
-                if(TempData["CourseId"] is null)
+                if(TempData.Peek("CourseId") is null)
                     courseId = iuw.courseRepo.GetAllCourses().Result.First().Id;
                 else
                  courseId = int.Parse(TempData["CourseId"].ToString());

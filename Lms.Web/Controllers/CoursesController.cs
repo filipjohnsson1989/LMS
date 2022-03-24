@@ -26,7 +26,7 @@ public class CoursesController : Controller
     }
 
     // Dynamic course id
-    public void TrackedCourseId(int id)
+    public async Task TrackedCourseId(int id)
     {
 
         TempData["CourseId"] = id;
