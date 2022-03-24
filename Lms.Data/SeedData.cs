@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,23 +45,27 @@ public class SeedData
 
     private static async Task DocumentsInitAsync(ApplicationDbContext context, IEnumerable<Activity> activities, IEnumerable<Course> courses)
     {
-        string Name = "dummyDoc";
-        var docs = new List<Document>();
-        var data = new Byte[50];
-        for (int i = 0; i < 50; i++)
-        {
-            data[i] = faker.System.Random.Byte();
-        }
+        string name = "BananaCar";
+        string path = "~/BananaCar.jpg";
+        var fileName = Path.GetFileName(path);
+        var contentType = "image/jpeg";
+        if (!File.Exists(fileName)) throw new NullReferenceException(nameof(fileName));
+
+
+
+        Byte[] data = File.ReadAllBytes(fileName);
+
+        List<Document>? docs = new List<Document>();
         foreach (var course in courses)
         {
             for (int i = 0; i < faker.Random.Number(1, 5); i++)
             {
                 var doc = new Document()
                 {
-                    Name = Name,
+                    Name = name,
                     Course = course,
                     Data = data,
-                    ContentType = "Dummy"
+                    ContentType = contentType
                 };
                 docs.Add(doc);
             }
@@ -70,10 +75,10 @@ public class SeedData
         {
             var doc = new Document()
             {
-                Name = Name,
+                Name = name,
                 Activity = activity,
                 Data = data,
-                ContentType = "Dummy"
+                ContentType = contentType
             };
             docs.Add(doc);
         }
