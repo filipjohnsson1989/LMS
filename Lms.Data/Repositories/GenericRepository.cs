@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Lms.Data.Repositories;
 
-public class GenericRepository<T> : IRepository<T> where T : class
+public class GenericRepository<T> : IRepository<T> where T : class, IEntity
 {
     private protected ApplicationDbContext context;
     private DbSet<T> DbSet => context.Set<T>();
@@ -24,7 +24,10 @@ public class GenericRepository<T> : IRepository<T> where T : class
     public virtual async Task<T?> GetAsync(int id) => await context.FindAsync<T>(id);
 
     public virtual IQueryable<T> GetAll()
-        => DbSet.Take(10).AsQueryable();
+        => DbSet
+        .OrderByDescending(record => record.Id) // TakeLast(10)
+        .Take(10) // TakeLast(10)
+        .AsQueryable();
 
     public virtual async Task<IEnumerable<T>> GetAllAsync()
         => await this.GetAll()
