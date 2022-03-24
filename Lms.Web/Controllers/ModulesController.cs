@@ -82,9 +82,8 @@ public class ModulesController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        var moduleToReturn = mapper.Map<CreateEditModuleViewModel>(moduleViewModel);
 
-        return View(moduleToReturn);
+        return View(moduleViewModel);
     }
 
     // GET: Modules/Edit/5

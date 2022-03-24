@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Lms.Data.AutoMapper;
+using Lms.Data.Services;
+using Lms.Core.Interfaces.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<IRepository<Course>, CourseRepositoryG>();
@@ -15,6 +18,9 @@ builder.Services.AddTransient<IRepository<Module>, ModuleRepositoryG>();
 builder.Services.AddTransient<IRepository<Activity>, ActivityRepositoryG>();
 builder.Services.AddTransient<IRepository<ActivityType>, ActivityTypeRepository>();
 //builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<IActivityTypeService, ActivityTypeService>();
+
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

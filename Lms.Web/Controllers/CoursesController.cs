@@ -75,9 +75,8 @@ public class CoursesController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        var courseToReturn = mapper.Map<CourseViewModel>(courseViewModel);
 
-        return View(courseToReturn);
+        return View(courseViewModel);
     }
 
     // GET: Courses/Edit/5

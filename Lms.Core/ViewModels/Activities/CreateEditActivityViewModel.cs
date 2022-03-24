@@ -1,4 +1,4 @@
-﻿using Lms.Core.Entities;
+﻿using Lms.Core.ViewModels.ActivityTypes;
 using Lms.Core.ViewModels.Modules;
 using System.ComponentModel.DataAnnotations;
 
@@ -14,9 +14,9 @@ public class CreateEditActivityViewModel
 
     [Display(Name = "Module")]
     public SearchModuleViewModel Module { get; set; } = default!;
-    [Display(Name = "Activity Type")]
 
-    public ActivityType ActivityType { get; set; } = default!;
+    [Display(Name = "Activity Type")]
+    public ActivityTypeViewModel ActivityType { get; set; } = default!;
 
 
 

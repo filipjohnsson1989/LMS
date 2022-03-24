@@ -19,6 +19,9 @@
                 @Html.DisplayNameFor(model => model.ModuleName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ActivityTypeName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
@@ -39,6 +42,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.ModuleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityTypeName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)

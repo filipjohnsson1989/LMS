@@ -62,18 +62,25 @@ public class ActivitiesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Module")] CreateEditActivityViewModel activityDto)
+    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Module,ActivityType")] CreateEditActivityViewModel activityViewModel)
     {
         if (ModelState.IsValid)
         {
-            var activity = mapper.Map<Activity>(activityDto);
+            var activity = mapper.Map<Activity>(activityViewModel);
 
-            var module = await unitOfWork.ModuleRepoG.GetAsync(activityDto.Module.Id);
+            var module = await unitOfWork.ModuleRepoG.GetAsync(activityViewModel.Module.Id);
             if (module is null)
             {
                 return BadRequest();
             }
             activity.Module = module;
+
+            var activityType = await unitOfWork.ActivityTypeRepo.GetAsync(activityViewModel.ActivityType.Id);
+            if (activityType is null)
+            {
+                return BadRequest();
+            }
+            activity.ActivityType = activityType;
 
             await unitOfWork.ActivityRepoG
                             .AddAsync(activity);
@@ -82,9 +89,8 @@ public class ActivitiesController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        var activityToReturn = mapper.Map<CreateEditActivityViewModel>(activityDto);
 
-        return View(activityToReturn);
+        return View(activityViewModel);
     }
 
     // GET: Activities/Edit/5
@@ -112,9 +118,9 @@ public class ActivitiesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Module")] CreateEditActivityViewModel activityDto)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Module,ActivityType")] CreateEditActivityViewModel activityViewModel)
     {
-        if (id != activityDto.Id)
+        if (id != activityViewModel.Id)
         {
             return NotFound();
         }
@@ -123,14 +129,21 @@ public class ActivitiesController : Controller
         {
             try
             {
-                var activity = mapper.Map<Activity>(activityDto);
+                var activity = mapper.Map<Activity>(activityViewModel);
 
-                var module = await unitOfWork.ModuleRepoG.GetAsync(activityDto.Module.Id);
+                var module = await unitOfWork.ModuleRepoG.GetAsync(activityViewModel.Module.Id);
                 if (module is null)
                 {
                     return BadRequest();
                 }
                 activity.Module = module;
+
+                var activityType = await unitOfWork.ActivityTypeRepo.GetAsync(activityViewModel.ActivityType.Id);
+                if (activityType is null)
+                {
+                    return BadRequest();
+                }
+                activity.ActivityType = activityType;
 
                 unitOfWork.ActivityRepoG
                           .Update(activity);
@@ -138,7 +151,7 @@ public class ActivitiesController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await ActivityExists(activityDto.Id))
+                if (!await ActivityExists(activityViewModel.Id))
                 {
                     return NotFound();
                 }
@@ -149,7 +162,7 @@ public class ActivitiesController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(activityDto);
+        return View(activityViewModel);
     }
 
     // GET: Activities/Delete/5
