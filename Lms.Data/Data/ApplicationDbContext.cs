@@ -1,10 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Lms.Core.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lms.Data.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
     {
+        public DbSet<Course> Courses => Set<Course>();
+        public DbSet<Module> Modules => Set<Module>();
+        public DbSet<ActivityType> ActivityTypes => Set<ActivityType>();
+        public DbSet<Activity> Activities => Set<Activity>();
+        public DbSet<Document> Documents => Set<Document>();
+        public DbSet<ApplicationUser> AppUsers => Set<ApplicationUser>();
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

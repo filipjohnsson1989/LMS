@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Module>
+<div class="col">
+    <h2>Modules</h2>
+    @foreach (var item in Model)
+    {
+        <a class="btn btn-dark navButton" asp-page="/LandingActivities" asp-route-id="@item.Id">&#x1F6C8 @Html.DisplayFor(model => item.Name)</a>
+    }
+    @if (Model.Any())
+    {
+        <script type="text/javascript">
+            var id = @Model.First().Id;
+        </script>
+    }
+
+</div>
+<hr class="divider" />
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="/js/DefaultActivity.js"></script>

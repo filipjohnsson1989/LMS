@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "/Views/Shared/_MasterLayout.cshtml"; 
+}
+<head>
+    <link rel="stylesheet" href="~/css/IndexStyle.css" asp-append-version="true" />
+</head>
+
+<p>>_Layout</p>
+<div class="sidenav">
+    
+    @if (User.Identity!.IsAuthenticated)
+    {
+        var userId = userManager.GetUserId(User);
+
+        @await Component.InvokeAsync("ModulesVC", new {userId})
+    }
+    else
+    {
+        <p>You must be signed in to view this content.</p>
+    }
+</div>
+
+<div class="container-fluid mainBody">
+    
+    @RenderBody()
+</div>
+

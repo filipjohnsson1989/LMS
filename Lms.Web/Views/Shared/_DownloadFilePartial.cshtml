@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Document>
+
+
+
+<div class="tableContainer">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(p => p.Name)
+                </th>
+            </tr>
+        </thead>
+        <tbody >
+            @foreach (var item in Model)
+            {
+              <tr>
+                  <td>
+                      @Html.DisplayFor(model => item.Name)
+                  </td>
+                  
+            <td>
+                  <td> <a asp-controller="ActivityTypes" asp-action="Download" asp-route-id="@item.Id">Download</a></td>
+               
+              </tr>
+            }
+        </tbody>
+    </table>
+</div>
