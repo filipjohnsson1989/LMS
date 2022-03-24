@@ -16,6 +16,9 @@ html {
 body {
     margin-bottom: 60px;
 }
+.alluvem {
+    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+}
 
 .bdgcolor {
     background-color: #484948;
@@ -36,7 +39,8 @@ body {
 }
 
 .t1 {
-    border: 1px solid #dddddd;
+    border-style: groove;
+    border: 2px solid #484948;
     text-align: left;
     padding: 8px;
 }
@@ -46,7 +50,7 @@ body {
 }
 
 .tbr:nth-child(odd) {
-    background-color: black;
+    Background: linear-gradient(#484948, #0E0F0E) !important;
 }
 
 .tbtr:nth-child(even) {
