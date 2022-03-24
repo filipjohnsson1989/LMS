@@ -45,6 +45,7 @@ public class ActivitiesModel : PageModel
                 courseId = db.Courses.First().Id;
                 moduleId = db.Modules.Where(c => c.CourseId == courseId).First().Id;
                 id = moduleId;
+                TempData["CourseId"]=courseId;
             }
 
             else
