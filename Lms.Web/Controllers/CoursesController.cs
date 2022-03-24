@@ -13,23 +13,25 @@ public class CoursesController : Controller
     private readonly UserManager<ApplicationUser> userManager;
 
     private readonly IMapper mapper;
+    private readonly ICourseSelector ser;
 
     public CoursesController(IUnitOfWork unitOfWork,
                              UserManager<ApplicationUser> userManager,
-                             IMapper mapper)
+                             IMapper mapper, ICourseSelector ser)
     {
         this.unitOfWork = unitOfWork;
         this.userManager = userManager;
         this.mapper = mapper;
+        this.ser = ser;
     }
 
     // Dynamic course id
-    public string TrackedCourseId(int id)
+    public void TrackedCourseId(int id)
     {
-        service.course_id = id;
 
-        return null;
-
+        TempData["CourseId"] = id;
+        TempData.Keep("CourseId");
+        
     }
 
     // GET: Courses
@@ -47,6 +49,7 @@ public class CoursesController : Controller
         if (id == null)
         {
             return NotFound();
+
         }
 
         var course = await unitOfWork.CourseRepoG
@@ -207,35 +210,30 @@ public class CoursesController : Controller
     }
 
 
-    //[Authorize(Roles = "Student")]
+    [Authorize(Roles = "Student")]
     public async Task<IActionResult> Student_CourseOverview()
     {
         var user = await userManager.GetUserAsync(User);
-
-        //var course = await unitOfWork.courseRepo.GetAllbyId((int)user.CourseId);
-        var course = await unitOfWork.courseRepo.GetAllbyId(service.course_id);
-
+        var course = await unitOfWork.courseRepo.GetAllbyId((int)user.CourseId);
         return View(mapper.Map<CourseOverViewModel>(course));
     }
 
-    //[Authorize(Roles = "Student")]
-    public async Task<IActionResult> LoadModulePartial()
+    [Authorize(Roles = "Student")]
+    public async Task<IActionResult> LoadModulePartial(int id)
     {
-        var course = await unitOfWork.courseRepo.GetAllbyId(service.course_id);
+        var course = await unitOfWork.courseRepo.GetAllbyId(id);
         return PartialView("_ModuleView", course);
     }
-    //[Authorize(Roles = "Student")]
-    public async Task<IActionResult> LoadStudentPartial()
+    [Authorize(Roles = "Student")]
+    public async Task<IActionResult> LoadStudentPartial(int id)
     {
-        var course = await unitOfWork.courseRepo.GetAllbyId(service.course_id);
+        var course = await unitOfWork.courseRepo.GetAllbyId(id);
         return PartialView("_StudentView", course);
     }
     //[Authorize(Roles = "Student")]
-    public async Task<IActionResult> LoadDocumentsPartial()
+    public async Task<IActionResult> LoadDocumentsPartial(int id)
     {
-        var course = await unitOfWork.courseRepo.GetAllbyId(service.course_id);
-
-
+        var course = await unitOfWork.courseRepo.GetAllbyId(id);
         return PartialView("_DocumentView", course);
     }
 

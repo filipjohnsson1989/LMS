@@ -19,12 +19,12 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="nav-link fwcolor" asp-controller="Courses" asp-action="Student_CourseOverview" >Student Course Overview</a>
-               @*  @if (User.IsInRole("Teacher"))
-                { *@ 
+                 @if (User.IsInRole("Teacher"))
+                {  
                     <select  id="selectedCourse" class="form-select" style="width:25%" asp-items="@await service.GetSelectList()">
                         <option selected="selected" value="">Select Course</option>
                     </select>
-               @* }*@
+                }
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lms.Web.Services
 {
-    public class CourseSelector : ICourseSelector
+    public  class CourseSelector : ICourseSelector
     {
         private readonly ApplicationDbContext db;
         public CourseSelector(ApplicationDbContext db)
@@ -11,7 +11,6 @@ namespace Lms.Web.Services
             this.db = db;
         }
 
-        public static int Course_Id { get; set; } = default!;
 
         public async Task<IEnumerable<SelectListItem>> GetSelectList()
         {

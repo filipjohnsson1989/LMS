@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+#nullable disable
 
 namespace Lms.Web.Services
 {
     public interface ICourseSelector
     {
-        public static int Course_Id { get; set; }
+        
         public Task<IEnumerable<SelectListItem>> GetSelectList();
     }
 }

@@ -1,7 +1,8 @@
 ﻿$(document).ready(function () {
-    //Course Selector returns course id
+    //Course Selector 
     $('#selectedCourse').on('change', function (e) {
         changeTrackedCourse(this.value);
+        location.reload();
     });
 });
 

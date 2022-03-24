@@ -9,16 +9,17 @@ public class ActivitiesModel : PageModel
 {
     private readonly ILogger<ActivitiesModel> logger;
     private readonly ApplicationDbContext db;
+    private readonly UserManager<ApplicationUser> userManager;
 
     public ActivitiesModel(ILogger<ActivitiesModel> logger,
-                                     ApplicationDbContext db)
+                                     ApplicationDbContext db, UserManager<ApplicationUser> userManager)
     {
         if (logger == null) throw new NullReferenceException(nameof(logger));
         if (db == null) throw new NullReferenceException(nameof(db));
 
         this.logger = logger;
         this.db = db;
-
+        this.userManager = userManager;
     }
     public List<Activity> Activities { get; set; } = new List<Activity>();
 
@@ -35,8 +36,27 @@ public class ActivitiesModel : PageModel
         NameSort = sortOrder == "Name" ? "name_desc" : "Name";
         DateSort = sortOrder == "Date" ? "date_desc" : "Date";
 
-        CurrentFilter = searchString;
+        if (User.IsInRole("Teacher"))
+        {
+            int courseId;
+            int moduleId;
+            if (TempData["CourseId"] is null)
+            {
+                courseId = db.Courses.First().Id;
+                moduleId = db.Modules.Where(c => c.CourseId == courseId).First().Id;
+                id = moduleId;
+            }
 
+            else
+            {
+                courseId = int.Parse(TempData["CourseId"].ToString());
+                moduleId = db.Modules.Where(c => c.CourseId == courseId).First().Id;
+                id = moduleId;
+            }
+            TempData.Keep("CourseId");
+        }
+
+            CurrentFilter = searchString;
         Activities = await db.Activities.Where(a => a.ModuleId == id).OrderBy(a => a.EndDate).Include(a => a.ActivityType).Include(a => a.Documents).ToListAsync();
 
         //Filter By week. starting from first Monday of the year

@@ -2,6 +2,6 @@
 {
     public static class service
     {
-        public static int course_id { get; set; }
+        public static int course_id { get; set; } = 1;
     }
 }
