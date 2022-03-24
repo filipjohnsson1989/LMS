@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
+﻿using AutoMapper;
 using Lms.Core.ViewModels.Courses;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lms.Web.Controllers;
 
@@ -10,7 +10,6 @@ public class CoursesController : Controller
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly UserManager<ApplicationUser> userManager;
-
     private readonly IMapper mapper;
 
     public CoursesController(IUnitOfWork unitOfWork,
@@ -196,44 +195,40 @@ public class CoursesController : Controller
 
     }
 
-
-
-
-
-
-
     [Authorize(Roles = "Student")]
     public async Task<IActionResult> Student_CourseOverview()
     {
         var user = await userManager.GetUserAsync(User);
+        if (user == null) throw new ArgumentNullException(nameof(user));
+        if (User.IsInRole("Student"))
+        {
+            var course = await unitOfWork.courseRepo.GetCourseById((int)user.CourseId!);
 
-        var course = await unitOfWork.courseRepo.GetAllbyId((int)user.CourseId);
+            return View(mapper.Map<CourseOverViewModel>(course));
 
-        return View(mapper.Map<CourseOverViewModel>(course));
+        }
+        return RedirectToPage("LandingActivities");
     }
 
     [Authorize(Roles = "Student")]
     public async Task<IActionResult> LoadModulePartial(int id)
     {
-        var course = await unitOfWork.courseRepo.GetAllbyId(id);
-        return PartialView("_ModuleView", course);
+        var model = await unitOfWork.moduleRepo.GetAllModulesByCourseId(id);
+        return PartialView("_ModuleView", model);
     }
     [Authorize(Roles = "Student")]
     public async Task<IActionResult> LoadStudentPartial(int id)
     {
-        var course = await unitOfWork.courseRepo.GetAllbyId(id);
-        return PartialView("_StudentView", course);
+        var course = await unitOfWork.courseRepo.GetCourseByIdWithUsers(id);
+        var model = course.Users.ToList();
+        return PartialView("_StudentView", model);
     }
     [Authorize(Roles = "Student")]
     public async Task<IActionResult> LoadDocumentsPartial(int id)
     {
-        var course = await unitOfWork.courseRepo.GetAllbyId(id);
-        var user = userManager.GetUserId(User);
-        //var document =  unitOfWork.documentRepo.GetDocumentBy_UserId(user);
-        //var doc = mapper.Map<StudentDocumentViewModel>(document);
-        // var doc = mapper.Map<IEnumerable<StudentDocumentViewModel>>(course);
+        var model = await unitOfWork.documentRepo.GetDocumentsBy_CourseIdAsync(id);
 
-        return PartialView("_DocumentView", course);
+        return PartialView("_DocumentView", model);
     }
 
     [HttpPost, ActionName("DeleteDocument")]

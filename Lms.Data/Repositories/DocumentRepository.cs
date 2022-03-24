@@ -46,12 +46,24 @@ public class DocumentRepository : IDocumentRepository
         return document;
     }
 
-    public  IEnumerable<Document> GetDocumentBy_UserId(string id)
+    public IEnumerable<Document> GetDocumentsBy_UserId(string id)
     {
        var document =  db.Documents
                             .Include(u=>u.User)
                             .Where(d=>d.User.Id == id)
                              .ToList();
+        if (document == null)
+        {
+            throw new ArgumentNullException(nameof(document));
+        }
+        return document;
+    }
+    public async Task<IEnumerable<Document>> GetDocumentsBy_CourseIdAsync(int id)
+    {
+        var document = await db.Documents
+                             .Include(d => d.Course)
+                             .Where(d => d.Course!.Id == id)
+                              .ToListAsync();
         if (document == null)
         {
             throw new ArgumentNullException(nameof(document));

@@ -99,7 +99,16 @@ public class CourseRepository : ICourseRepository
 
     public async Task<Course> GetCourseById(int id)
     {
-        var course = await db.Courses.FirstOrDefaultAsync(c => c.Id == id);
+        var course = await db.Courses.Include(c => c.Modules).FirstOrDefaultAsync(c => c.Id == id);
+        if (course == null)
+        {
+            throw new NullReferenceException(nameof(course));
+        }
+        return (course);
+    }
+    public async Task<Course> GetCourseByIdWithUsers(int id)
+    {
+        var course = await db.Courses.Include(c => c.Users).FirstOrDefaultAsync(c => c.Id == id);
         if (course == null)
         {
             throw new NullReferenceException(nameof(course));

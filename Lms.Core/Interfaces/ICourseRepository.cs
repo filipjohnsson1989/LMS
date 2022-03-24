@@ -21,7 +21,6 @@ namespace Lms.Core.Interfaces
 
         //Sort the Modules of a Course through Name; Ascending or Descending.
         Task<Course> GetCourseById_Include_SortModule(int courseId, string sortOrder);
-
-
+        Task<Course> GetCourseByIdWithUsers(int id);
     }
 }
