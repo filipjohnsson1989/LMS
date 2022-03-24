@@ -1,4 +1,4 @@
-﻿@model Lms.Core.Entities.Course
+﻿@model IEnumerable<Document>
 
 <div class="card" >
     <div class="card-header tbr fwcolor">
@@ -7,14 +7,14 @@
      <table class="table tbl">
     <thead>
         <tr class="tbr fwcolor">
-            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Documents.First().Name)</th>
-            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Documents.First().UploadDate)</th>
-            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Documents.First().ContentType)</th>
+            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Name)</th>
+            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.UploadDate)</th>
+            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.ContentType)</th>
             @*<th class="t1 fwcolor">Actions</th>*@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Documents) {
+@foreach (var item in Model) {
         <tr class="tbr fwcolor">
             <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Name)</td>
             <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.UploadDate)</td>

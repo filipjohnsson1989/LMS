@@ -25,12 +25,9 @@ public class ModuleRepository : IModuleRepository
         db.Modules.Remove(module);
     }
 
-    public async Task<IEnumerable<Module>> GetAllModules()
-    {
-        return await db.Modules.ToListAsync();
-    }
+    public async Task<IEnumerable<Module>> GetAllModules() => await db.Modules.ToListAsync();
 
-    public async Task<IEnumerable<Module>> GetAllModulesByCourseId(int courseId)
+    public async Task<IEnumerable<Module>> GetModulesByCourseIdAsync(int courseId)
     {
         return await db.Modules.Where(m => m.CourseId == courseId).ToListAsync();
     }
@@ -46,13 +43,7 @@ public class ModuleRepository : IModuleRepository
         return module;
     }
 
-    public bool ModuleExists(int id)
-    {
-        return db.Modules.Any(e => e.Id == id);
-    }
+    public bool ModuleExists(int id) => db.Modules.Any(e => e.Id == id);
 
-    public void UpdateModule(Module module)
-    {
-        db.Modules.Update(module);
-    }
+    public void UpdateModule(Module module) => db.Modules.Update(module);
 }
