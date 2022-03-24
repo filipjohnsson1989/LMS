@@ -1,13 +1,7 @@
-﻿using Lms.Core.Entities;
-using Lms.Data;
-using Lms.Data.Data;
+﻿using Lms.Data.AutoMapper;
 using Lms.Web.Conventions;
-using Lms.Data.Repositories;
-using Lms.Core.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Lms.Data.AutoMapper;
 using Lms.Data.Services;
 using Lms.Core.Interfaces.Services;
 
@@ -17,7 +11,6 @@ builder.Services.AddTransient<IRepository<Course>, CourseRepositoryG>();
 builder.Services.AddTransient<IRepository<Module>, ModuleRepositoryG>();
 builder.Services.AddTransient<IRepository<Activity>, ActivityRepositoryG>();
 builder.Services.AddTransient<IRepository<ActivityType>, ActivityTypeRepository>();
-//builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<IActivityTypeService, ActivityTypeService>();
 
@@ -48,6 +41,7 @@ builder.Services.AddAutoMapper(typeof(LMSMappings));
 builder.Services.AddAutoMapper(typeof(CourseProfile));
 builder.Services.AddAutoMapper(typeof(ModuleProfile));
 builder.Services.AddAutoMapper(typeof(ActivityProfile));
+builder.Services.AddAutoMapper(typeof(ActivityTypeProfile));
 
 
 

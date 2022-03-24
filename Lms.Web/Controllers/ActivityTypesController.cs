@@ -16,7 +16,7 @@ public class ActivityTypesController : Controller
             .GetAllAsync();
         var docs = await unitOfWork.documentRepo
             .GetAllDocuments();
-        UpDownLoadCombinedTestViewModel testModel = new UpDownLoadCombinedTestViewModel();
+        UpDownLoadCombinedTestViewModel testModel = new();
         testModel.Documents = docs;
         testModel.ActivityTypes = activityTypes;
         return View(testModel);

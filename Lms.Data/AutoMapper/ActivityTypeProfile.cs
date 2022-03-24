@@ -3,9 +3,9 @@ using Lms.Core.ViewModels.ActivityTypes;
 
 namespace Lms.Data.AutoMapper;
 
-public class ActivittTypeProfile : Profile
+public class ActivityTypeProfile : Profile
 {
-    public ActivittTypeProfile()
+    public ActivityTypeProfile()
     {
         CreateMap<ActivityType, ActivityTypeViewModel>().ReverseMap();
     }
