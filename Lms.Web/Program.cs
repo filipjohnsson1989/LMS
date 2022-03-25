@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Lms.Data.AutoMapper;
 using Lms.Web.Services;
+using Lms.Web.Views.Shared.Components.ComponentClasses;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,13 @@ builder.Services.AddTransient<IRepository<ActivityType>, ActivityTypeRepository>
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var serviceProvider = builder.Services.BuildServiceProvider();
+var logger = serviceProvider.GetService<ILogger<ModulesVC>>();
+builder.Services.AddSingleton(typeof(ILogger), logger);
+    builder.Logging.ClearProviders();
+    builder.Logging.AddConsole();
+
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -20,6 +28,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
 
 builder.Services.AddRazorPages(options =>
 {

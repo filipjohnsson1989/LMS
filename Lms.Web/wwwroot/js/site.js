@@ -2,7 +2,6 @@
     //Course Selector 
     $('#selectedCourse').on('change', function (e) {
         changeTrackedCourse(this.value);
-        setTimeout(5000);
         location.reload();
     });
 });
