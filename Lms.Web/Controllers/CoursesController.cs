@@ -3,6 +3,7 @@ using Lms.Core.ViewModels.Courses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+#nullable disable
 
 namespace Lms.Web.Controllers;
 
@@ -11,15 +12,29 @@ public class CoursesController : Controller
     private readonly IUnitOfWork unitOfWork;
     private readonly UserManager<ApplicationUser> userManager;
     private readonly IMapper mapper;
+    private readonly ICourseSelector ser;
 
     public CoursesController(IUnitOfWork unitOfWork,
                              UserManager<ApplicationUser> userManager,
-                             IMapper mapper)
+                             IMapper mapper, ICourseSelector ser)
     {
         this.unitOfWork = unitOfWork;
         this.userManager = userManager;
         this.mapper = mapper;
+        this.ser = ser;
     }
+
+    // Dynamic course id
+    [HttpPost]
+    [Route("CourseSelector/TempData/")]
+    public ActionResult SetTempData(int id)
+    {
+        // Set your TempData key to the value passed in
+        TempData["CourseId"] = id;
+        TempData.Keep("CourseId");
+        return Ok("success");
+    }
+
 
     // GET: Courses
     public async Task<IActionResult> Index()
@@ -36,6 +51,7 @@ public class CoursesController : Controller
         if (id == null)
         {
             return NotFound();
+
         }
 
         var course = await unitOfWork.CourseRepoG
@@ -223,7 +239,7 @@ public class CoursesController : Controller
         var model = course.Users.ToList();
         return PartialView("_StudentView", model);
     }
-    [Authorize(Roles = "Student")]
+    //[Authorize(Roles = "Student")]
     public async Task<IActionResult> LoadDocumentsPartial(int id)
     {
         var model = await unitOfWork.documentRepo.GetDocumentsByCourseIdAsync(id);
@@ -240,4 +256,5 @@ public class CoursesController : Controller
 
         return RedirectToAction(nameof(Student_CourseOverview));
     }
+
 }
