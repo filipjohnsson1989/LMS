@@ -14,12 +14,8 @@ public class ActivitiesModel : PageModel
     public ActivitiesModel(ILogger<ActivitiesModel> logger,
                                      ApplicationDbContext db, UserManager<ApplicationUser> userManager)
     {
-        if (logger == null) throw new NullReferenceException(nameof(logger));
-        if (db == null) throw new NullReferenceException(nameof(db));
-
-        this.logger = logger;
-        this.db = db;
-        this.userManager = userManager;
+        this.logger = logger ?? throw new NullReferenceException(nameof(logger));
+        this.db = db ?? throw new NullReferenceException(nameof(db));
     }
     public List<Activity> Activities { get; set; } = new List<Activity>();
     public List<Activity> WeekActivities { get; set; } = new List<Activity>();

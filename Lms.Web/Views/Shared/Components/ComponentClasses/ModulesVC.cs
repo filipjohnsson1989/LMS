@@ -25,12 +25,12 @@ namespace Lms.Web.Views.Shared.Components.ComponentClasses
                     courseId = int.Parse(TempData["CourseId"].ToString());
 
                 TempData.Keep("CourseId");
-                var modules = await iuw.moduleRepo.GetAllModulesByCourseId(courseId);
+                var modules = await iuw.moduleRepo.GetModulesByCourseIdAsync(courseId);
                 return View(modules);
             }
             if (user != null && User.IsInRole("Student"))
             {
-                var modules = await iuw.moduleRepo.GetAllModulesByCourseId((int)user.CourseId!);
+                var modules = await iuw.moduleRepo.GetModulesByCourseIdAsync((int)user.CourseId!);
                 return View(modules);
             }
             else
