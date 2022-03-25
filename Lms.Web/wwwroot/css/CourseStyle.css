@@ -1,37 +1,21 @@
-﻿html {
-    font-size: 14px;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
-html {
-    position: relative;
-    min-height: 100%;
-}
-
+﻿
 body {
     margin-bottom: 60px;
 }
 .alluvem {
     box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
-}
-
-.bdgcolor {
-    background-color: #484948;
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+    background-blend-mode: unset;
+    background: linear-gradient(#484948, #0E0F0E) !important;
+    border-radius: 25px;
+    padding: 5px;
+    padding-bottom: 1rem !important;
 }
 
 .fwcolor {
     color: white;
 }
-
-.bgcolor {
-    background-color: gray;
-}
-
 .tbl {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -39,31 +23,29 @@ body {
 }
 
 .t1 {
-    border-style: groove;
-    border: 2px solid #484948;
+    border: 2px thin red;
     text-align: left;
     padding: 8px;
+
 }
 
 .tbr:nth-child(even) {
-    background-color: grey;
+    
 }
 
 .tbr:nth-child(odd) {
-    Background: linear-gradient(#484948, #0E0F0E) !important;
+   
 }
 
 .tbtr:nth-child(even) {
-    background-color: grey;
+   
 }
 
 .tbtr:nth-child(odd) {
-    background-color: #16637C;
+   
 }
-
-.bbcolor {
-    background-color: #623D2F;
-}
-.bbgcolor {
-    background-color: #484948;
+.card {
+    background: none !important;
+    border-block:none !important;
+    border: none !important;
 }
