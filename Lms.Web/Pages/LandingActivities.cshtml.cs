@@ -9,15 +9,15 @@ public class ActivitiesModel : PageModel
 {
     private readonly ILogger<ActivitiesModel> logger;
     private readonly ApplicationDbContext db;
+    private readonly UserManager<ApplicationUser> userManager;
 
     public ActivitiesModel(ILogger<ActivitiesModel> logger,
-                                     ApplicationDbContext db)
+                                     ApplicationDbContext db, UserManager<ApplicationUser> userManager)
     {
         this.logger = logger ?? throw new NullReferenceException(nameof(logger));
         this.db = db ?? throw new NullReferenceException(nameof(db));
     }
     public List<Activity> Activities { get; set; } = new List<Activity>();
-
     public List<Activity> WeekActivities { get; set; } = new List<Activity>();
     public List<int> Weeks { get; set; } = new List<int>();
     public string NameSort { get; set; }
@@ -31,8 +31,8 @@ public class ActivitiesModel : PageModel
         NameSort = sortOrder == "Name" ? "name_desc" : "Name";
         DateSort = sortOrder == "Date" ? "date_desc" : "Date";
 
-        CurrentFilter = searchString;
 
+        CurrentFilter = searchString;
         Activities = await db.Activities.Where(a => a.ModuleId == id).OrderBy(a => a.EndDate).Include(a => a.ActivityType).Include(a => a.Documents).ToListAsync();
 
         //Filter By week. starting from first Monday of the year
