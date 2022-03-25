@@ -14,24 +14,28 @@ public class CoursesController : Controller
 
     private readonly IMapper mapper;
     private readonly ICourseSelector ser;
+    private readonly ILogger logger;
+    private static int count;
+    
 
     public CoursesController(IUnitOfWork unitOfWork,
                              UserManager<ApplicationUser> userManager,
-                             IMapper mapper, ICourseSelector ser)
+                             IMapper mapper, ICourseSelector ser, ILogger logger)
     {
         this.unitOfWork = unitOfWork;
         this.userManager = userManager;
         this.mapper = mapper;
         this.ser = ser;
+        this.logger = logger;
     }
 
     // Dynamic course id
     public void TrackedCourseId(int id)
     {
-
+        count++;
+        logger.LogInformation($"\r\n\r\n\r\n\r\n\r\nTrackedCourseID: {id} Times:{count}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
         TempData["CourseId"] = id;
         TempData.Keep("CourseId");
-        
     }
 
     // GET: Courses

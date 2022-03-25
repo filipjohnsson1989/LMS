@@ -6,23 +6,30 @@ namespace Lms.Web.Views.Shared.Components.ComponentClasses
     {
         private readonly IUnitOfWork iuw;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger logger;
+        private static int count;
 
-        public ModulesVC(IUnitOfWork iuw, UserManager<ApplicationUser> userManager)
+        public ModulesVC(IUnitOfWork iuw, UserManager<ApplicationUser> userManager, ILogger logger)
         {
             this.iuw = iuw;
             this.userManager = userManager;
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
         public async Task<IViewComponentResult> InvokeAsync(string userId)
         {
+            count++;
+            logger.LogInformation($"\r\n\r\n\r\n\r\n ModuleVD Id: {TempData.Peek("CourseId")} Times:{count}\r\n\r\n\r\n\r\n\r\n");
+            
             var user = await userManager.FindByIdAsync(userId);
 
             if (User.IsInRole("Teacher"))
             {
                 int courseId;
-                if(TempData["CourseId"] is null)
+                if(TempData.Peek("CourseId") is null)
                     courseId = iuw.courseRepo.GetAllCourses().Result.First().Id;
                 else
                  courseId = int.Parse(TempData["CourseId"].ToString());
+
                 
                 TempData.Keep("CourseId");
                 var modules = await iuw.moduleRepo.GetAllModulesByCourseId(courseId);

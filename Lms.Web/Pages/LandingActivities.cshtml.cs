@@ -36,28 +36,29 @@ public class ActivitiesModel : PageModel
         NameSort = sortOrder == "Name" ? "name_desc" : "Name";
         DateSort = sortOrder == "Date" ? "date_desc" : "Date";
 
-        if (User.IsInRole("Teacher"))
-        {
-            int courseId;
-            int moduleId;
-            if (TempData["CourseId"] is null)
-            {
-                courseId = db.Courses.First().Id;
-                moduleId = db.Modules.Where(c => c.CourseId == courseId).First().Id;
-                id = moduleId;
-                TempData["CourseId"]=courseId;
-            }
+        //if (User.IsInRole("Teacher"))
+        //{
+        //    int courseId;
+        //    int moduleId;
+        //    if (TempData.Peek("CourseId") is null)
+        //    {
+                
+        //        courseId = db.Courses.First().Id;
+        //        moduleId = db.Modules.Where(c => c.CourseId == courseId).First().Id;
+        //        id = moduleId;
+        //        TempData["CourseId"] = courseId;
+        //    }
 
-            else
-            {
-                courseId = int.Parse(TempData["CourseId"].ToString());
-                moduleId = db.Modules.Where(c => c.CourseId == courseId).First().Id;
-                id = moduleId;
-            }
-            TempData.Keep("CourseId");
-        }
+        //    else
+        //    {
+        //        courseId = int.Parse(TempData["CourseId"].ToString());
+        //        moduleId = db.Modules.Where(c => c.CourseId == courseId).First().Id;
+        //        id = moduleId;
+        //    }
+        //    TempData.Keep("CourseId");
+        //}
 
-            CurrentFilter = searchString;
+        CurrentFilter = searchString;
         Activities = await db.Activities.Where(a => a.ModuleId == id).OrderBy(a => a.EndDate).Include(a => a.ActivityType).Include(a => a.Documents).ToListAsync();
 
         //Filter By week. starting from first Monday of the year
