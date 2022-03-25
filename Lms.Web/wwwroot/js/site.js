@@ -10,7 +10,7 @@ $('#selectedCourse').on('change', function (e) {
 function changeTrackedCourse(id) {
   
     $.ajax({
-        url: 'CourseSelector/TempData/',
+        url: '/CourseSelector/TempData/',
         data: {id: id},
         type: 'POST',
         success: function (data) { location.reload(); },

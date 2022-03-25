@@ -1,6 +1,7 @@
 ﻿
 $(document).ready(start());
 
+
 //start function
 //    if url is activity/any id
 //         do nothing
