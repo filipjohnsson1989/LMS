@@ -32,7 +32,8 @@ public class ModuleRepository : IModuleRepository
 
     public async Task<IEnumerable<Module>> GetAllModulesByCourseId(int courseId)
     {
-        return await db.Modules.Where(m => m.CourseId == courseId).ToListAsync();
+       var module =  db.Modules.Where(c=>c.CourseId==courseId).AsQueryable();
+        return module;
     }
 
 

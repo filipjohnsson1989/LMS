@@ -246,5 +246,5 @@ public class CoursesController : Controller
 
         return RedirectToAction(nameof(Student_CourseOverview));
     }
-
+    
 }
