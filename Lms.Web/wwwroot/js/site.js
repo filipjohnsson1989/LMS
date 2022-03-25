@@ -13,7 +13,7 @@ function changeTrackedCourse(id) {
         url: '/CourseSelector/TempData/',
         data: {id: id},
         type: 'POST',
-        success: function (data) { location.reload(); },
+        success: function (data) { window.location.href = '../' },
         error: function (r) {
             alert(r.responseText);
         }
