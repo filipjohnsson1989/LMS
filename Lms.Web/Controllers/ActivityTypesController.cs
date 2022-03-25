@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lms.Web.Controllers;
@@ -199,10 +200,14 @@ public class ActivityTypesController : Controller
                     await unitOfWork.documentRepo.AddDocument(objfiles);
                     await unitOfWork.CompleteAsync();
 
+                    TempData["Success"] = $"{model.Upload.FileName} is successfully uploaded";
                 }
             }
         }
-        return RedirectToAction("Index");
+
+        return Redirect(model.Url);
+
+
     }
 
 

@@ -1,4 +1,4 @@
-﻿
+﻿@inject ICourseSelector service
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +21,7 @@
                 <a class="nav-link fwcolor" asp-controller="Courses" asp-action="Student_CourseOverview" >Student Course Overview</a>
                  @if (User.IsInRole("Teacher"))
                 {  
-                    <select  id="selectedCourse" class="form-select" style="width:25%" asp-items="@await service.GetSelectList()">
+                    <select  id="selectedCourse" class="form-select" style="width:25%" asp-items="@await service.GetSelectListAsync()">
                         <option selected="selected" value="">Select Course</option>
                     </select>
                 }

@@ -7,7 +7,7 @@ namespace Lms.Core.ViewModels
     {
         //toDo Validation
         public IFormFile? Upload { get; set; }
-
+        public string Url { get; set; }
         public Course? Course { get; set; }
         public Module? Module { get; set; }
         public Activity? Activity { get; set; }

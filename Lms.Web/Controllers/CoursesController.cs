@@ -28,11 +28,21 @@ public class CoursesController : Controller
     // Dynamic course id
     public async Task TrackedCourseId(int id)
     {
-
-        TempData["CourseId"] = id;
+        Console.WriteLine("ya1");
+         TempData["CourseId"] = id;
         TempData.Keep("CourseId");
         
     }
+    [HttpPost]
+    [Route("indices/TestMethod/")]
+    public ActionResult SetTempData(int id)
+    {
+        // Set your TempData key to the value passed in
+        TempData["CourseId"] = id;
+        TempData.Keep("CourseId");
+        return Ok("success");
+    }
+
 
     // GET: Courses
     public async Task<IActionResult> Index()

@@ -12,7 +12,7 @@ namespace Lms.Web.Services
         }
 
 
-        public async Task<IEnumerable<SelectListItem>> GetSelectList()
+        public async Task<IEnumerable<SelectListItem>> GetSelectListAsync()
         {
             return await db.Courses.Select(c => new SelectListItem
             {

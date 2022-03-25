@@ -7,7 +7,8 @@ $(document).ready(start());
 //   else go to url/activity/model id
 
 function start() {
-    if (window.location.pathname == '/')
-        window.location.pathname = '/' + 'LandingActivities' + '/' + id;
-
+    if (id != null) {
+        if (window.location.pathname == '/')
+            window.location.pathname = '/' + 'LandingActivities' + '/' + id;
+    }
 }

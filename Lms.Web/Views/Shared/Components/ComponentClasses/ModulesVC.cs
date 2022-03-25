@@ -16,6 +16,7 @@ namespace Lms.Web.Views.Shared.Components.ComponentClasses
         {
             var user = await userManager.FindByIdAsync(userId);
 
+            Console.WriteLine("ya2");
             if (User.IsInRole("Teacher"))
             {
                 int courseId;
@@ -23,7 +24,8 @@ namespace Lms.Web.Views.Shared.Components.ComponentClasses
                     courseId = iuw.courseRepo.GetAllCourses().Result.First().Id;
                 else
                  courseId = int.Parse(TempData["CourseId"].ToString());
-                
+
+                Console.WriteLine("course id:" + courseId);
                 TempData.Keep("CourseId");
                 var modules = await iuw.moduleRepo.GetAllModulesByCourseId(courseId);
                 return View(modules);

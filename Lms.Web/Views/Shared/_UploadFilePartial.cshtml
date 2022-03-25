@@ -1,5 +1,10 @@
 ﻿@model UploadFileViewModel
 
+@Context.Request.Path 
+@Context.Request.Path.Value
+@{
+    Model.Url = @Context.Request.Path ;
+} 
 @using (Html.BeginForm("FormUpload", "ActivityTypes", 
                        FormMethod.Post, 
                        new { enctype = "multipart/form-data" }))
@@ -8,5 +13,9 @@
     <div class="form-group">
         @Html.TextBoxFor(m => m.Upload, new { type = "file" })
     </div>
+    @Context.Request.Path 
+    
+@Html.HiddenFor(m => m.Url);
+@Html.HiddenFor(m => m.Activity);
     <input type="submit" name="submit" value="Submit" />
 }

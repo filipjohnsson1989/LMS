@@ -6,7 +6,7 @@ namespace Lms.Web.Services
     public interface ICourseSelector
     {
         
-        public Task<IEnumerable<SelectListItem>> GetSelectList();
+        Task<IEnumerable<SelectListItem>> GetSelectListAsync();
     }
 }
 
