@@ -49,8 +49,8 @@ using (var scope = app.Services.CreateScope())
     var db = services.GetRequiredService<ApplicationDbContext>();
     var config = services.GetRequiredService<IConfiguration>();
 
-    db.Database.EnsureDeleted();
-    db.Database.Migrate();
+    //db.Database.EnsureDeleted();
+    //db.Database.Migrate();
 
     //dotnet user-secrets set "AdminPW" "L�seord1!"
     var adminPW = config["AdminPW"];
