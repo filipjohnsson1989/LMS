@@ -10,10 +10,14 @@ $('#selectedCourse').on('change', function (e) {
 function changeTrackedCourse(id) {
   
     $.ajax({
-        url: '/indices/TestMethod/',
+        url: 'CourseSelector/TempData/',
         data: {id: id},
         type: 'POST',
-        success: function (data) { location.reload();}
+        success: function (data) { location.reload(); },
+        error: function (r) {
+            alert(r.responseText);
+        }
+
     });
 
 

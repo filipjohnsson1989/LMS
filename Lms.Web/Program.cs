@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<IRepository<Course>, CourseRepositoryG>();
 builder.Services.AddTransient<IRepository<Module>, ModuleRepositoryG>();
 builder.Services.AddTransient<IRepository<ActivityType>, ActivityTypeRepository>();
-//builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
