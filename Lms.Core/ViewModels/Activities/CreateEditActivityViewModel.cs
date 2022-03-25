@@ -18,7 +18,6 @@ public class CreateEditActivityViewModel
     [Display(Name = "Activity Type")]
     public ActivityTypeViewModel ActivityType { get; set; } = default!;
 
-
-
-
+    [Display(Name = "File")]
+    public UploadFileViewModel? UploadFile { get; set; }
 }
