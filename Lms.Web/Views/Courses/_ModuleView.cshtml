@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Module>
 
 <div class="card">
-    <div class="card-header tbr fwcolor"> <h1>Module history</h1>Click to show activities</div>
+    <div class="card-header tbr fwcolor"> <h1>Module history</h1>Tip: Click a module to show its activities!</div>
 </div>
 <table class="table tbl">
     <thead>
@@ -10,6 +10,7 @@
             <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Description)</th>
             <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.StartDate)</th>
             <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.EndDate)</th>
+            <th class="t1 fwcolor">Expand</th>
         </tr>
     </thead>
     <tbody>
@@ -24,6 +25,7 @@
                     <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Description)</td>
                     <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.StartDate)</td>
                     <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.EndDate)</td>
+                    <td class="t1 fwcolor expandState">+</td>
                 </tr>
                 
                 foreach (var activity in item.Activities)
@@ -33,6 +35,7 @@
                     <td class="t1 fwcolor">@Html.DisplayFor(modelItem => activity.Description)</td>
                     <td class="t1 fwcolor">@Html.DisplayFor(modelItem => activity.StartDate)</td>
                     <td class="t1 fwcolor">@Html.DisplayFor(modelItem => activity.EndDate)</td>
+                    
                 </tr>
                 }
             }
