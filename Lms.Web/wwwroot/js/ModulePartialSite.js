@@ -1,6 +1,6 @@
-﻿const modules = document.querySelectorAll(".moduleClickable");
+﻿var allModules = document.querySelectorAll(".moduleClickable");
 
-modules.forEach(btn => btn.addEventListener('click', function (event) {
+allModules.forEach(btn => btn.addEventListener('click', function (event) {
     console.log('click');
     let targetId = event.target.parentNode.id;
     
@@ -14,8 +14,6 @@ modules.forEach(btn => btn.addEventListener('click', function (event) {
         else { element.classList.add('hidden') }
 
     })
-    
-    
 }));
 
 
