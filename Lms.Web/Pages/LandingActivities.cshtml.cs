@@ -16,9 +16,9 @@ public class ActivitiesModel : PageModel
     {
         this.logger = logger ?? throw new NullReferenceException(nameof(logger));
         this.db = db ?? throw new NullReferenceException(nameof(db));
-
         this.userManager = userManager ?? throw new NullReferenceException(nameof(userManager));
     }
+    public string CourseName { get; set; }
     public List<Activity> Activities { get; set; } = new List<Activity>();
     public List<Activity> WeekActivities { get; set; } = new List<Activity>();
     public List<int> Weeks { get; set; } = new List<int>();
@@ -38,6 +38,16 @@ public class ActivitiesModel : PageModel
 
         CurrentFilter = searchString;
         Activities = await db.Activities.Where(a => a.ModuleId == id).OrderBy(a => a.EndDate).Include(a => a.ActivityType).Include(a => a.Documents).ToListAsync();
+        if (User.IsInRole("Student"))
+        {
+           var user = await userManager.GetUserAsync(User);
+           var course = db.Courses.Where(c => c.Id == user.CourseId).FirstOrDefault();
+           CourseName = course.Name;
+        }
+        else
+        {
+            CourseName = "temp";
+        }
 
         //Filter By week. starting from first Monday of the year
         CultureInfo myCI = CultureInfo.GetCultureInfo("sv-SE");
@@ -79,5 +89,6 @@ public class ActivitiesModel : PageModel
         }
         return Page();
     }
+
 }
 
