@@ -22,9 +22,12 @@
                     Sort By Name
                 </a>
             </li>
-            <li>
-                <a class="nav-link courseLink" asp-controller="Courses" asp-action="Student_CourseOverview"><strong>Course: </strong>@Model.CourseName</a>
-            </li>
+            @if (User.IsInRole("Student"))
+            {
+                <li>
+                    <a class="nav-link courseLink" asp-controller="Courses" asp-action="Student_CourseOverview"><strong>Course: </strong>@Model.CourseName</a>
+                </li>
+            }
         </ul>
         @if (TempData["Success"] != null)
         {
