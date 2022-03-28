@@ -1,10 +1,10 @@
 ﻿@page "{id}"
-
 @model ActivitiesModel
-
+@inject IAssignmentByUserList service
 @{
     Layout = "_Layout.cshtml";
     ViewData["Title"] = "Activities";
+    var time = DateTime.Now;
 }
 
 
@@ -47,15 +47,16 @@
                     i = activity.Id;
                     var activityId = $"activity{i}";
 
-                    if (activity.EndDate.CompareTo(DateTime.Now) > 0)
+                    if (activity.EndDate.CompareTo(time) > 0)
                     {
-                        var due = activity.EndDate - DateTime.Now;
+                        var due = activity.EndDate - time;
                         string startDate = $"{activity.StartDate.ToShortDateString()}, {activity.StartDate.ToShortTimeString()}";
                         string endDate = $"{activity.EndDate.ToShortDateString()}, {activity.EndDate.ToShortTimeString()}";
                         string dueTime = $"{@due.Days} day(s), {@due.Hours}h & {@due.Minutes}m";
 
                         if (activity.ActivityType.Id == 2)
                         {
+                            var students = await service.GetStudentListAsync(i);
 
 
                             //Assignment
@@ -75,23 +76,102 @@
                                     <hr>
                                     <div class="documents">
                                         <strong>Documents:</strong>
-                                        @await Html.PartialAsync("_UploadFilePartial", new UploadFileViewModel(){Activity = activity})      <div class="btn btn-primary uploadBtn  col-3">
-                                            TestUploadBtn
-                                        </div>
-                                        <ul class="list-group docs">
-                                            @foreach (var doc in activity.Documents)
+                                        @await Html.PartialAsync("_UploadFilePartial", new UploadFileViewModel{ActivityId = i})
+
+
+                                        <strong>Activity Documents:</strong>
+
+                                        @foreach (var doc in activity.Documents)
+                                        {
+                                            if (!students.Contains(doc.User))
                                             {
-                                                <li>
-                                                    <p>Name: @doc.Name</p>
-                                                    <hr>
-                                                    <p>Type:  @doc.ContentType</p>
-                                                    <p>Upload Time: @doc.UploadDate</p>
-                                                    <span class="deleteDoc">&#x2717</span>
 
-                                                </li>
-
+                                                var docId = doc.Id;
+                                                <ul class="list-group docs">
+                                                    <li>
+                                                        <p>Name: @doc.Name</p>
+                                                        <hr>
+                                                        <p>Type:  @doc.ContentType</p>
+                                                        <p>Upload Time: @doc.UploadDate</p>
+                                                        <a asp-controller="ActivityTypes" asp-action="Download" asp-route-id="@docId">Download</a>
+                                                        @if (User.IsInRole("Teacher"))
+                                                        {
+                                                            @await Html.PartialAsync("_DeleteFilePartial", new DeleteFileViewModel{DocumentId = docId})
+                                                        }
+                                                    </li>
+                                                </ul>
                                             }
-                                        </ul>
+                                        }
+
+
+
+
+                                        <strong>Student's Documents:</strong>
+                                        @if (User.IsInRole("Teacher"))
+                                        {
+
+                                            var deadline = activity.EndDate;
+                                            @foreach (var student in students)
+                                            {
+                                                int totalDocuments = 0;
+                                                <ul class="list-group docs">
+
+                                                    <li> @student.UserName </li>
+                                                    @foreach (var doc in activity.Documents)
+                                                    {
+                                                        if (doc.User == student)
+                                                        {
+                                                            totalDocuments++;
+
+                                                            var docId = doc.Id;
+                                                            <li>
+                                                                <p>Name: @doc.Name</p>
+                                                                <hr>
+                                                                <p>Type:  @doc.ContentType</p>
+                                                                <p>Upload Time: @doc.UploadDate</p>
+                                                                <a asp-controller="ActivityTypes" asp-action="Download" asp-route-id="@docId">Download</a>
+                                                                @await Html.PartialAsync("_DeleteFilePartial", new DeleteFileViewModel{DocumentId = docId})
+                                                            </li>
+                                                        }
+                                                    }
+                                                    @if (totalDocuments == 0)
+                                                    {
+                                                        @if (deadline >= time)
+                                                        {
+                                                            <li> Missing</li>
+
+                                                        }
+                                                        @if (deadline < time)
+                                                        {
+                                                            <li> Late</li>
+                                                        }
+                                                    }
+
+                                                </ul>
+                                            }
+                                        }
+                                        @if (User.IsInRole("Student"))
+                                        {
+                                            <ul class="list-group docs">
+                                                @foreach (var doc in activity.Documents)
+                                                {
+                                                    if (doc.User == Model.CurrentUser)
+                                                    {
+                                                        var docId = doc.Id;
+
+                                                        <li>
+                                                            <p>Name: @doc.Name</p>
+                                                            <hr>
+                                                            <p>Type:  @doc.ContentType</p>
+                                                            <p>Upload Time: @doc.UploadDate</p>
+                                                            <a asp-controller="ActivityTypes" asp-action="Download" asp-route-id="@docId">Download</a>
+                                                            @await Html.PartialAsync("_DeleteFilePartial", new DeleteFileViewModel{DocumentId = docId})
+                                                        </li>
+                                                    }
+                                                }
+
+                                            </ul>
+                                        }
 
                                     </div>
                                 </div>
