@@ -30,6 +30,11 @@ public class ActivityRepository : IActivityRepository
         db.Activities.Remove(activity);
     }
 
+    public async Task<IEnumerable<Activity>> GetActivitiesByModuleIdAsync(int moduleId)
+    {
+        return await db.Activities.Where(m => m.ModuleId == moduleId).ToListAsync();
+    }
+
     public async Task<Activity> GetActivityId(int id)
     {
         var activity = await db.Activities.FirstOrDefaultAsync(m => m.Id == id);

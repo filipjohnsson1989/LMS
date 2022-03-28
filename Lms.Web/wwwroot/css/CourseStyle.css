@@ -63,3 +63,54 @@ body {
 .bbgcolor {
     background-color: #484948;
 }
+.CourseContainer {
+    width: 30%;
+    background-color: grey;
+    text-align: center;
+    float: left;
+    margin-right: 20px;
+    overflow-y: scroll;
+}
+.ModuleContainer {
+    width: 30%;
+    background-color: grey;
+    text-align: center;
+    float: left;
+    margin-right: 20px;
+    overflow-y: scroll;
+}
+.ActivityContainer {
+    width: 30%;
+    height:500px;
+    background-color: grey;
+    text-align: center;
+    float: left;
+    margin-right: 20px;
+    overflow-y:scroll;
+}
+.Coursebtn{
+    width:100%;
+    background-color:#16637c;
+    color:white;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+.Modulebtn {
+    width: 100%;
+    background-color:burlywood;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.Activitybtn {
+    width: 100%;
+    background-color:cadetblue;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.Addbtn {
+    background-color: #623D2F;
+    color:white;
+    
+}

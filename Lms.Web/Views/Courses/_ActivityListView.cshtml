@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Activity>
+<div class=" ActivityContainer">
+    @foreach (var item in Model) {
+     <a  class="btn Activitybtn" 
+    >&#x1F6C8 @Html.DisplayFor(model => item.Name)</a>
+    <br />
+    }
+    <a class="btn Addbtn">Add Activity</a>
+</div>
+

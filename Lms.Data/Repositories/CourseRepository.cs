@@ -93,8 +93,7 @@ public class CourseRepository : ICourseRepository
    
     public async Task<IEnumerable<Course>> GetAllCourses()
     {
-        return await db.Courses.Take(10)
-            .ToListAsync();
+        return await db.Courses.ToListAsync();
     }
 
     public async Task<Course> GetCourseById_IncludeModulesAsync(int id)

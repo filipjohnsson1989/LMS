@@ -257,4 +257,20 @@ public class CoursesController : Controller
         return RedirectToAction(nameof(Student_CourseOverview));
     }
 
+    public async Task<IActionResult> Add_Course_Module_Activity()
+    {
+        var courses = await unitOfWork.courseRepo.GetAllCourses();
+        return View(courses);
+    }
+    
+    public async Task<IActionResult> LoadModuleListPartial(int id)
+    {
+        var module = await unitOfWork.moduleRepo.GetModulesByCourseIdAsync(id);
+        return PartialView("_ModuleListView", module);
+    }
+    public async Task<IActionResult> LoadActivityListPartial(int id)
+    {
+        var activity = await unitOfWork.activityRepo.GetActivitiesByModuleIdAsync(id);
+        return PartialView("_ActivityListView", activity);
+    }
 }

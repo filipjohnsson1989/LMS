@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Course>
+@{
+    Layout = "_Layout.cshtml";
+}
+<br /> <br /><br /> <br />
+<div class=" CourseContainer">
+    @foreach (var item in Model) {
+    <a id="modules" class="btn Coursebtn" asp-action="LoadModuleListPartial" asp-route-id="@item.Id"
+        data-ajax="true"
+        data-ajax-update="#partial"
+        data-ajax-mode="replace"
+    >&#x1F6C8 @Html.DisplayFor(model => item.Name)</a>
+    <br />
+    }
+    <a asp-action="Create" class="btn Addbtn">Add Course</a>
+</div>
+
+<div id="partial">
+    </div>

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Module>
+<div class=" ModuleContainer">
+    @foreach (var item in Model) {
+     <a id="activities" class="btn Modulebtn" asp-action="LoadActivityListPartial" asp-route-id="@item.Id"
+        data-ajax="true"
+        data-ajax-update="#activitypartial"
+        data-ajax-mode="replace"
+    >&#x1F6C8 @Html.DisplayFor(model => item.Name)</a>
+    <br />
+    }
+    <a class="btn Addbtn">Add Module</a>
+</div>
+
+<div id="activitypartial">
+    </div>
