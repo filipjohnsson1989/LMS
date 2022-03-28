@@ -229,8 +229,9 @@ public class CoursesController : Controller
     [Authorize(Roles = "Student")]
     public async Task<IActionResult> LoadModulePartial(int id)
     {
-        var model = await unitOfWork.moduleRepo.GetModulesByCourseIdAsync(id);
-        return PartialView("_ModuleView", model);
+        var model = await unitOfWork.moduleRepo.GetModulesByCourseId_IncludeActivitiesAsync(id);
+        var sorted = model.OrderBy(x => x.StartDate);
+        return PartialView("_ModuleView", sorted);
     }
     [Authorize(Roles = "Student")]
     public async Task<IActionResult> LoadStudentPartial(int id)

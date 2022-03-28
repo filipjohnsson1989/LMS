@@ -49,3 +49,37 @@ body {
     border-block:none !important;
     border: none !important;
 }
+.hidden {
+    display: none !important;
+}
+.moduleClickable:hover {
+    background-color: #305763;
+}
+.activity {
+    background-color: ThreeDDarkShadow;
+    border: solid;
+    font-size: 0.8rem;
+}
+.btn-primary:hover {
+    background-color: #724C3E !important;
+}
+.btn-primary {
+    background-color: #56433C;
+    color: white;
+    width: 6rem;
+    height: 2.1rem;
+    border-block: none;
+    border-block-start: none;
+    border-inline: none;
+}
+.active {
+    color: black;
+    font-weight: 700;
+    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+    background-color: white;
+    padding: 0.2rem;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
