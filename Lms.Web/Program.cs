@@ -34,6 +34,7 @@ builder.Services.AddRazorPages(options =>
 
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IAssignmentByUserList, AssignmentByUserList>();
 builder.Services.AddScoped<ICourseSelector, CourseSelector>();
 builder.Services.AddAutoMapper(typeof(LMSMappings));
 

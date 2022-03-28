@@ -22,6 +22,7 @@ public class ActivitiesModel : PageModel
     public List<Activity> Activities { get; set; } = new List<Activity>();
     public List<Activity> WeekActivities { get; set; } = new List<Activity>();
     public List<int> Weeks { get; set; } = new List<int>();
+    public ApplicationUser CurrentUser { get; set; }
     public string NameSort { get; set; }
     public string DateSort { get; set; }
     public string CurrentSort { get; set; }
@@ -32,6 +33,9 @@ public class ActivitiesModel : PageModel
         CurrentSort = sortOrder;
         NameSort = sortOrder == "Name" ? "name_desc" : "Name";
         DateSort = sortOrder == "Date" ? "date_desc" : "Date";
+
+        CurrentUser = await userManager.GetUserAsync(User);
+
         CurrentFilter = searchString;
         Activities = await db.Activities.Where(a => a.ModuleId == id).OrderBy(a => a.EndDate).Include(a => a.ActivityType).Include(a => a.Documents).ToListAsync();
         if (User.IsInRole("Student"))
