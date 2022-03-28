@@ -16,6 +16,6 @@ namespace Lms.Core.Interfaces
         Task<Module> GetModuleById(int id);
         Task<IEnumerable<Module>> GetAllModules();
         Task<IEnumerable<Module>> GetModulesByCourseIdAsync(int courseId);
-
+        Task<IEnumerable<Module>> GetModulesByCourseId_IncludeActivitiesAsync(int courseId);
     }
 }

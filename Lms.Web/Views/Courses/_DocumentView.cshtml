@@ -1,16 +1,12 @@
 ﻿@model IEnumerable<Document>
 
 <div class="card" >
-    <div class="card-header tbr fwcolor">
-        <h1>Documents Information</h1>
-    </div>
      <table class="table tbl">
     <thead>
         <tr class="tbr fwcolor">
             <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Name)</th>
             <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.UploadDate)</th>
             <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.ContentType)</th>
-            @*<th class="t1 fwcolor">Actions</th>*@
         </tr>
     </thead>
     <tbody>
@@ -19,12 +15,9 @@
             <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Name)</td>
             <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.UploadDate)</td>
             <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.ContentType)</td>
-            @*<td class="t1 fwcolor">
-                <form asp-action=""> 
-                    <a class="btn bbcolor fwcolor" asp-controller = "ActivityTypes" asp-action="Download" asp-route-id="@item.Id">Download</a> 
-                    <input type="submit" value="Delete" class="btn btn-danger" asp-action="DeleteDocument" asp-route-id="@item.Id" />
-                </form>
-            </td>*@
+            <td class="t1 fwcolor">
+            <a class="btn btn-primary fwcolor" asp-controller = "ActivityTypes" asp-action="Download" asp-route-id="@item.Id">Download</a>
+            </td>
         </tr>
 }
     </tbody>
