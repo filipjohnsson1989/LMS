@@ -54,6 +54,7 @@ body {
 }
 .moduleClickable:hover {
     background-color: #305763;
+    cursor: pointer;
 }
 .activity {
     background-color: ThreeDDarkShadow;
