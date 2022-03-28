@@ -44,23 +44,39 @@ public class UnitOfWork : IUnitOfWork
                 this.moduleTypeRepoG = new ModuleRepositoryG(this.context);
             }
 
-                return moduleTypeRepoG;
-            }
+            return moduleTypeRepoG;
         }
-        private IRepository<Activity> activityTypeRepoG = default!;
-        public IRepository<Activity> ActivityRepoG
+    }
+    private IRepository<Activity> activityTypeRepoG = default!;
+    public IRepository<Activity> ActivityRepoG
+    {
+        get
         {
-            get
+            if (activityTypeRepoG == null)
             {
-                if (activityTypeRepoG == null)
-                {
-                    this.activityTypeRepoG = new ActivityRepositoryG(this.context);
-                }
-
-                return activityTypeRepoG;
+                this.activityTypeRepoG = new ActivityRepositoryG(this.context);
             }
+
+            return activityTypeRepoG;
         }
-        public IDocumentRepository documentRepo { get; set; }
+    }
+
+    private IRepository<Document> documentRepoG;
+
+    public IRepository<Document> DocumentRepoG
+    {
+        get
+        {
+            if (documentRepoG == null)
+            {
+                this.documentRepoG = new DocumentRepositoryG(this.context);
+            }
+
+            return documentRepoG;
+        }
+    }
+
+    public IDocumentRepository documentRepo { get; set; }
 
     public ApplicationDbContext context;
 

@@ -20,6 +20,7 @@ public class ActivityRepositoryG : GenericRepository<Activity>
         return await context.Activities
             .Include(activity => activity.Module)
             .Include(activity => activity.ActivityType)
+            .Include(activity => activity.Documents)
             .FirstOrDefaultAsync(activity => activity.Id == id);
 
     }

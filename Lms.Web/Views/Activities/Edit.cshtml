@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Lms.Core.ViewModels.Documents
+@{
     Layout = "/Views/Shared/_MasterLayout.cshtml";
 }
 @model Lms.Core.ViewModels.Activities.CreateEditActivityViewModel
@@ -13,7 +14,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -47,11 +48,49 @@
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="UploadFiles" class="control-label"></label>
+                <input asp-for=UploadFiles type="file" multiple class="form-control">
+                <span asp-validation-for="UploadFiles" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+
+@if (Model.Documents is not null)
+{
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameForInnerType((DocumentViewModel model) => model.Name)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Documents)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                <a asp-controller="Documents" asp-action="Download" asp-route-id="@item.Id" target="_blank">Download</a>
+                                <a asp-controller="Documents" asp-action="Delete" asp-route-id="@item.Id" target="_blank">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
 
 <div>
     <a asp-action="Index">Back to List</a>

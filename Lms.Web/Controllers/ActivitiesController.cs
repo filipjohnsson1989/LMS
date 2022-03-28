@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Lms.Core.ViewModels.Activities;
+using Lms.Web.Extensions;
 
 namespace Lms.Web.Controllers;
 
@@ -62,7 +63,7 @@ public class ActivitiesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Module,ActivityType")] CreateEditActivityViewModel activityViewModel)
+    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Module,ActivityType,UploadFiles")] CreateEditActivityViewModel activityViewModel)
     {
         if (ModelState.IsValid)
         {
@@ -85,6 +86,8 @@ public class ActivitiesController : Controller
             await unitOfWork.ActivityRepoG
                             .AddAsync(activity);
 
+            await UploadFilesAsync(activity, activityViewModel.UploadFiles);
+
             await unitOfWork.CompleteAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -92,6 +95,34 @@ public class ActivitiesController : Controller
 
         return View(activityViewModel);
     }
+
+    private async Task UploadFilesAsync(Activity? activity, IEnumerable<IFormFile>? formFiles)
+    {
+        IEnumerable<Task<Document>>? documents = formFiles?
+                .Select(async formFile
+                        => new Document
+                        {
+                            Name = formFile.FileName,
+                            Data = (await formFile.GetBytesAsync()),
+                            ContentType = formFile.ContentType,
+                            Activity = activity,
+                        });
+
+
+        if (documents is not null)
+        {
+            foreach (var document in documents)
+            {
+                var doc = await document;
+                if (doc is not null)
+                {
+                    await unitOfWork.documentRepo.AddDocument(doc);
+                }
+
+            }
+        }
+    }
+
 
     // GET: Activities/Edit/5
     public async Task<IActionResult> Edit(int? id)
@@ -118,7 +149,7 @@ public class ActivitiesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Module,ActivityType")] CreateEditActivityViewModel activityViewModel)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Module,ActivityType,UploadFiles")] CreateEditActivityViewModel activityViewModel)
     {
         if (id != activityViewModel.Id)
         {
@@ -147,6 +178,9 @@ public class ActivitiesController : Controller
 
                 unitOfWork.ActivityRepoG
                           .Update(activity);
+
+                await UploadFilesAsync(activity, activityViewModel.UploadFiles);
+
                 await unitOfWork.CompleteAsync();
             }
             catch (DbUpdateConcurrencyException)

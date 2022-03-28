@@ -11,5 +11,7 @@ public interface IUnitOfWork
     IRepository<Activity> ActivityRepoG { get; }
     IRepository<ActivityType> ActivityTypeRepo { get;}
     IDocumentRepository documentRepo { get;}
+    IRepository<Document> DocumentRepoG { get; }
+
     Task CompleteAsync();
 }
