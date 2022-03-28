@@ -1,0 +1,11 @@
+﻿
+@model DeleteFileViewModel
+
+@{
+    Model.Url = @Context.Request.Path ;
+} 
+@Html.ActionLink("Delete", "DeleteDocument", "ActivityTypes", @Model)
+
+  
+
+@Html.HiddenFor(m => m.Url);

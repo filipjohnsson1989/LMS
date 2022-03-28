@@ -9,17 +9,20 @@ public class ActivitiesModel : PageModel
 {
     private readonly ILogger<ActivitiesModel> logger;
     private readonly ApplicationDbContext db;
+    private readonly UserManager<ApplicationUser> userManager;
 
     public ActivitiesModel(ILogger<ActivitiesModel> logger,
-                                     ApplicationDbContext db)
+                                     ApplicationDbContext db, UserManager<ApplicationUser> userManager)
     {
         this.logger = logger ?? throw new NullReferenceException(nameof(logger));
         this.db = db ?? throw new NullReferenceException(nameof(db));
+        this.userManager = userManager ?? throw new NullReferenceException(nameof(userManager));
     }
+    public string CourseName { get; set; }
     public List<Activity> Activities { get; set; } = new List<Activity>();
-
     public List<Activity> WeekActivities { get; set; } = new List<Activity>();
     public List<int> Weeks { get; set; } = new List<int>();
+    public ApplicationUser CurrentUser { get; set; }
     public string NameSort { get; set; }
     public string DateSort { get; set; }
     public string CurrentSort { get; set; }
@@ -31,9 +34,20 @@ public class ActivitiesModel : PageModel
         NameSort = sortOrder == "Name" ? "name_desc" : "Name";
         DateSort = sortOrder == "Date" ? "date_desc" : "Date";
 
-        CurrentFilter = searchString;
+        CurrentUser = await userManager.GetUserAsync(User);
 
+        CurrentFilter = searchString;
         Activities = await db.Activities.Where(a => a.ModuleId == id).OrderBy(a => a.EndDate).Include(a => a.ActivityType).Include(a => a.Documents).ToListAsync();
+        if (User.IsInRole("Student"))
+        {
+           var user = await userManager.GetUserAsync(User);
+           var course = db.Courses.Where(c => c.Id == user.CourseId).FirstOrDefault();
+           CourseName = course.Name;
+        }
+        else
+        {
+            CourseName = "temp";
+        }
 
         //Filter By week. starting from first Monday of the year
         CultureInfo myCI = CultureInfo.GetCultureInfo("sv-SE");

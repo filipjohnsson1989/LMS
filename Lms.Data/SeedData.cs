@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,8 +9,10 @@ public class SeedData
 {
     private static RoleManager<IdentityRole> roleManager = default!;
     private static UserManager<ApplicationUser> userManager = default!;
+    private static DateTime dateBuffer;
     private static readonly Faker faker = new Faker("sv");
     const int defaultNumberOfInitializingRecords = 8;
+    public static DateTime DateBuffer { get => dateBuffer; set => dateBuffer = value; }
 
     public static async Task InitAsync(ApplicationDbContext context, IServiceProvider services, string adminPW)
     {
@@ -239,19 +240,25 @@ public class SeedData
 
         foreach (var course in courses)
         {
-            var numBuffer = 1;
+            var dateBufferPre = faker.Date.Between(DateTime.Now.AddDays(-10), DateTime.Now.AddDays(10));
+            var dateShortString = dateBufferPre.ToShortDateString();
+            var newDate = DateTime.Parse(dateShortString);
+            TimeSpan timeSpan = new TimeSpan(0, 9, 0, 0);
+            DateBuffer = newDate + timeSpan;
+
             for (int i = 0; i < faker.Random.Number(8, 16); i++)
             {
-                var startDate = faker.Date.Between(DateTime.Now.AddDays(-10), DateTime.Now.AddDays(10));
+                var startDate = DateBuffer.AddDays(1);
                 var temp = new Module
                 {
                     Name = faker.Company.CatchPhrase(),
                     Description = faker.Lorem.Sentences(3),
                     StartDate = startDate,
-                    EndDate = faker.Date.Between(startDate.AddDays(numBuffer), startDate.AddDays(3)),
+                    EndDate = startDate.AddDays(faker.Random.Number(1, 3)),
                     Course = course,
                 };
-                numBuffer += 3;
+                DateBuffer = temp.EndDate;
+
                 modules.Add(temp);
             }
         }

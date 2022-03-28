@@ -200,5 +200,17 @@ li {
         background: linear-gradient(red, red) !important;
         border-color: firebrick;
     }
+.courseLink:hover {
+    background-color: #724C3E !important;
+    color: white;
+}
+.courseLink {
+    background-color: #56433C;
+    position: absolute;
+    right: 10px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 0.3rem;
+}
 
 

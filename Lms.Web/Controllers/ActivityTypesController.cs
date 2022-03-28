@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lms.Web.Controllers;
@@ -6,8 +7,14 @@ namespace Lms.Web.Controllers;
 public class ActivityTypesController : Controller
 {
     private readonly IUnitOfWork unitOfWork;
+    private readonly UserManager<ApplicationUser> userManager;
 
-    public ActivityTypesController(IUnitOfWork unitOfWork) => this.unitOfWork = unitOfWork;
+    public ActivityTypesController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
+    {
+        this.unitOfWork = unitOfWork;
+        this.userManager = userManager;
+
+    }
 
     // GET: ActivityTypes
     public async Task<IActionResult> Index()
@@ -172,22 +179,43 @@ public class ActivityTypesController : Controller
                     var fileExtension = Path.GetExtension(fileName);
                     var newFileName = String.Concat(Convert.ToString(Guid.NewGuid()), fileExtension);
                     var contentType = file.ContentType;
-                    var course = model.Course;
-                    var module = model.Module;
-                    var activity = model.Activity;
-                    var applicationUser = model.User;
+
+
+
 
                     var objfiles = new Document()
                     {
                         Name = newFileName,
                         //FileType = fileExtension,
                         UploadDate = DateTime.Now,
-                        ContentType = contentType,
-                        Course = course,
-                        Module = module,
-                        Activity = activity,
-                        User = applicationUser
+                        ContentType = contentType
+
                     };
+                    var user = await userManager.GetUserAsync(User);
+                    if (user == null) throw new ArgumentNullException(nameof(user));
+                    objfiles.User = user;
+
+                    if (model.ActivityId != 0)
+                    {
+                        var activity = await unitOfWork.activityRepo.GetActivityId(model.ActivityId);
+                        objfiles.Activity = activity;
+                    }
+                    if (model.CourseId != 0)
+                    {
+                        var course = await unitOfWork.courseRepo.GetCourseByIdAsync(model.CourseId);
+                        objfiles.Course = course;
+                    }
+                    if (model.ModuleId != 0)
+                    {
+                        var module = await unitOfWork.moduleRepo.GetModuleById(model.ModuleId);
+                        objfiles.Module = module;
+                    }
+                    if (model.ApplicationUserId != 0)
+                    {
+                        var applicationUser = await userManager.GetUserAsync(User);
+                        objfiles.User = applicationUser;
+                    }
+
 
 
                     using (var target = new MemoryStream())
@@ -199,12 +227,50 @@ public class ActivityTypesController : Controller
                     await unitOfWork.documentRepo.AddDocument(objfiles);
                     await unitOfWork.CompleteAsync();
 
+                    TempData["Success"] = $"{model.Upload.FileName} is successfully uploaded";
                 }
             }
         }
-        return RedirectToAction("Index");
-    }
 
+        return Redirect(model.Url);
+
+
+    }
+    public async Task<IActionResult> DeleteDocument(DeleteFileViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var document = await unitOfWork.documentRepo.GetDocumentById(model.DocumentId);
+            if (document == null)
+            {
+                return NotFound();
+            }
+
+            var user = await userManager.GetUserAsync(User);
+            if (user == null) throw new ArgumentNullException(nameof(user));
+            if (user == document.User)
+            {
+
+                TempData["success"] = $"You have deleted your own Document. {document.Name} is successfully deleted";
+
+            }
+            else
+            {
+                if (User.IsInRole("Teacher"))
+                {
+                    TempData["success"] = $"You have deleted someone else's Document. {document.Name} is successfully deleted";
+                }
+            }
+
+            await unitOfWork.documentRepo.DeleteDocument(model.DocumentId);
+            await unitOfWork.CompleteAsync();
+
+            return Redirect(model.Url);
+        }
+        TempData["success"] = $"Failed to delete";
+
+        return Redirect(model.Url);
+    }
 
 
 }

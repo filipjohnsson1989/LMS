@@ -1,12 +1,24 @@
-﻿@model UploadFileViewModel
+﻿
+@model UploadFileViewModel
 
+@{
+    Model.Url = @Context.Request.Path ;
+} 
 @using (Html.BeginForm("FormUpload", "ActivityTypes", 
                        FormMethod.Post, 
-                       new { enctype = "multipart/form-data" }))
+                       new { enctype = "multipart/form-data"@*, @class="btn btn-primary uploadBtn  col-3"*@ }))
 
 {
-    <div class="form-group">
-        @Html.TextBoxFor(m => m.Upload, new { type = "file" })
-    </div>
-    <input type="submit" name="submit" value="Submit" />
+        @Html.TextBoxFor(m => m.Upload, new { type = "file"})
+    
+
+
+
+@Html.HiddenFor(m => m.Url);
+@Html.HiddenFor(m => m.ActivityId);
+@Html.HiddenFor(m => m.ModuleId);
+@Html.HiddenFor(m => m.CourseId);
+@Html.HiddenFor(m => m.ApplicationUserId);
+
+    <input class="btn btn-primary uploadBtn  col-3" type="submit" name="submit" value="Submit" />
 }

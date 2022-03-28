@@ -1,4 +1,12 @@
-﻿using Lms.Data.AutoMapper;
+﻿using Lms.Data;
+using Lms.Data.Repositories;
+using Lms.Core.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Lms.Core.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Lms.Data.AutoMapper;
+using Lms.Web.Services;
 using Lms.Web.Conventions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +19,7 @@ builder.Services.AddTransient<IRepository<Course>, CourseRepositoryG>();
 builder.Services.AddTransient<IRepository<Module>, ModuleRepositoryG>();
 builder.Services.AddTransient<IRepository<Activity>, ActivityRepositoryG>();
 builder.Services.AddTransient<IRepository<ActivityType>, ActivityTypeRepository>();
+//builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<IActivityTypeService, ActivityTypeService>();
 
@@ -34,7 +43,8 @@ builder.Services.AddRazorPages(options =>
 
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+builder.Services.AddScoped<IAssignmentByUserList, AssignmentByUserList>();
+builder.Services.AddScoped<ICourseSelector, CourseSelector>();
 builder.Services.AddAutoMapper(typeof(LMSMappings));
 
 

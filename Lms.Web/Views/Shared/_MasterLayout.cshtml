@@ -1,4 +1,4 @@
-﻿
+﻿@inject ICourseSelector service
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +43,12 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="nav-link fwcolor" asp-controller="Courses" asp-action="Student_CourseOverview">Student Course Overview</a>
+                 @if (User.IsInRole("Teacher"))
+                {  
+                    <select  id="selectedCourse" class="form-select" style="width:25%" asp-items="@await service.GetSelectListAsync()">
+                        <option selected="selected" value="">Select Course</option>
+                    </select>
+                }
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
@@ -62,7 +67,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - Lms.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - Lms Group 2
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
