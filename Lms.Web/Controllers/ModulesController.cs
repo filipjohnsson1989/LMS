@@ -54,6 +54,7 @@ public class ModulesController : Controller
     // GET: Modules/Create
     public IActionResult Create()
     {
+
         return View();
     }
 
@@ -62,30 +63,40 @@ public class ModulesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleViewModel moduleViewModel)
+    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,CourseId")] Module @module)
     {
         if (ModelState.IsValid)
         {
-            var module = mapper.Map<Module>(moduleViewModel);
-
-            var course = await unitOfWork.CourseRepoG.GetAsync(moduleViewModel.Course.Id);
-            if (course is null)
-            {
-                return BadRequest();
-            }
-            module.Course = course;
-
-            await unitOfWork.ModuleRepoG
-                            .AddAsync(module);
-
+            await unitOfWork.moduleRepo.AddModule(@module);
             await unitOfWork.CompleteAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        var moduleToReturn = mapper.Map<CreateEditModuleViewModel>(moduleViewModel);
-
-        return View(moduleToReturn);
+        return View(@module);
     }
+    //public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleViewModel moduleViewModel)
+    //{
+    //    if (ModelState.IsValid)
+    //    {
+    //        var module = mapper.Map<Module>(moduleViewModel);
+
+    //        var course = await unitOfWork.CourseRepoG.GetAsync(moduleViewModel.Course.Id);
+    //        if (course is null)
+    //        {
+    //            return BadRequest();
+    //        }
+    //        module.Course = course;
+
+    //        await unitOfWork.ModuleRepoG
+    //                        .AddAsync(module);
+
+    //        await unitOfWork.CompleteAsync();
+    //        return RedirectToAction(nameof(Index));
+    //    }
+
+    //    var moduleToReturn = mapper.Map<CreateEditModuleViewModel>(moduleViewModel);
+
+    //    return View(moduleToReturn);
+    //}
 
     // GET: Modules/Edit/5
     public async Task<IActionResult> Edit(int? id)
@@ -197,5 +208,17 @@ public class ModulesController : Controller
     {
         return await unitOfWork.ModuleRepoG
                                .ExistAsync(id);
+    }
+    public async Task<IActionResult> CalenderTimeLine()
+    {
+        return View();
+    }
+    [HttpGet]
+    [Route("Modules/ModuleTimeLine/")]
+    public async Task<IActionResult> ModuleTimeLine()
+    {
+        int x = (int)TempData["cid"];
+        var modules = await unitOfWork.moduleRepo.GetModulesByCourseIdAsync(x);
+            return Json(data: modules);
     }
 }

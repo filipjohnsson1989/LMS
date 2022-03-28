@@ -1,46 +1,65 @@
-﻿@{
-    Layout = "/Views/Shared/_MasterLayout.cshtml";
+﻿@model Lms.Core.ViewModels.Courses.CourseViewModel
+@{
+    Layout = "_Layout.cshtml";
 }
-@model Lms.Core.ViewModels.Courses.CourseViewModel
-
+<br /><br /><br />
 @{
     ViewData["Title"] = "Create";
 }
-
-<h1>Create</h1>
-
-<h4>Course</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-sm-6">
+<div class="CreateContainer">
+    <h1 class="fwcolor">Create Course</h1>
+        <form asp-action="Create" >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <div class="input-group">
+                <label asp-for="Name" class="control-label Labelcol"></label> &nbsp;&nbsp;&nbsp;
+                <div class="input-group-append">
+                <input asp-for="Name" class="form-control txt " />
+                </div>
                 <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
             </div>
+            <br /><br />
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <div class="input-group">
+                <label asp-for="Description" class="control-label Labelcol"></label>&nbsp;&nbsp;&nbsp;
+                <div class="input-group-append">
+                <input asp-for="Description" class="form-control txt" />
+                </div>
                 <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
             </div>
+            <br /><br />
             <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
+                <div class="input-group">
+                <label asp-for="StartDate" class="control-label Labelcol"></label>&nbsp;&nbsp;&nbsp;
+                <div class="input-group-append">
+                <input asp-for="StartDate" class="form-control txt" />
+                </div>
                 <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <br /><br />
+            <div class="form-group text-align">
+                <a asp-action="Add_Course_Module_Activity" class="btn btn-danger" > Cancel </a>
+                 <a id="coursetimeline" class="btn bbcolor fwcolor" > Show Timeline </a>                 
+                <input type="submit" value="Create" class="btn bbcolor fwcolor" />
+                <br />
             </div>
-        </form>
-    </div>
+            
+            </form>
+           
+     </div>   
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="col-sm-6" >
+<div >
+<partial name="CalenderTimeLine"  />
 </div>
-
-@section Scripts {
+</div>
+</div>
+@*@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+}*@

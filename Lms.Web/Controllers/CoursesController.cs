@@ -87,7 +87,7 @@ public class CoursesController : Controller
                             .AddAsync(course);
 
             await unitOfWork.CompleteAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Add_Course_Module_Activity));
         }
 
         var courseToReturn = mapper.Map<CourseViewModel>(courseViewModel);
@@ -265,6 +265,8 @@ public class CoursesController : Controller
     
     public async Task<IActionResult> LoadModuleListPartial(int id)
     {
+        TempData["cid"]=(int)id;
+        TempData.Keep("cid");
         var module = await unitOfWork.moduleRepo.GetModulesByCourseIdAsync(id);
         return PartialView("_ModuleListView", module);
     }
@@ -272,5 +274,19 @@ public class CoursesController : Controller
     {
         var activity = await unitOfWork.activityRepo.GetActivitiesByModuleIdAsync(id);
         return PartialView("_ActivityListView", activity);
+    }
+
+
+    public async Task<IActionResult> CalenderTimeLine()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    [Route("Courses/CourseTimeLine/")]
+    public async Task<IActionResult> CourseTimeLine()
+    {
+        var courses =  await unitOfWork.courseRepo.GetAllCourses();
+        return Json(data: courses);
     }
 }
