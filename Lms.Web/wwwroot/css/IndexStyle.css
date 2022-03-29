@@ -1,4 +1,7 @@
-﻿.divider {
+﻿.active {
+    background-color: red !important;
+}
+.divider {
     margin: 2rem;
 }
 
@@ -140,40 +143,52 @@ li {
 }
 
 .docs {
-    background: grey;
-    color: black !important;
+    background: linear-gradient(#484948, #484948) !important;
+    color: white !important;
     font-size: 0.8rem;
-    border-style: inset;
-    border-color: grey;
-    
+    border-radius: 5px;
+    border: 1px inset #6D6D6D;
 }
-    .docs li {
-        margin: 1rem;
-        color: white;
+    .docs li p{
+        margin: 0.4rem;
+        border-bottom: 1px groove white;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin-left: 1rem;
         font-weight: 700 !important;
     }
+    .docs li a {
+        text-decoration: none;
+        background-color: #56433C;
+        color: white;
+        font-size: 1rem;
+        padding: 2px;
+        padding-bottom: unset;
+        margin: 2px;
+        border: 1px solid black; 
+        border-radius: 5px;
+    }
+        .docs li a:hover {
+            background-color: #724C3E !important;
+        }
 
-.weeks-card {
-    position: fixed;
-    right: 20px;
-    top: 100px;
-    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
-    border-style: outset;
-    border-radius: 5px;
-    border-color: grey;
-    margin-top: 2rem !important;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    background-size: auto;
-    margin: 0.5rem;
-    background: linear-gradient(#6D6D6D, #373737) !important;
-    color: white;
-    height: fit-content;
-    width: 12%;
-}
+    .weeks-card {
+        position: fixed;
+        right: 20px;
+        top: 100px;
+        box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+        border-style: outset;
+        border-radius: 5px;
+        border-color: grey;
+        margin-top: 2rem !important;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        background-size: auto;
+        margin: 0.5rem;
+        background: linear-gradient(#6D6D6D, #373737) !important;
+        color: white;
+        height: fit-content;
+        width: 12%;
+    }
 
 .btn-success {
     position: relative;
@@ -273,8 +288,6 @@ input.btn.btn-primary.uploadBtn {
 }
 form {
     display: flex;
-    
-
 }
 
 
