@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Lms.Core.ViewModels.Modules;
+using Lms.Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Lms.Web.Controllers;
@@ -97,18 +98,39 @@ public class ModulesController : Controller
     //            return BadRequest();
     //        }
     //        module.Course = course;
+    //        await UploadFilesAsync(module, moduleViewModel.UploadFiles);
 
-    //        await unitOfWork.ModuleRepoG
-    //                        .AddAsync(module);
 
-    //        await unitOfWork.CompleteAsync();
-    //        return RedirectToAction(nameof(Index));
-    //    }
 
-    //    var moduleToReturn = mapper.Map<CreateEditModuleViewModel>(moduleViewModel);
-
-    //    return View(moduleToReturn);
+     //   return View(moduleViewModel);
     //}
+
+    private async Task UploadFilesAsync(Module? module, IEnumerable<IFormFile>? formFiles)
+    {
+        IEnumerable<Task<Document>>? documents = formFiles?
+                .Select(async formFile
+                        => new Document
+                        {
+                            Name = formFile.FileName,
+                            Data = (await formFile.GetBytesAsync()),
+                            ContentType = formFile.ContentType,
+                            Module = module,
+                        });
+
+
+        if (documents is not null)
+        {
+            foreach (var document in documents)
+            {
+                var doc = await document;
+                if (doc is not null)
+                {
+                    await unitOfWork.documentRepo.AddDocument(doc);
+                }
+
+            }
+        }
+    }
 
     // GET: Modules/Edit/5
     public async Task<IActionResult> Edit(int? id)
@@ -135,7 +157,7 @@ public class ModulesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleViewModel moduleViewModel)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Course,UploadFiles")] CreateEditModuleViewModel moduleViewModel)
     {
         if (id != moduleViewModel.Id)
         {
@@ -157,6 +179,9 @@ public class ModulesController : Controller
 
                 unitOfWork.ModuleRepoG
                           .Update(module);
+
+                await UploadFilesAsync(module, moduleViewModel.UploadFiles);
+
                 await unitOfWork.CompleteAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -220,6 +245,17 @@ public class ModulesController : Controller
     {
         return await unitOfWork.ModuleRepoG
                                .ExistAsync(id);
+    }
+
+    //[Produces("application/json")]
+    [HttpGet]
+    public async Task<IActionResult> Search(string term)
+    {
+        var modules = await unitOfWork.ModuleRepoG.FindAsync(course => course.Name.Contains(term));
+        var coursesToReturn = mapper.Map<IEnumerable<ModuleViewModel>>(modules);
+
+        return Json(coursesToReturn);
+
     }
     public async Task<IActionResult> CalenderTimeLine()
     {

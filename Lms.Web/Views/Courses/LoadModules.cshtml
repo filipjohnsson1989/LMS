@@ -2,11 +2,14 @@
 @{
     Layout = "_Layout.cshtml";
 }
-<br /> <br /><br /> <br />
- <a class="btn bbgcolor fwcolor" asp-action="Teacher_CourseOverview" >Go Back</a> 
-<div class="card" >
+<br />
+<br />
+<br />
+<br />
+<a class="btn bbgcolor fwcolor" asp-action="Teacher_CourseOverview">Go Back</a>
+<div class="card">
     <div class="card-header tbr fwcolor"> <h1>Modules Information</h1> </div>
-     <table class="table tbl">
+    <table class="table tbl">
         <thead>
             <tr class="tbr fwcolor">
                 <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Name)</th>
@@ -17,19 +20,20 @@
             </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model) {
-            <tr class="tbr fwcolor">
-                <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Name)</td>
-                <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Description)</td>
-                <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.StartDate)</td>
-                <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.EndDate)</td>
-                <td class="t1 fwcolor">
-                    <a class="btn bbcolor fwcolor" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-                    <a class="btn bbcolor fwcolor" asp-action="LoadActivities" asp-route-id="@item.Id">Activities</a> 
-                    <a class="btn btn-danger fwcolor" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
+            @foreach (var item in Model)
+            {
+                <tr class="tbr fwcolor">
+                    <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.StartDate)</td>
+                    <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.EndDate)</td>
+                    <td class="t1 fwcolor">
+                        <a class="btn bbcolor fwcolor" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn bbcolor fwcolor" asp-action="LoadActivities" asp-route-id="@item.Id">Activities</a>
+                        <a class="btn btn-danger fwcolor" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

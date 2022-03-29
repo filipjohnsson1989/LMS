@@ -47,6 +47,35 @@ public class UnitOfWork : IUnitOfWork
             return moduleTypeRepoG;
         }
     }
+    private IRepository<Activity> activityTypeRepoG = default!;
+    public IRepository<Activity> ActivityRepoG
+    {
+        get
+        {
+            if (activityTypeRepoG == null)
+            {
+                this.activityTypeRepoG = new ActivityRepositoryG(this.context);
+            }
+
+            return activityTypeRepoG;
+        }
+    }
+
+    private IRepository<Document> documentRepoG;
+
+    public IRepository<Document> DocumentRepoG
+    {
+        get
+        {
+            if (documentRepoG == null)
+            {
+                this.documentRepoG = new DocumentRepositoryG(this.context);
+            }
+
+            return documentRepoG;
+        }
+    }
+
     public IDocumentRepository documentRepo { get; set; }
 
     public ApplicationDbContext context;

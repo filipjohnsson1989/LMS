@@ -17,6 +17,8 @@ namespace Lms.Core.Interfaces
         Task<Course> GetCourseById_IncludeModulesAsync(int id);
         Task<Course> GetAllbyId(int id);
         Task<IEnumerable<Course>> GetAll();
+        Task<Course> GetCourseByIdAsync(int id);
+
         Task<IEnumerable<Course>> GetAllCourses();
 
         //Sort the Modules of a Course through Name; Ascending or Descending.

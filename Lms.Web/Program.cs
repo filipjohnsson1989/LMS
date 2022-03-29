@@ -8,12 +8,21 @@ using Microsoft.EntityFrameworkCore;
 using Lms.Data.AutoMapper;
 using Lms.Web.Services;
 using Lms.Web.Conventions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Lms.Data.Services;
+using Lms.Core.Interfaces.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<IRepository<Course>, CourseRepositoryG>();
+builder.Services.AddTransient<IRepository<Module>, ModuleRepositoryG>();
+builder.Services.AddTransient<IRepository<Activity>, ActivityRepositoryG>();
 builder.Services.AddTransient<IRepository<ActivityType>, ActivityTypeRepository>();
 //builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<IActivityTypeService, ActivityTypeService>();
+
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -34,11 +43,16 @@ builder.Services.AddRazorPages(options =>
 
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IAssignmentByUserList, AssignmentByUserList>();
 builder.Services.AddScoped<ICourseSelector, CourseSelector>();
 builder.Services.AddAutoMapper(typeof(LMSMappings));
 
 
 builder.Services.AddAutoMapper(typeof(CourseProfile));
+builder.Services.AddAutoMapper(typeof(ModuleProfile));
+builder.Services.AddAutoMapper(typeof(ActivityProfile));
+builder.Services.AddAutoMapper(typeof(ActivityTypeProfile));
+
 
 
 var app = builder.Build();

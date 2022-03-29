@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Lms.Core.ViewModels.Courses;
+using Lms.Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -86,13 +87,42 @@ public class CoursesController : Controller
             await unitOfWork.CourseRepoG
                             .AddAsync(course);
 
+            await UploadFilesAsync(course, courseViewModel.UploadFiles);
+
             await unitOfWork.CompleteAsync();
             return RedirectToAction(nameof(Add_Course_Module_Activity));
         }
 
-        var courseToReturn = mapper.Map<CourseViewModel>(courseViewModel);
 
-        return View(courseToReturn);
+        return View(courseViewModel);
+    }
+
+
+    private async Task UploadFilesAsync(Course? course, IEnumerable<IFormFile>? formFiles)
+    {
+        IEnumerable<Task<Document>>? documents = formFiles?
+                .Select(async formFile
+                        => new Document
+                        {
+                            Name = formFile.FileName,
+                            Data = (await formFile.GetBytesAsync()),
+                            ContentType = formFile.ContentType,
+                            Course = course,
+                        });
+
+
+        if (documents is not null)
+        {
+            foreach (var document in documents)
+            {
+                var doc = await document;
+                if (doc is not null)
+                {
+                    await unitOfWork.documentRepo.AddDocument(doc);
+                }
+
+            }
+        }
     }
 
     // GET: Courses/Edit/5
@@ -120,7 +150,7 @@ public class CoursesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate")] CourseViewModel courseViewModel)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,UploadFiles")] CourseViewModel courseViewModel)
     {
         if (id != courseViewModel.Id)
         {
@@ -135,6 +165,9 @@ public class CoursesController : Controller
 
                 unitOfWork.CourseRepoG
                           .Update(course);
+
+                await UploadFilesAsync(course, courseViewModel.UploadFiles);
+
                 await unitOfWork.CompleteAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -229,8 +262,9 @@ public class CoursesController : Controller
     [Authorize(Roles = "Student")]
     public async Task<IActionResult> LoadModulePartial(int id)
     {
-        var model = await unitOfWork.moduleRepo.GetModulesByCourseIdAsync(id);
-        return PartialView("_ModuleView", model);
+        var model = await unitOfWork.moduleRepo.GetModulesByCourseId_IncludeActivitiesAsync(id);
+        var sorted = model.OrderBy(x => x.StartDate);
+        return PartialView("_ModuleView", sorted);
     }
     [Authorize(Roles = "Student")]
     public async Task<IActionResult> LoadStudentPartial(int id)

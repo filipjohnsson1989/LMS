@@ -32,6 +32,10 @@ public class ModuleRepository : IModuleRepository
         return await db.Modules.Where(m => m.CourseId == courseId).ToListAsync();
     }
 
+    public async Task<IEnumerable<Module>> GetModulesByCourseId_IncludeActivitiesAsync(int courseId)
+    {
+        return await db.Modules.Include(m => m.Activities.OrderBy(a => a.StartDate)).Where(m => m.CourseId == courseId).ToListAsync();
+    }
 
     public async Task<Module> GetModuleById(int id)
     {

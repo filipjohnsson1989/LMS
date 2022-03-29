@@ -1,8 +1,9 @@
-﻿namespace Lms.Core.Entities;
+﻿using Lms.Core.Interfaces;
 
-public class Activity
+namespace Lms.Core.Entities;
+
+public class Activity : BaseEntity
 {
-    public int Id { get; set; }
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;
     public DateTime StartDate { get; set; }

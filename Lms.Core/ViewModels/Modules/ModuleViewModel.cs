@@ -1,4 +1,5 @@
 ﻿using Lms.Core.ViewModels.Courses;
+using Lms.Core.ViewModels.Documents;
 using System.ComponentModel.DataAnnotations;
 
 namespace Lms.Core.ViewModels.Modules;
@@ -13,6 +14,6 @@ public class ModuleViewModel
 
     public string CourseName { get; set; } = default!;
 
-
+    public IEnumerable<DocumentViewModel>? Documents { get; set; } = default!;
 
 }

@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "/Views/Shared/_MasterLayout.cshtml";
 }
-@model Lms.Core.ViewModels.Modules.ModuleViewModel
+@model             Lms.Core.ViewModels.Modules.ModuleViewModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -52,3 +52,5 @@
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
+<partial name="_DocumentsListAdminPartial" for=@Model.Documents />
+
