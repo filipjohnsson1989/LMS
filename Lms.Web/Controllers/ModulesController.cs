@@ -233,8 +233,6 @@ public class ModulesController : Controller
         var modules = await unitOfWork.moduleRepo.GetModulesByCourseIdAsync(x);
             return Json(data: modules);
     }
-    //[AcceptVerbs("GET,POST")]
-    //[AllowAnonymous]
     public IActionResult VerifyStartdate(DateTime StartDate, int CourseId)
     {
         //Check if startdate already exists in the database. Sends a warning if it exists
@@ -246,7 +244,6 @@ public class ModulesController : Controller
         }
         return Json(true);
     }
-    //[AllowAnonymous]
     public IActionResult VerifyEnddate(DateTime EndDate, DateTime StartDate)
     {
         //Check if startdate already exists in the database. Sends a warning if it exists
