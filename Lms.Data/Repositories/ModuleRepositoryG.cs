@@ -18,6 +18,7 @@ public class ModuleRepositoryG : GenericRepository<Module>
     {
         return await context.Modules
             .Include(module => module.Course)
+            .Include(activity => activity.Documents)
             .FirstOrDefaultAsync(module => module.Id == id);
 
     }

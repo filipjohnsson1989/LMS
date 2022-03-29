@@ -13,7 +13,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -32,11 +32,18 @@
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="UploadFiles" class="control-label"></label>
+                <partial name="_DocumentInputAdminPartial" for=UploadFiles />
+                <span asp-validation-for="UploadFiles" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+
+<partial name="_DocumentsListAdminPartial" for=@Model.Documents />
 
 <div>
     <a asp-action="Index">Back to List</a>
