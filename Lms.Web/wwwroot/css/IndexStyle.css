@@ -5,6 +5,15 @@
 .hidden {
     display: none !important;
 }
+div.expandState {
+    margin: unset;
+    padding: unset;
+    position: sticky;
+    font-size: 2rem;
+    float: right;
+    box-sizing:unset;
+    user-select: none;
+}
 
 .moduleInfo {
     padding-top: 5px;
@@ -80,6 +89,7 @@ li {
     color: white;
     margin: 0.2rem;
     box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 }
 
     .card:hover {

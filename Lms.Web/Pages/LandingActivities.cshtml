@@ -61,19 +61,14 @@
 
                             //Assignment
                             <li class="card card-assignment p-1" id="@activityId">
+                            <div class="infoButton">
                                 <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
                                 <p class="activityType"><strong>@Html.DisplayFor(model => activity.ActivityType.Name)</strong></p>
                                 <p class="card-header"><strong>Starts:</strong> @startDate</p>
                                 <p class="card-header"><strong>Ends:</strong> @endDate </p>
-                                <div class="card-header"><strong>Due in: </strong>@dueTime</div>
-                                <div class="card-body row">
-                                    <span class="btn btn-primary infoButton col-3">Expand &#8595</span>
-
-                                </div>
-
-                                <div class="card-footer container hidden">
+                                <div class="card-header"><strong>Due in: </strong>@dueTime</div><div class="expandState">+</div></div>
+                                <div class="card-footer container hidden expandCard">
                                     <strong>About:</strong> @activity.Description
-                                    <hr>
                                     <div class="documents">
                                         <strong>Documents:</strong>
                                         @await Html.PartialAsync("_UploadFilePartial", new UploadFileViewModel{ActivityId = i})
@@ -183,12 +178,12 @@
                         {
                             //not assignment
                             <li class="card p-1" id="@activityId">
+                            <div class="infoButton">
                                 <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
                                 <p class="activityType"><strong>@Html.DisplayFor(model => activity.ActivityType.Name)</strong></p>
                                 <p class="card-header"><strong>Starts:</strong> @startDate</p>
-                                <p class="card-header"><strong>Ends:</strong> @endDate </p>
-                                <div class="card-body col"><span class="btn btn-primary infoButton col-6">Expand &#8595</span></div>
-                                <div class="card-footer hidden">
+                                <p class="card-header"><strong>Ends:</strong> @endDate  <div class="expandState">+</div></p></div>
+                                <div class="card-footer hidden expandCard">
                                     <strong>About:</strong> @activity.Description
                                 </div>
                             </li>
