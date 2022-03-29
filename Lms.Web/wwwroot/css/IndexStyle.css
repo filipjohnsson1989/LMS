@@ -229,29 +229,7 @@ li {
     right: 15px;
     top: 10px;
 }
-.deleteDoc {
-    position: absolute;
-    left: 89%;
-    bottom: 24%;
-    background: linear-gradient(#F60303, #7B0202);
-    width: 2rem;
-    height: 1.6rem;
-    text-align: center;
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
-    cursor: pointer;
-    border-style: outset;
-    border-radius: 5px;
-    border-color: #7B0202;
-    user-select:none;
-}
-    .deleteDoc:hover {
-        background: linear-gradient(red, red) !important;
-        border-color: red;
-    }
-    .deleteDoc:active {
-        background: linear-gradient(red, red) !important;
-        border-color: firebrick;
-    }
+
 .courseLink:hover {
     background-color: #724C3E !important;
     color: white;
@@ -265,15 +243,38 @@ li {
     margin-top: 0.3rem;
 }
 input[type="file"] {
-    display:grid;
-    color: white !important;
-    font-size: 0.8rem;
+    margin-top: 8px;
+    font-size: 20px;
+    
 }
+
 ::-webkit-file-upload-button {
     background: #56433C;
     color: white;
     border: medium;
     border-radius: 10px;
+    height: 2rem;
+    
+}
+    ::-webkit-file-upload-button:hover {
+        background-color: #724C3E !important;
+        cursor: pointer;
+    }
+input.btn.btn-primary.uploadBtn {
+    background: #56433C;
+    color: white;
+    border: medium;
+    border-radius: 10px;
+    height: 2rem;
+    font-size: 20px;
+    text-align:center;
+    padding-bottom: 5px;
+    padding-top: 0px;
+}
+form {
+    display: flex;
+    
+
 }
 
 
