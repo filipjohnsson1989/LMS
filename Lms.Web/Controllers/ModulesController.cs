@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Lms.Core.ViewModels.Modules;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Lms.Web.Controllers;
 
@@ -69,7 +70,14 @@ public class ModulesController : Controller
     public async Task<IActionResult> CreateModule(CreateModuleModel module)
     {
         var moduleobj = mapper.Map<Module>(module);
-        if (ModelState.IsValid)
+
+        //var mobj = db.Modules.Where(d => d.EndDate > moduleobj.StartDate || moduleobj.EndDate<moduleobj.StartDate).FirstOrDefault(c => c.CourseId == moduleobj.CourseId);
+        //if (mobj != null)
+        //{
+        //    return Json($"Enter a Valid Date");
+        //}
+
+        if (ModelState.IsValid )
         {
             await unitOfWork.moduleRepo.AddModule(moduleobj);
             await unitOfWork.CompleteAsync();
@@ -77,30 +85,30 @@ public class ModulesController : Controller
         }
         return View(moduleobj);
     }
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleViewModel moduleViewModel)
-    {
-        if (ModelState.IsValid)
-        {
-            var module = mapper.Map<Module>(moduleViewModel);
+    //public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleViewModel moduleViewModel)
+    //{
+    //    if (ModelState.IsValid)
+    //    {
+    //        var module = mapper.Map<Module>(moduleViewModel);
 
-            var course = await unitOfWork.CourseRepoG.GetAsync(moduleViewModel.Course.Id);
-            if (course is null)
-            {
-                return BadRequest();
-            }
-            module.Course = course;
+    //        var course = await unitOfWork.CourseRepoG.GetAsync(moduleViewModel.Course.Id);
+    //        if (course is null)
+    //        {
+    //            return BadRequest();
+    //        }
+    //        module.Course = course;
 
-            await unitOfWork.ModuleRepoG
-                            .AddAsync(module);
+    //        await unitOfWork.ModuleRepoG
+    //                        .AddAsync(module);
 
-            await unitOfWork.CompleteAsync();
-            return RedirectToAction(nameof(Index));
-        }
+    //        await unitOfWork.CompleteAsync();
+    //        return RedirectToAction(nameof(Index));
+    //    }
 
-        var moduleToReturn = mapper.Map<CreateEditModuleViewModel>(moduleViewModel);
+    //    var moduleToReturn = mapper.Map<CreateEditModuleViewModel>(moduleViewModel);
 
-        return View(moduleToReturn);
-    }
+    //    return View(moduleToReturn);
+    //}
 
     // GET: Modules/Edit/5
     public async Task<IActionResult> Edit(int? id)
@@ -225,19 +233,29 @@ public class ModulesController : Controller
         var modules = await unitOfWork.moduleRepo.GetModulesByCourseIdAsync(x);
             return Json(data: modules);
     }
-    [AcceptVerbs("GET,POST")]
-    [AllowAnonymous]
-    public IActionResult VerifyModuledate(DateTime StartDate, int CourseId)
+    //[AcceptVerbs("GET,POST")]
+    //[AllowAnonymous]
+    public IActionResult VerifyStartdate(DateTime StartDate, int CourseId)
     {
         //Check if startdate already exists in the database. Sends a warning if it exists
 
-         var moduleobj=db.Modules.Where(d=>d.EndDate > StartDate).FirstOrDefault(c=>c.CourseId==CourseId);
-        if (moduleobj!=null)
+        var moduleobj = db.Modules.Where(d => d.EndDate > StartDate).FirstOrDefault(c => c.CourseId == CourseId);
+        if (moduleobj != null)
         {
-            return Json($"Date {StartDate} is already in use.");
+            return Json($"Enter a valid Start Date.");
+        }
+        return Json(true);
+    }
+    //[AllowAnonymous]
+    public IActionResult VerifyEnddate(DateTime EndDate, DateTime StartDate)
+    {
+        //Check if startdate already exists in the database. Sends a warning if it exists
+
+       if(EndDate < StartDate)
+        {
+            return Json($"Enter a valid End Date.");
         }
         return Json(true);
     }
 
-    
 }

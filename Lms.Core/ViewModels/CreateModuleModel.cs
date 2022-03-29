@@ -14,9 +14,11 @@ namespace Lms.Core.ViewModels
 
         public string Description { get; set; } = default!;
 
-        [Remote(action: "VerifyModuledate", controller: "Modules",
-            AdditionalFields=nameof(CourseId))]
+        [Remote(action: "VerifyStartdate", controller: "Modules",
+            AdditionalFields = nameof(CourseId))]
         public DateTime StartDate { get; set; }
+        [Remote(action: "VerifyEnddate", controller: "Modules",
+           AdditionalFields = nameof(StartDate)) ]
         public DateTime EndDate { get; set; }
         public int CourseId { get; set; }
     }
