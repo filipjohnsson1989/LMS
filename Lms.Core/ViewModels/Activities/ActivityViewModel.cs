@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Lms.Core.ViewModels.Documents;
+using System.ComponentModel.DataAnnotations;
 
 namespace Lms.Core.ViewModels.Activities;
 
@@ -13,6 +14,7 @@ public class ActivityViewModel
     public string ModuleName { get; set; } = default!;
     public string ActivityTypeName { get; set; } = default!;
 
+    public IEnumerable<DocumentViewModel>? Documents { get; set; } = default!;
 
 
 
