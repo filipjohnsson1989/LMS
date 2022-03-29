@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Lms.Core.ViewModels.Modules;
+using Lms.Web.Extensions;
 
 namespace Lms.Web.Controllers;
 
@@ -62,7 +63,7 @@ public class ModulesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleViewModel moduleViewModel)
+    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Course,UploadFiles")] CreateEditModuleViewModel moduleViewModel)
     {
         if (ModelState.IsValid)
         {
@@ -78,12 +79,42 @@ public class ModulesController : Controller
             await unitOfWork.ModuleRepoG
                             .AddAsync(module);
 
+            await UploadFilesAsync(module, moduleViewModel.UploadFiles);
+
+
             await unitOfWork.CompleteAsync();
             return RedirectToAction(nameof(Index));
         }
 
 
         return View(moduleViewModel);
+    }
+
+    private async Task UploadFilesAsync(Module? module, IEnumerable<IFormFile>? formFiles)
+    {
+        IEnumerable<Task<Document>>? documents = formFiles?
+                .Select(async formFile
+                        => new Document
+                        {
+                            Name = formFile.FileName,
+                            Data = (await formFile.GetBytesAsync()),
+                            ContentType = formFile.ContentType,
+                            Module = module,
+                        });
+
+
+        if (documents is not null)
+        {
+            foreach (var document in documents)
+            {
+                var doc = await document;
+                if (doc is not null)
+                {
+                    await unitOfWork.documentRepo.AddDocument(doc);
+                }
+
+            }
+        }
     }
 
     // GET: Modules/Edit/5
@@ -111,7 +142,7 @@ public class ModulesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleViewModel moduleViewModel)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Course,UploadFiles")] CreateEditModuleViewModel moduleViewModel)
     {
         if (id != moduleViewModel.Id)
         {
@@ -133,6 +164,9 @@ public class ModulesController : Controller
 
                 unitOfWork.ModuleRepoG
                           .Update(module);
+
+                await UploadFilesAsync(module, moduleViewModel.UploadFiles);
+
                 await unitOfWork.CompleteAsync();
             }
             catch (DbUpdateConcurrencyException)
