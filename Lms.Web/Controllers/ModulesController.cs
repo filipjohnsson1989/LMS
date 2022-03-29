@@ -11,14 +11,16 @@ public class ModulesController : Controller
     private readonly UserManager<ApplicationUser> userManager;
 
     private readonly IMapper mapper;
+    private readonly ApplicationDbContext db;
 
     public ModulesController(IUnitOfWork unitOfWork,
                              UserManager<ApplicationUser> userManager,
-                             IMapper mapper)
+                             IMapper mapper, ApplicationDbContext db)
     {
         this.unitOfWork = unitOfWork;
         this.userManager = userManager;
         this.mapper = mapper;
+        this.db = db;
     }
 
     // GET: Modules
@@ -52,9 +54,10 @@ public class ModulesController : Controller
     }
 
     // GET: Modules/Create
-    public IActionResult Create()
+    public IActionResult CreateModule(int courseid)
     {
 
+        TempData["courseid"] = courseid;
         return View();
     }
 
@@ -63,40 +66,41 @@ public class ModulesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,CourseId")] Module @module)
+    public async Task<IActionResult> CreateModule(CreateModuleModel module)
     {
+        var moduleobj = mapper.Map<Module>(module);
         if (ModelState.IsValid)
         {
-            await unitOfWork.moduleRepo.AddModule(@module);
+            await unitOfWork.moduleRepo.AddModule(moduleobj);
             await unitOfWork.CompleteAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(@module);
+        return View(moduleobj);
     }
-    //public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleViewModel moduleViewModel)
-    //{
-    //    if (ModelState.IsValid)
-    //    {
-    //        var module = mapper.Map<Module>(moduleViewModel);
+    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Course")] CreateEditModuleViewModel moduleViewModel)
+    {
+        if (ModelState.IsValid)
+        {
+            var module = mapper.Map<Module>(moduleViewModel);
 
-    //        var course = await unitOfWork.CourseRepoG.GetAsync(moduleViewModel.Course.Id);
-    //        if (course is null)
-    //        {
-    //            return BadRequest();
-    //        }
-    //        module.Course = course;
+            var course = await unitOfWork.CourseRepoG.GetAsync(moduleViewModel.Course.Id);
+            if (course is null)
+            {
+                return BadRequest();
+            }
+            module.Course = course;
 
-    //        await unitOfWork.ModuleRepoG
-    //                        .AddAsync(module);
+            await unitOfWork.ModuleRepoG
+                            .AddAsync(module);
 
-    //        await unitOfWork.CompleteAsync();
-    //        return RedirectToAction(nameof(Index));
-    //    }
+            await unitOfWork.CompleteAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
-    //    var moduleToReturn = mapper.Map<CreateEditModuleViewModel>(moduleViewModel);
+        var moduleToReturn = mapper.Map<CreateEditModuleViewModel>(moduleViewModel);
 
-    //    return View(moduleToReturn);
-    //}
+        return View(moduleToReturn);
+    }
 
     // GET: Modules/Edit/5
     public async Task<IActionResult> Edit(int? id)
@@ -221,4 +225,19 @@ public class ModulesController : Controller
         var modules = await unitOfWork.moduleRepo.GetModulesByCourseIdAsync(x);
             return Json(data: modules);
     }
+    [AcceptVerbs("GET,POST")]
+    [AllowAnonymous]
+    public IActionResult VerifyModuledate(DateTime StartDate, int CourseId)
+    {
+        //Check if startdate already exists in the database. Sends a warning if it exists
+
+         var moduleobj=db.Modules.Where(d=>d.EndDate > StartDate).FirstOrDefault(c=>c.CourseId==CourseId);
+        if (moduleobj!=null)
+        {
+            return Json($"Date {StartDate} is already in use.");
+        }
+        return Json(true);
+    }
+
+    
 }

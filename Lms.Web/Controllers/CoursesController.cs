@@ -67,7 +67,7 @@ public class CoursesController : Controller
     }
 
     // GET: Courses/Create
-    public IActionResult Create()
+    public IActionResult CreateCourse()
     {
         return View();
     }
@@ -77,7 +77,7 @@ public class CoursesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate")] CourseViewModel courseViewModel)
+    public async Task<IActionResult> CreateCourse([Bind("Id,Name,Description,StartDate")] CourseViewModel courseViewModel)
     {
         if (ModelState.IsValid)
         {

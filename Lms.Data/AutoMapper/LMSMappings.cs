@@ -18,6 +18,8 @@ namespace Lms.Data.AutoMapper
                 dest => dest.ModuleCount,
                 opt => opt.MapFrom(src => src.Modules.Count));
 
+            CreateMap<Module, CreateModuleModel>().ReverseMap();
+
         }
     }
 }
