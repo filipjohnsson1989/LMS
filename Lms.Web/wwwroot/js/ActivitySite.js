@@ -1,18 +1,38 @@
-﻿const btn = document.querySelectorAll('span');
+﻿const btn = document.querySelectorAll(".infoButton");
 
 
 btn.forEach(btn => btn.addEventListener('click', function () {
-    let parent = this.parentNode;
-    let element = parent.nextElementSibling;
-    if (element.classList.contains('hidden')) {
-        element.classList.remove('hidden');
-    }
-    else {element.classList.add('hidden') }
+    let infoCard = this.nextElementSibling;
     
 
-    /*console.log(element);*/
+        if (infoCard.classList.contains("expandCard"))
+        {
+                changeBtn(this);
+            let expando = infoCard.classList;
+            if (expando.contains("hidden")) {
+                expando.remove("hidden");
+            }
+            else {
+                expando.add("hidden");
+            }
+        }
 }));
 
 
-
+function changeBtn(infoCard)
+{
+    console.log(infoCard);
+    let children = infoCard.children;
+    for (var i = 0; i < children.length; i++)
+    {
+        if (children[i].classList.contains("expandState"))
+        {
+            let expandoToken = children[i];
+            if (expandoToken.innerText == "+")
+                expandoToken.innerText = "-";
+            else
+                expandoToken.innerText = "+";
+        }
+    }
+}
 
