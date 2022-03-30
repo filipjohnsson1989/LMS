@@ -1,32 +1,20 @@
-﻿html {
-    font-size: 14px;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
-html {
-    position: relative;
-    min-height: 100%;
-}
-
-body {
+﻿body {
     margin-bottom: 60px;
 }
 
-.bdgcolor {
-    background-color: #484948;
+.alluvem {
+    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+    background-blend-mode: unset;
+    background: linear-gradient(#484948, #0E0F0E) !important;
+    border-radius: 25px;
+    padding: 5px;
+    padding-bottom: 1rem !important;
 }
 
 .fwcolor {
     color: white;
-}
-
-.bgcolor {
-    background-color: gray;
 }
 
 .tbl {
@@ -36,100 +24,87 @@ body {
 }
 
 .t1 {
-    border: 1px solid #dddddd;
+    border: 2px thin red;
     text-align: left;
     padding: 8px;
 }
 
 .tbr:nth-child(even) {
-    background-color: grey;
 }
 
 .tbr:nth-child(odd) {
-    background-color: black;
 }
 
 .tbtr:nth-child(even) {
-    background-color: grey;
 }
 
 .tbtr:nth-child(odd) {
-    background-color: #16637C;
 }
 
-.bbcolor {
-    background-color: #623D2F;
+.card {
+    background: none !important;
+    border-block: none !important;
+    border: none !important;
 }
-.bbgcolor {
-    background-color: #484948;
+
+.hidden {
+    display: none !important;
 }
-.CourseContainer {
-    width: 30%;
-    background-color: grey;
-    text-align: center;
-    float: left;
-    margin-right: 20px;
-    overflow-y: scroll;
+
+.moduleClickable:hover {
+    background-color: #305763;
+    cursor: pointer;
 }
-.CreateContainer {
-    width:90%;
-    background-color: grey;
-    text-align: center;
-    margin-bottom:30px;
+
+.activity {
+    background-color: ThreeDDarkShadow;
+    border: solid;
+    font-size: 0.8rem;
 }
-.ModuleContainer {
-    width: 30%;
-    background-color: grey;
-    height: 500px;
-    text-align: center;
-    float: left;
-    margin-right: 20px;
-    overflow-y: scroll;
+
+.btn-primary:hover {
+    background-color: #724C3E !important;
 }
-.ActivityContainer {
-    width: 30%;
-    height:500px;
-    background-color: grey;
-    text-align: center;
-    float: left;
-    margin-right: 20px;
-    overflow-y:scroll;
-}
-.Coursebtn{
-    width:100%;
-    background-color:#16637c;
-    color:white;
-    margin-top:5px;
-    margin-bottom:5px;
-}
-.Modulebtn {
-    width: 100%;
-    background-color:burlywood;
+
+.btn-primary {
+    background-color: #56433C;
     color: white;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    width: 6rem;
+    height: 2.1rem;
+    border-block: none;
+    border-block-start: none;
+    border-inline: none;
 }
-.Activitybtn {
-    width: 100%;
-    background-color:cadetblue;
+
+a {
+    box-shadow: inset 0 0 0 0 #54b3d6;
+    color: #54b3d6;
+    margin: 0 -.25rem;
+    padding: 0 .25rem;
+    transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+}
+
+    a:hover {
+        color: #16637C;
+    }
+
+.active:hover {
     color: white;
-    margin-top: 5px;
-    margin-bottom: 5px;
 }
-.Labelcol {
-    background-color: cadetblue;
+
+.active {
     color: white;
-    height: 40px;
-    width: 100px;
-    margin-left: 20px;
+    font-weight: 700;
+    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+    background-color: #56433C;
+    padding: 0.2rem;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-decoration: none;
 }
-.txt {
-    height: 40px;
-    width: 400px;
-    margin-left: 20px;
-}
-.Addbtn {
-    background-color: #623D2F;
-    color:white;
-    
+
+.expandState {
+    text-align: center;
+    font-size: 30px;
 }
