@@ -11,7 +11,7 @@
     background-color: gray;
 }
 
-.tbl {
+/*.tbl {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
@@ -37,7 +37,7 @@
 
 .tbtr:nth-child(odd) {
     background-color: #16637C;
-}
+}*/
 
 .bbcolor {
     background-color: #623D2F;

@@ -13,7 +13,7 @@
     padding-bottom: 1rem !important;
 }
 
-.fwcolor {
+.fwcolork {
     color: white;
 }
 
@@ -27,18 +27,6 @@
     border: 2px thin red;
     text-align: left;
     padding: 8px;
-}
-
-.tbr:nth-child(even) {
-}
-
-.tbr:nth-child(odd) {
-}
-
-.tbtr:nth-child(even) {
-}
-
-.tbtr:nth-child(odd) {
 }
 
 .card {
