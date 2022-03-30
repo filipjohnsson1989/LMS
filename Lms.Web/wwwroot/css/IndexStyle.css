@@ -220,23 +220,32 @@ li {
     box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
     
 }
+    .btn-warning:active {
+       outline: none !important; 
+       box-shadow: none !important;
+       border-color: none !important;
+    }
+btn.btn-warning:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: none !important;
+}
     .btn-warning:hover {
         background-color: #724C3E !important;
         color: white;
     }
 .btn-warning {
-    /*border-style: outset !important;
-    border-radius: 5px !important;
-    border-color: #56433C !important;*/
     background-color: #56433C;
     color: white;
-    width: 9rem;
-    margin-right: 1rem;
+    width: 6rem;
+    margin-right: 0.3rem;
     margin-top: 0.3rem;
     border-block: none;
     border-block-start: none;
     border-inline: none;
     float: left;
+    font-size: 12px;
+
 }
 .activityType {
     font-size: 1.2rem;
