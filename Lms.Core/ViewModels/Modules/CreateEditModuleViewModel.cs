@@ -26,6 +26,6 @@ public class CreateEditModuleViewModel
 
     public IEnumerable<DocumentViewModel>? Documents { get; set; } = default!;
 
-    public int CourseId { get; set; }
+    public int CourseId { get { return this.Course.Id; } }
 
 }

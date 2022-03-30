@@ -15,6 +15,8 @@
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data" >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CourseId" />
+
             <div class="form-group">
                 <label asp-for="Course" class="control-label"></label>
                 <partial name="_CourseInput" for="Course" />
@@ -36,14 +38,23 @@
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="UploadFiles" class="control-label"></label>
                 <partial name="_DocumentInputAdminPartial" for=UploadFiles />
                 <span asp-validation-for="UploadFiles" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                <a id="moduletimeline" class="btn bbcolor fwcolor" > Show Timeline </a>   
             </div>
         </form>
+    </div>
+    <div class="col-md-8">
+        <partial name="CalenderTimeLine" />
     </div>
 </div>
 

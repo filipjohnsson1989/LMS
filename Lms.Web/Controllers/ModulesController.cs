@@ -64,8 +64,8 @@ public class ModulesController : Controller
 
         var courseModel = mapper.Map<SearchCourseViewModel>(course)!;
 
-        CreateEditModuleViewModel modelToReturn = new() { Course = courseModel};
-
+        CreateEditModuleViewModel modelToReturn = new() { Course = courseModel };
+        TempData["CourseIdForCreateModule"] = courseId.Value;
         return View(modelToReturn);
 
 
@@ -254,5 +254,43 @@ public class ModulesController : Controller
 
         return Json(coursesToReturn);
 
+    }
+
+    public async Task<IActionResult> CalenderTimeLine()
+    {
+        return View();
+    }
+
+
+    [HttpGet]
+    [Route("Modules/ModuleTimeLine/")]
+    public async Task<IActionResult> ModuleTimeLine()
+    {
+        int courseId = (int)TempData["CourseIdForCreateModule"];
+        var modules = await unitOfWork.moduleRepo.GetModulesByCourseIdAsync(courseId);
+        return Json(data: modules);
+    }
+    public async Task<IActionResult> VerifyStartdate(DateTime StartDate, int CourseId)
+    {
+        //Check if startdate already exists in the database. Sends a warning if it exists
+
+        var moduels = await unitOfWork.ModuleRepoG.FilterAsync(module => module.EndDate > StartDate && module.CourseId == CourseId);
+        var module = moduels.FirstOrDefault();
+
+        if (module != null)
+        {
+            return Json($"Enter a valid Start Date.");
+        }
+        return Json(true);
+    }
+    public IActionResult VerifyEnddate(DateTime EndDate, DateTime StartDate)
+    {
+        //Check if startdate already exists in the database. Sends a warning if it exists
+
+        if (EndDate < StartDate)
+        {
+            return Json($"Enter a valid End Date.");
+        }
+        return Json(true);
     }
 }

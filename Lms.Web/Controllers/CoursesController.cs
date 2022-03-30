@@ -281,14 +281,19 @@ public class CoursesController : Controller
         return PartialView("_DocumentView", model);
     }
 
-    [HttpPost, ActionName("DeleteDocument")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteDocument(int id)
-    {
-        await unitOfWork.documentRepo.DeleteDocument(id);
-        await unitOfWork.CompleteAsync();
 
-        return RedirectToAction(nameof(Student_CourseOverview));
+    public async Task<IActionResult> LoadModuleListPartial(int id)
+    {
+        TempData["cid"] = (int)id;
+        TempData.Keep("cid");
+        var module = await unitOfWork.moduleRepo.GetModulesByCourseIdAsync(id);
+        return PartialView("_ModuleListView", module);
+    }
+    public async Task<IActionResult> LoadActivityListPartial(int id)
+    {
+        var activity = await unitOfWork.activityRepo.GetActivitiesByModuleIdAsync(id);
+
+        return PartialView("_ActivityListView", activity);
     }
 
     public async Task<IActionResult> CalenderTimeLine()
@@ -304,5 +309,15 @@ public class CoursesController : Controller
         return Json(data: courses);
     }
 
+
+    [HttpPost, ActionName("DeleteDocument")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteDocument(int id)
+    {
+        await unitOfWork.documentRepo.DeleteDocument(id);
+        await unitOfWork.CompleteAsync();
+
+        return RedirectToAction(nameof(Student_CourseOverview));
+    }
 
 }
