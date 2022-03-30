@@ -291,4 +291,18 @@ public class CoursesController : Controller
         return RedirectToAction(nameof(Student_CourseOverview));
     }
 
+    public async Task<IActionResult> CalenderTimeLine()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    [Route("Courses/CourseTimeLine/")]
+    public async Task<IActionResult> CourseTimeLine()
+    {
+        var courses = await unitOfWork.courseRepo.GetAllCourses();
+        return Json(data: courses);
+    }
+
+
 }
