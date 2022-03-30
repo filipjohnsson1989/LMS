@@ -74,13 +74,17 @@
                         var students = await service.GetStudentListAsync(i);
 
 
+
                         //Assignment
                         <li class="card card-assignment p-1" id="@activityId">
+
+
                             <div class="infoButton">
                                 <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
                                 <p class="activityType"><strong>@Html.DisplayFor(model => activity.ActivityType.Name)</strong></p>
                                 <p class="card-header"><strong>Starts:</strong> @startDate</p>
                                 <p class="card-header"><strong>Ends:</strong> @endDate </p>
+
                                 <div class="card-header"><strong>Due in: </strong>@dueTime</div><div class="expandState">+</div>
                             </div>
                             <div class="card-footer container hidden expandCard">
@@ -90,7 +94,9 @@
                                     @await Html.PartialAsync("_UploadFilePartial", new UploadFileViewModel{ActivityId = i})
 
 
+
                                     <strong>Activity Documents:</strong>
+
 
                                     @foreach (var doc in activity.Documents)
                                     {
@@ -110,6 +116,8 @@
                                                     }
                                                 </li>
                                             </ul>
+
+                                              
                                         }
                                     }
 
@@ -119,6 +127,7 @@
                                     <strong>Student's Documents:</strong>
                                     @if (User.IsInRole("Teacher"))
                                     {
+
 
                                         var deadline = activity.EndDate;
                                         @foreach (var student in students)
@@ -132,6 +141,7 @@
                                                     if (doc.User == student)
                                                     {
                                                         totalDocuments++;
+
 
                                                         var docId = doc.Id;
                                                         <li>
@@ -156,6 +166,7 @@
                                                     }
                                                 }
 
+
                                             </ul>
                                         }
                                     }
@@ -178,6 +189,7 @@
                                                 }
                                             }
 
+
                                         </ul>
                                     }
 
@@ -186,21 +198,25 @@
                         </li>
 
 
+
                     }
                     else
                     {
                         //not assignment
                         <li class="card p-1" id="@activityId">
+
                             <div class="infoButton">
                                 <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
                                 <p class="activityType"><strong>@Html.DisplayFor(model => activity.ActivityType.Name)</strong></p>
                                 <p class="card-header"><strong>Starts:</strong> @startDate</p>
+
                                 <p class="card-header"><strong>Ends:</strong> @endDate  <div class="expandState">+</div></p>
                             </div>
                             <div class="card-footer hidden expandCard">
                                 <strong>About:</strong> @activity.Description
                             </div>
                         </li>
+
                     }
                 }
             }
