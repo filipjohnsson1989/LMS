@@ -15,7 +15,7 @@ public class GenericRepository<T> : IRepository<T> where T : class, IEntity
 
     public virtual async Task<bool> ExistAsync(int id) => await DbSet.AnyAsync();
 
-    public virtual async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+    public virtual async Task<IEnumerable<T>> FilterAsync(Expression<Func<T, bool>> predicate)
         => await DbSet.AsQueryable()
                       .Where(predicate)
                       .ToListAsync();
@@ -29,7 +29,7 @@ public class GenericRepository<T> : IRepository<T> where T : class, IEntity
         .Take(10) // TakeLast(10)
         .AsQueryable();
 
-    public virtual async Task<IEnumerable<T>> GetAllAsync()
+    public virtual async Task<IEnumerable<T>> GetAllAsync(int? parentRelationId = null)
         => await this.GetAll()
                      .ToListAsync();
 

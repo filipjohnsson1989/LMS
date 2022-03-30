@@ -10,9 +10,18 @@ public class ModuleRepositoryG : GenericRepository<Module>
     {
     }
 
-    public override async Task<IEnumerable<Module>> GetAllAsync() => await base.GetAll()
-                         .Include(module => module.Course)
-                         .ToListAsync();
+    public override async Task<IEnumerable<Module>> GetAllAsync(int? parentRelationId = null)
+    {
+        var query =
+          base.GetAll();
+
+        if(parentRelationId is not null) {
+            query = query.Where(module => module.CourseId == parentRelationId);
+        }
+
+        return await query.Include(module => module.Course)
+                          .ToListAsync();
+    }
 
     public override async Task<Module?> GetAsync(int id)
     {

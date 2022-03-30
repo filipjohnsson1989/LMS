@@ -8,11 +8,12 @@ public class CourseRepositoryG : GenericRepository<Course>
     {
     }
 
-    public override async Task<Course?> GetAsync(int id)
+    public async Task<Course?> GetInculdeDocumentsAsync(int id)
     {
         return await context.Courses
             .Include(course => course.Documents)
             .FirstOrDefaultAsync(course => course.Id == id);
 
     }
+
 }
