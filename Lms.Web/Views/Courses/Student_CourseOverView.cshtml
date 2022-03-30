@@ -10,7 +10,7 @@
 <div >
     <div class="alluvem">
         <div class="card">
-            <div class="card-header bdgcolor fwcolor">
+            <div class="card-header fwcolork">
                 <div class=" h2 text-center">Course Overview</div>
                 <div class="row">
                     <div class="col-sm-8">
@@ -30,19 +30,19 @@
                 </div>
             </div>
 
-            <div class="card-body bgcolor fwcolor">
+            <div class="card-body fwcolork">
                 @Html.DisplayFor(model=>model.Description )
             </div>
-            <div class="card-footer bdgcolor ">
-                <a id="documentsList" class="card-link fwcolor" asp-action="LoadDocumentsPartial" asp-route-id="@Model.Id"
+            <div class="card-footer">
+                <a id="documentsList" class="card-link fwcolork" asp-action="LoadDocumentsPartial" asp-route-id="@Model.Id"
                    data-ajax="true"
                    data-ajax-update="#partial"
                    data-ajax-mode="replace">Files</a>
-                <a id="modulesList" class="card-link fwcolor" asp-action="LoadModulePartial" asp-route-id="@Model.Id"
+                <a id="modulesList" class="card-link fwcolork" asp-action="LoadModulePartial" asp-route-id="@Model.Id"
                    data-ajax="true"
                    data-ajax-update="#partial"
                    data-ajax-mode="replace">Modules History</a>
-                <a id="studentsList" class="card-link fwcolor" asp-action="LoadStudentPartial" asp-route-id="@Model.Id"
+                <a id="studentsList" class="card-link fwcolork" asp-action="LoadStudentPartial" asp-route-id="@Model.Id"
                    data-ajax="true"
                    data-ajax-update="#partial"
                    data-ajax-mode="replace">Students</a>

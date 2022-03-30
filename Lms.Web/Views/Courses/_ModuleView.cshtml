@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Module>
 
 <div class="card">
-    <div class="card-header tbr fwcolor"> <h1>Module history</h1>Tip: Click a module to show its activities!</div>
+    <div class="card-header tbr fwcolork"> <h1>Module history</h1>Tip: Click a module to show its activities!</div>
 </div>
 <table class="table tbl">
     <thead>
-        <tr class="tbr fwcolor">
+        <tr class="tbr fwcolork">
             <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Name)</th>
             <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Description)</th>
             <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.StartDate)</th>
@@ -20,7 +20,7 @@
             
             if (item.EndDate.CompareTo(DateTime.Now) < 0)
             {
-                <tr id="@itemId" class="tbr fwcolor moduleClickable">
+                <tr id="@itemId" class="tbr fwcolork moduleClickable">
                     <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Name)</td>
                     <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Description)</td>
                     <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.StartDate)</td>

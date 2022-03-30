@@ -4,20 +4,22 @@
      <table class="table tbl">
     <thead>
         <tr class="tbr fwcolor">
-            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Name)</th>
-            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.UploadDate)</th>
-            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.ContentType)</th>
-            <th></th>
+
+            <th class="t1 fwcolork">@Html.DisplayNameFor(model => model.Name)</th>
+            <th class="t1 fwcolork">@Html.DisplayNameFor(model => model.UploadDate)</th>
+            <th class="t1 fwcolork">@Html.DisplayNameFor(model => model.ContentType)</th>
+            <th class="t1 fwcolork"></th>
+
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr class="tbr fwcolor">
-            <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Name)</td>
-            <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.UploadDate)</td>
-            <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.ContentType)</td>
-            <td class="t1 fwcolor">
-            <a class="btn btn-primary fwcolor" asp-controller = "ActivityTypes" asp-action="Download" asp-route-id="@item.Id">Download</a>
+            <td class="t1 fwcolork">@Html.DisplayFor(modelItem => item.Name)</td>
+            <td class="t1 fwcolork">@Html.DisplayFor(modelItem => item.UploadDate)</td>
+            <td class="t1 fwcolork">@Html.DisplayFor(modelItem => item.ContentType)</td>
+            <td class="t1 fwcolork">
+            <a class="btn btn-primary fwcolork" asp-controller = "ActivityTypes" asp-action="Download" asp-route-id="@item.Id">Download</a>
             </td>
         </tr>
 }
