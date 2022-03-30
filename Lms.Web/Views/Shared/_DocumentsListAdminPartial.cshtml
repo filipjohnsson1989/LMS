@@ -1,0 +1,34 @@
+﻿@using Lms.Core.ViewModels.Documents
+@model IEnumerable<DocumentViewModel>?
+
+@if (Model is not null)
+{
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameForInnerType((DocumentViewModel model) => model.Name)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                <a asp-controller="Documents" asp-action="Download" asp-route-id="@item.Id" target="_blank">Download</a>
+                                <a asp-controller="Documents" asp-action="Delete" asp-route-id="@item.Id" target="_blank">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

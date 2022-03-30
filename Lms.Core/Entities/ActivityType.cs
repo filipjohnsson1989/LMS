@@ -1,8 +1,7 @@
 ﻿namespace Lms.Core.Entities;
 
-public class ActivityType
+public class ActivityType : BaseEntity
 {
-    public int Id { get; set; }
     public string Name { get; set; } = default!;
     public ICollection<Activity> Activities { get; set; } = default!;
 }

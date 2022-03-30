@@ -9,6 +9,8 @@ public class CourseProfile : Profile
     public CourseProfile()
     {
         CreateMap<Course, CourseViewModel>().ReverseMap();
+        //CreateMap<CourseViewModel, Course>()
+        //    .ForMember(dest => dest.Modules.Count(), opt => opt.MapFrom(src => src.CountOfModules)); 
         CreateMap<Course, SearchCourseViewModel>().ReverseMap();
     }
 }

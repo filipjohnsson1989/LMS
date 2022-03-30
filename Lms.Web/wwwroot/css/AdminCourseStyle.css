@@ -1,0 +1,117 @@
+﻿
+.bdgcolor {
+    background-color: #484948;
+}
+
+.fwcolor {
+    color: white;
+}
+
+.bgcolor {
+    background-color: gray;
+}
+
+.tbl {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.t1 {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.tbr:nth-child(even) {
+    background-color: grey;
+}
+
+.tbr:nth-child(odd) {
+    background-color: black;
+}
+
+.tbtr:nth-child(even) {
+    background-color: grey;
+}
+
+.tbtr:nth-child(odd) {
+    background-color: #16637C;
+}
+
+.bbcolor {
+    background-color: #623D2F;
+}
+.bbgcolor {
+    background-color: #484948;
+}
+.CourseContainer {
+    width: 30%;
+    background-color: grey;
+    text-align: center;
+    float: left;
+    margin-right: 20px;
+    overflow-y: scroll;
+}
+.CreateContainer {
+    width:90%;
+    background-color: grey;
+    text-align: center;
+    margin-bottom:30px;
+}
+.ModuleContainer {
+    width: 30%;
+    background-color: grey;
+    height: 500px;
+    text-align: center;
+    float: left;
+    margin-right: 20px;
+    overflow-y: scroll;
+}
+.ActivityContainer {
+    width: 30%;
+    height:500px;
+    background-color: grey;
+    text-align: center;
+    float: left;
+    margin-right: 20px;
+    overflow-y:scroll;
+}
+.Coursebtn{
+    width:100%;
+    background-color:#16637c;
+    color:white;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+.Modulebtn {
+    width: 100%;
+    background-color:burlywood;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.Activitybtn {
+    width: 100%;
+    background-color:cadetblue;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.Labelcol {
+    background-color: cadetblue;
+    color: white;
+    height: 40px;
+    width: 100px;
+    margin-left: 20px;
+}
+.txt {
+    height: 40px;
+    width: 400px;
+    margin-left: 20px;
+}
+.Addbtn {
+    background-color: #623D2F;
+    color:white;
+    
+}
