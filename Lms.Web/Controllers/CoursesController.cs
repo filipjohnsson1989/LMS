@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Lms.Core.ViewModels.Courses;
+using Lms.Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -54,8 +55,8 @@ public class CoursesController : Controller
 
         }
 
-        var course = await unitOfWork.CourseRepoG
-                                     .GetAsync(id.Value);
+        var course = await ((CourseRepositoryG)unitOfWork.CourseRepoG)
+                                     .GetInculdeDocumentsAsync(id.Value);
         if (course == null)
         {
             return NotFound();
@@ -77,7 +78,7 @@ public class CoursesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate")] CourseViewModel courseViewModel)
+    public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,UploadFiles")] CourseViewModel courseViewModel)
     {
         if (ModelState.IsValid)
         {
@@ -86,13 +87,42 @@ public class CoursesController : Controller
             await unitOfWork.CourseRepoG
                             .AddAsync(course);
 
+            await UploadFilesAsync(course, courseViewModel.UploadFiles);
+
             await unitOfWork.CompleteAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        var courseToReturn = mapper.Map<CourseViewModel>(courseViewModel);
 
-        return View(courseToReturn);
+        return View(courseViewModel);
+    }
+
+
+    private async Task UploadFilesAsync(Course? course, IEnumerable<IFormFile>? formFiles)
+    {
+        IEnumerable<Task<Document>>? documents = formFiles?
+                .Select(async formFile
+                        => new Document
+                        {
+                            Name = formFile.FileName,
+                            Data = (await formFile.GetBytesAsync()),
+                            ContentType = formFile.ContentType,
+                            Course = course,
+                        });
+
+
+        if (documents is not null)
+        {
+            foreach (var document in documents)
+            {
+                var doc = await document;
+                if (doc is not null)
+                {
+                    await unitOfWork.documentRepo.AddDocument(doc);
+                }
+
+            }
+        }
     }
 
     // GET: Courses/Edit/5
@@ -103,8 +133,8 @@ public class CoursesController : Controller
             return NotFound();
         }
 
-        var course = await unitOfWork.CourseRepoG
-                                     .GetAsync(id.Value);
+        var course = await ((CourseRepositoryG)unitOfWork.CourseRepoG)
+                                     .GetInculdeDocumentsAsync(id.Value);
         if (course == null)
         {
             return NotFound();
@@ -120,7 +150,7 @@ public class CoursesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate")] CourseViewModel courseViewModel)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,UploadFiles")] CourseViewModel courseViewModel)
     {
         if (id != courseViewModel.Id)
         {
@@ -135,6 +165,9 @@ public class CoursesController : Controller
 
                 unitOfWork.CourseRepoG
                           .Update(course);
+
+                await UploadFilesAsync(course, courseViewModel.UploadFiles);
+
                 await unitOfWork.CompleteAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -161,8 +194,8 @@ public class CoursesController : Controller
             return NotFound();
         }
 
-        var course = await unitOfWork.CourseRepoG
-                                     .GetAsync(id.Value);
+        var course = await ((CourseRepositoryG)unitOfWork.CourseRepoG)
+                                     .GetInculdeDocumentsAsync(id.Value);
 
         if (course == null)
         {
@@ -179,8 +212,8 @@ public class CoursesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var course = await unitOfWork.CourseRepoG
-                                     .GetAsync(id);
+        var course = await ((CourseRepositoryG)unitOfWork.CourseRepoG)
+                                     .GetInculdeDocumentsAsync(id);
         if (course == null)
         {
             return NotFound();
@@ -204,7 +237,7 @@ public class CoursesController : Controller
     [HttpGet]
     public async Task<IActionResult> Search(string term)
     {
-        var courses = await unitOfWork.CourseRepoG.FindAsync(course => course.Name.Contains(term));
+        var courses = await unitOfWork.CourseRepoG.FilterAsync(course => course.Name.Contains(term));
         var coursesToReturn = mapper.Map<IEnumerable<CourseViewModel>>(courses);
 
         return Json(coursesToReturn);
@@ -247,6 +280,35 @@ public class CoursesController : Controller
 
         return PartialView("_DocumentView", model);
     }
+
+
+    public async Task<IActionResult> LoadModuleListPartial(int id)
+    {
+        TempData["cid"] = (int)id;
+        TempData.Keep("cid");
+        var module = await unitOfWork.moduleRepo.GetModulesByCourseIdAsync(id);
+        return PartialView("_ModuleListView", module);
+    }
+    public async Task<IActionResult> LoadActivityListPartial(int id)
+    {
+        var activity = await unitOfWork.activityRepo.GetActivitiesByModuleIdAsync(id);
+
+        return PartialView("_ActivityListView", activity);
+    }
+
+    public async Task<IActionResult> CalenderTimeLine()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    [Route("Courses/CourseTimeLine/")]
+    public async Task<IActionResult> CourseTimeLine()
+    {
+        var courses = await unitOfWork.courseRepo.GetAllCourses();
+        return Json(data: courses);
+    }
+
 
     [HttpPost, ActionName("DeleteDocument")]
     [ValidateAntiForgeryToken]

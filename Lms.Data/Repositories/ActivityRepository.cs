@@ -56,4 +56,9 @@ public class ActivityRepository : IActivityRepository
     {
         db.Activities.Update(activity);
     }
+
+    public async Task<IEnumerable<Activity>> GetActivitiesByModuleIdAsync(int moduleId)
+    {
+        return await db.Activities.Where(m => m.ModuleId == moduleId).ToListAsync();
+    }
 }

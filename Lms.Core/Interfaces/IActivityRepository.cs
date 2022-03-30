@@ -18,5 +18,7 @@ namespace Lms.Core.Interfaces
 
         //Display all by latest activities first
         IEnumerable<Activity> SortActivitiesBySDate();
+        Task<IEnumerable<Activity>> GetActivitiesByModuleIdAsync(int moduleId);
+
     }
 }

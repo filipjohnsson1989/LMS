@@ -8,7 +8,10 @@ public interface IUnitOfWork
     IModuleRepository moduleRepo { get; }
     IRepository<Module> ModuleRepoG { get; }
     IActivityRepository activityRepo { get;}
+    IRepository<Activity> ActivityRepoG { get; }
     IRepository<ActivityType> ActivityTypeRepo { get;}
     IDocumentRepository documentRepo { get;}
+    IRepository<Document> DocumentRepoG { get; }
+
     Task CompleteAsync();
 }

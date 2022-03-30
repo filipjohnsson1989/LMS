@@ -1,0 +1,13 @@
+﻿@model Lms.Core.ViewModels.ActivityTypes.ActivityTypeViewModel
+
+@using Lms.Core.Interfaces.Services
+@inject IActivityTypeService service
+
+<select class="form-control" asp-for="Id" asp-items="@await service.GetActivityTypes(Model?.Id)">
+    @if (Model is null)
+    {
+        <option selected="selected" value="">Choose a type</option>
+
+    }
+</select>
+
