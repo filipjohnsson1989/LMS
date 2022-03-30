@@ -176,8 +176,8 @@ public class ActivityTypesController : Controller
                 {
                     var fileName = Path.GetFileName(file.FileName);
 
-                    var fileExtension = Path.GetExtension(fileName);
-                    var newFileName = String.Concat(Convert.ToString(Guid.NewGuid()), fileExtension);
+                    //var fileExtension = Path.GetExtension(fileName);
+                  //  var newFileName = String.Concat(Convert.ToString(Guid.NewGuid()), fileExtension);
                     var contentType = file.ContentType;
 
 
@@ -185,7 +185,7 @@ public class ActivityTypesController : Controller
 
                     var objfiles = new Document()
                     {
-                        Name = newFileName,
+                        Name = fileName,
                         //FileType = fileExtension,
                         UploadDate = DateTime.Now,
                         ContentType = contentType
