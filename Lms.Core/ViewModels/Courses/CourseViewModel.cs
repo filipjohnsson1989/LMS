@@ -16,4 +16,6 @@ public class CourseViewModel
 
     public IEnumerable<DocumentViewModel>? Documents { get; set; } = default!;
 
+    //[Display(Name = "Modules")]
+    //public int? CountOfModules { get; set; }
 }

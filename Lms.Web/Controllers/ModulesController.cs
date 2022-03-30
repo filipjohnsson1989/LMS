@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Lms.Core.ViewModels.Modules;
 using Lms.Web.Extensions;
+using Lms.Core.ViewModels.Courses;
 
 namespace Lms.Web.Controllers;
 
@@ -23,10 +24,10 @@ public class ModulesController : Controller
     }
 
     // GET: Modules
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int? courseId)
     {
         var modules = await unitOfWork.ModuleRepoG
-                                      .GetAllAsync();
+                                      .GetAllAsync(courseId);
 
         var modulesToReturn = mapper.Map<IEnumerable<ModuleViewModel>>(modules);
         return View(modulesToReturn);
@@ -53,9 +54,21 @@ public class ModulesController : Controller
     }
 
     // GET: Modules/Create
-    public IActionResult Create()
+    public async Task<IActionResult> Create(int? courseId)
     {
-        return View();
+        if (courseId is null)
+            return View();
+
+        var course = await unitOfWork.CourseRepoG
+            .GetAsync(courseId.Value);
+
+        var courseModel = mapper.Map<SearchCourseViewModel>(course)!;
+
+        CreateEditModuleViewModel modelToReturn = new() { Course = courseModel};
+
+        return View(modelToReturn);
+
+
     }
 
     // POST: Modules/Create
@@ -236,7 +249,7 @@ public class ModulesController : Controller
     [HttpGet]
     public async Task<IActionResult> Search(string term)
     {
-        var modules = await unitOfWork.ModuleRepoG.FindAsync(course => course.Name.Contains(term));
+        var modules = await unitOfWork.ModuleRepoG.FilterAsync(course => course.Name.Contains(term));
         var coursesToReturn = mapper.Map<IEnumerable<ModuleViewModel>>(modules);
 
         return Json(coursesToReturn);

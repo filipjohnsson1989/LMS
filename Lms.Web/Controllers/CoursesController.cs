@@ -55,8 +55,8 @@ public class CoursesController : Controller
 
         }
 
-        var course = await unitOfWork.CourseRepoG
-                                     .GetAsync(id.Value);
+        var course = await ((CourseRepositoryG)unitOfWork.CourseRepoG)
+                                     .GetInculdeDocumentsAsync(id.Value);
         if (course == null)
         {
             return NotFound();
@@ -133,8 +133,8 @@ public class CoursesController : Controller
             return NotFound();
         }
 
-        var course = await unitOfWork.CourseRepoG
-                                     .GetAsync(id.Value);
+        var course = await ((CourseRepositoryG)unitOfWork.CourseRepoG)
+                                     .GetInculdeDocumentsAsync(id.Value);
         if (course == null)
         {
             return NotFound();
@@ -194,8 +194,8 @@ public class CoursesController : Controller
             return NotFound();
         }
 
-        var course = await unitOfWork.CourseRepoG
-                                     .GetAsync(id.Value);
+        var course = await ((CourseRepositoryG)unitOfWork.CourseRepoG)
+                                     .GetInculdeDocumentsAsync(id.Value);
 
         if (course == null)
         {
@@ -212,8 +212,8 @@ public class CoursesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var course = await unitOfWork.CourseRepoG
-                                     .GetAsync(id);
+        var course = await ((CourseRepositoryG)unitOfWork.CourseRepoG)
+                                     .GetInculdeDocumentsAsync(id);
         if (course == null)
         {
             return NotFound();
@@ -237,7 +237,7 @@ public class CoursesController : Controller
     [HttpGet]
     public async Task<IActionResult> Search(string term)
     {
-        var courses = await unitOfWork.CourseRepoG.FindAsync(course => course.Name.Contains(term));
+        var courses = await unitOfWork.CourseRepoG.FilterAsync(course => course.Name.Contains(term));
         var coursesToReturn = mapper.Map<IEnumerable<CourseViewModel>>(courses);
 
         return Json(coursesToReturn);

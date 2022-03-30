@@ -10,7 +10,7 @@ public class ActivityRepositoryG : GenericRepository<Activity>
     {
     }
 
-    public override async Task<IEnumerable<Activity>> GetAllAsync() => await base.GetAll()
+    public override async Task<IEnumerable<Activity>> GetAllAsync(int? parentRelationId = null) => await base.GetAll()
                          .Include(activity => activity.Module)
                          .Include(activity => activity.ActivityType)
                          .ToListAsync();
