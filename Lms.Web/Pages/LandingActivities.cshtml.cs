@@ -97,7 +97,7 @@ public class ActivitiesModel : PageModel
 
         CurrentUser = await userManager.GetUserAsync(User);
 
-        CurrentFilter = searchString;
+        //CurrentFilter = searchString;
         Activities = await db.Activities.Where(a => a.ModuleId == id).OrderBy(a => a.EndDate).Include(a => a.ActivityType).Include(a => a.Documents).ToListAsync();
         if (User.IsInRole("Student"))
         {

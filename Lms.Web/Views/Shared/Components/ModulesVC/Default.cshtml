@@ -3,19 +3,25 @@
     <h2>Modules</h2>
     @foreach (var item in Model)
     {
-        <div>
-            <p class="infoBtn">&#x1F6C8</p>
-            <a class="moduleSelect btn btn-dark navButton" asp-page="/LandingActivities" asp-route-id="@item.Id"> @Html.DisplayFor(model => item.Name)</a>
+        if (item.EndDate > DateTime.Now)
+        {
+            <div>
+                <p class="infoBtn">&#x1F6C8</p>
+                <a class="moduleSelect btn btn-dark navButton" asp-page="/LandingActivities" asp-route-id="@item.Id"> @Html.DisplayFor(model => item.Name)</a>
 
-            <ul class="container hidden moduleInfo">
-                <li class="infoPart box">@Html.DisplayFor(model => item.Description)
-                </li>
-                <li class="infoPart box">Starts: @Html.DisplayFor(model => item.StartDate)
-                </li>
-                <li class="infoLast box">Ends: @Html.DisplayFor(model => item.EndDate)
-                </li>
-            </ul>
-        </div>
+                <ul class="container hidden moduleInfo">
+                    <li class="infoPart box">
+                        @Html.DisplayFor(model => item.Description)
+                    </li>
+                    <li class="infoPart box">
+                        Starts: @Html.DisplayFor(model => item.StartDate)
+                    </li>
+                    <li class="infoLast box">
+                        Ends: @Html.DisplayFor(model => item.EndDate)
+                    </li>
+                </ul>
+            </div>
+        }
     }
     @if (Model.Any())
     {
