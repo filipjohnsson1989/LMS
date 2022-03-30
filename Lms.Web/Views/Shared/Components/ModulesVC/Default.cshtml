@@ -3,6 +3,7 @@
     <h2>Modules</h2>
     @foreach (var item in Model)
     {
+
         if (item.EndDate > DateTime.Now)
         {
             <div>
@@ -22,6 +23,7 @@
                 </ul>
             </div>
         }
+
     }
     @if (Model.Any())
     {
