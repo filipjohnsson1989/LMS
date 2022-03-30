@@ -27,12 +27,73 @@ public class ActivitiesModel : PageModel
     public string DateSort { get; set; }
     public string CurrentSort { get; set; }
     public string CurrentFilter { get; set; }
+    public string IsChecked { get; set; }
+    public string History { get; set; }
 
-    public async Task<IActionResult> OnGetAsync(int id, string sortOrder, string searchString)
+    public async Task<IActionResult> OnGetAsync(int id, string sortOrder, string searchString, string activityFilter, string history)
     {
-        CurrentSort = sortOrder;
-        NameSort = sortOrder == "Name" ? "name_desc" : "Name";
-        DateSort = sortOrder == "Date" ? "date_desc" : "Date";
+
+        string sorting = sortOrder;
+        string weekFilter = searchString;
+        string activityTypeFilter = activityFilter;
+        string expiredActivities = history;
+
+        ////if all inputs are null then reset all saved search and filters
+        if (sortOrder == null && searchString == null && activityFilter == null && history == null)
+        {
+            TempData["WeekFilter"] = null;
+            TempData["HistoryFilter"] = History = expiredActivities == "False" ? "True" : "False";
+            TempData["ActivityFilter"] = IsChecked = activityTypeFilter == "False" ? "True" : "False";
+            TempData["NameSort"] = NameSort = sorting == "Name" ? "name_desc" : "Name";
+            TempData["DateSort"] = DateSort = sorting == "Date" ? "date_desc" : "Date";
+        }
+        if (!string.IsNullOrEmpty(sorting))
+        {
+            TempData["NameSort"] = NameSort = sorting == "Name" ? "name_desc" : "Name";
+            TempData["DateSort"] = DateSort = sorting == "Date" ? "date_desc" : "Date";
+        }
+        else
+        {
+            if (TempData["NameSort"] != null)
+            {
+                NameSort = sorting = TempData.Peek("NameSort").ToString();
+                DateSort = sorting = TempData.Peek("NameSort").ToString();
+            }
+
+        }
+        if (!string.IsNullOrEmpty(activityTypeFilter))
+        {
+            TempData["ActivityFilter"] = IsChecked = activityTypeFilter == "False" ? "True" : "False";
+        }
+        else
+        {
+            if (TempData["ActivityFilter"] != null)
+            {
+                IsChecked = activityTypeFilter = TempData.Peek("ActivityFilter").ToString();
+            }
+        }
+        if (!string.IsNullOrEmpty(weekFilter))
+        {
+            TempData["WeekFilter"] = CurrentFilter = weekFilter;
+        }
+        else
+        {
+            if (TempData["WeekFilter"] != null)
+            {
+                CurrentFilter = weekFilter = TempData.Peek("WeekFilter").ToString();
+            }
+        }
+        if (!string.IsNullOrEmpty(expiredActivities))
+        {
+            TempData["HistoryFilter"] = History = expiredActivities == "False" ? "True" : "False";
+        }
+        else
+        {
+            if (TempData["HistoryFilter"] != null)
+            {
+                History = expiredActivities = TempData.Peek("HistoryFilter").ToString();
+            }
+        }
 
         CurrentUser = await userManager.GetUserAsync(User);
 
@@ -49,6 +110,22 @@ public class ActivitiesModel : PageModel
             CourseName = "temp";
         }
 
+
+        if (!string.IsNullOrEmpty(History))
+        {
+            if (History.Equals("False"))
+            {
+                Activities = Activities.Where(s => s.EndDate > DateTime.Now).ToList();
+            }
+        }
+        if (!string.IsNullOrEmpty(IsChecked))
+        {
+            if (IsChecked.Equals("True"))
+            {
+                Activities = Activities.Where(s => s.ActivityType.Id == 2).ToList();
+            }
+        }
+
         //Filter By week. starting from first Monday of the year
         CultureInfo myCI = CultureInfo.GetCultureInfo("sv-SE");
         Calendar myCal = myCI.Calendar;
@@ -62,13 +139,13 @@ public class ActivitiesModel : PageModel
 
 
 
-        if (!string.IsNullOrEmpty(searchString))
+        if (!string.IsNullOrEmpty(CurrentFilter))
         {
             Activities = Activities.Where(s => myCal.GetWeekOfYear(s.EndDate, CalendarWeekRule.FirstDay, DayOfWeek.Monday) == int.Parse(CurrentFilter)).ToList();
         }
 
 
-        switch (sortOrder)
+        switch (sorting)
         {
             case "name_desc":
                 Activities = Activities.OrderByDescending(s => s.Name).ToList();

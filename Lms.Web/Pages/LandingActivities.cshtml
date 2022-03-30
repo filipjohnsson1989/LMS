@@ -5,6 +5,12 @@
     Layout = "_Layout.cshtml";
     ViewData["Title"] = "Activities";
     var time = DateTime.Now;
+    TempData.Keep("WeekFilter");
+    TempData.Keep("ActivityFilter");
+    TempData.Keep("NameSort");
+    TempData.Keep("DateSort");
+    TempData.Keep("HistoryFilter");
+
 }
 
 
@@ -20,6 +26,16 @@
             <li>
                 <a asp-route-sortOrder="@Model.NameSort" class="btn btn-warning" data-toggle="button" aria-pressed="false">
                     Sort By Name
+                </a>
+            </li>
+            <li>
+                <a asp-route-activityFilter="@Model.IsChecked" class="btn btn-warning" data-toggle="button" aria-pressed="false">
+                    Assignments
+                </a>
+            </li>
+            <li>
+                <a asp-route-history="@Model.History" class="btn btn-warning" data-toggle="button" aria-pressed="false">
+                    Show History
                 </a>
             </li>
             @if (User.IsInRole("Student"))
@@ -47,16 +63,15 @@
                     i = activity.Id;
                     var activityId = $"activity{i}";
 
-                    if (activity.EndDate.CompareTo(time) > 0)
-                    {
-                        var due = activity.EndDate - time;
-                        string startDate = $"{activity.StartDate.ToShortDateString()}, {activity.StartDate.ToShortTimeString()}";
-                        string endDate = $"{activity.EndDate.ToShortDateString()}, {activity.EndDate.ToShortTimeString()}";
-                        string dueTime = $"{@due.Days} day(s), {@due.Hours}h & {@due.Minutes}m";
 
-                        if (activity.ActivityType.Id == 2)
-                        {
-                            var students = await service.GetStudentListAsync(i);
+                    var due = activity.EndDate - time;
+                    string startDate = $"{activity.StartDate.ToShortDateString()}, {activity.StartDate.ToShortTimeString()}";
+                    string endDate = $"{activity.EndDate.ToShortDateString()}, {activity.EndDate.ToShortTimeString()}";
+                    string dueTime = $"{@due.Days} day(s), {@due.Hours}h & {@due.Minutes}m";
+
+                    if (activity.ActivityType.Id == 2)
+                    {
+                        var students = await service.GetStudentListAsync(i);
 
 
                             //Assignment
@@ -74,12 +89,12 @@
                                         @await Html.PartialAsync("_UploadFilePartial", new UploadFileViewModel{ActivityId = i})
 
 
-                                        <strong>Activity Documents:</strong>
+                                    <strong>Activity Documents:</strong>
 
-                                        @foreach (var doc in activity.Documents)
+                                    @foreach (var doc in activity.Documents)
+                                    {
+                                        if (!students.Contains(doc.User))
                                         {
-                                            if (!students.Contains(doc.User))
-                                            {
 
                                                 var docId = doc.Id;
                                                 <ul class="list-group docs">
@@ -100,22 +115,22 @@
 
 
 
-                                        <strong>Student's Documents:</strong>
-                                        @if (User.IsInRole("Teacher"))
+                                    <strong>Student's Documents:</strong>
+                                    @if (User.IsInRole("Teacher"))
+                                    {
+
+                                        var deadline = activity.EndDate;
+                                        @foreach (var student in students)
                                         {
+                                            int totalDocuments = 0;
+                                            <ul class="list-group docs">
 
-                                            var deadline = activity.EndDate;
-                                            @foreach (var student in students)
-                                            {
-                                                int totalDocuments = 0;
-                                                <ul class="list-group docs">
-
-                                                    <li> @student.UserName </li>
-                                                    @foreach (var doc in activity.Documents)
+                                                <li> @student.UserName </li>
+                                                @foreach (var doc in activity.Documents)
+                                                {
+                                                    if (doc.User == student)
                                                     {
-                                                        if (doc.User == student)
-                                                        {
-                                                            totalDocuments++;
+                                                        totalDocuments++;
 
                                                             var docId = doc.Id;
                                                             <li>
@@ -133,24 +148,24 @@
                                                         {
                                                             <li> Missing</li>
 
-                                                        }
-                                                        @if (deadline < time)
-                                                        {
-                                                            <li> Late</li>
-                                                        }
                                                     }
-
-                                                </ul>
-                                            }
-                                        }
-                                        @if (User.IsInRole("Student"))
-                                        {
-                                            <ul class="list-group docs">
-                                                @foreach (var doc in activity.Documents)
-                                                {
-                                                    if (doc.User == Model.CurrentUser)
+                                                    @if (deadline < time)
                                                     {
-                                                        var docId = doc.Id;
+                                                        <li> Late</li>
+                                                    }
+                                                }
+
+                                            </ul>
+                                        }
+                                    }
+                                    @if (User.IsInRole("Student"))
+                                    {
+                                        <ul class="list-group docs">
+                                            @foreach (var doc in activity.Documents)
+                                            {
+                                                if (doc.User == Model.CurrentUser)
+                                                {
+                                                    var docId = doc.Id;
 
                                                         <li>
                                                             <p>Name: @doc.Name</p>
@@ -162,12 +177,12 @@
                                                     }
                                                 }
 
-                                            </ul>
-                                        }
+                                        </ul>
+                                    }
 
-                                    </div>
                                 </div>
-                            </li>
+                            </div>
+                        </li>
 
 
                         }
