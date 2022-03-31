@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "/Views/Shared/_MasterLayout.cshtml";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
 @model Lms.Core.ViewModels.Modules.ModuleViewModel
 
@@ -7,18 +7,11 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Module</h4>
-    <hr />
+
+<div class="alluvem">
+    <div class="edit">
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CourseName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CourseName)
-        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -37,17 +30,11 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.StartDate)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
     </dl>
-</div>
-<partial name="_DocumentsListAdminPartial" for=@Model.Documents />
-
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div>
+        <a class="btn createBtn" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        <a class="btn createBtn" asp-action="Index">Back to List</a>
+    </div>
+        <partial name="_DocumentsListAdminPartial" for=@Model.Documents />
+    </div>
 </div>

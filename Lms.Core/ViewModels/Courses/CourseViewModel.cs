@@ -1,4 +1,5 @@
-﻿using Lms.Core.ViewModels.Documents;
+﻿using Lms.Core.Entities;
+using Lms.Core.ViewModels.Documents;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,7 +16,5 @@ public class CourseViewModel
     public IEnumerable<IFormFile>? UploadFiles { get; set; } = default!;
 
     public IEnumerable<DocumentViewModel>? Documents { get; set; } = default!;
-
-    //[Display(Name = "Modules")]
-    //public int? CountOfModules { get; set; }
+    public IEnumerable<Module> Modules { get; set; } = default!;
 }

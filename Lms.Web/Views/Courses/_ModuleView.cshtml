@@ -6,11 +6,11 @@
 <table class="table tbl">
     <thead>
         <tr class="tbr fwcolork">
-            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Name)</th>
-            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.Description)</th>
-            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.StartDate)</th>
-            <th class="t1 fwcolor">@Html.DisplayNameFor(model => model.EndDate)</th>
-            <th class="t1 fwcolor">Expand</th>
+            <th class="t1 fwcolork">@Html.DisplayNameFor(model => model.Name)</th>
+            <th class="t1 fwcolork">@Html.DisplayNameFor(model => model.Description)</th>
+            <th class="t1 fwcolork">@Html.DisplayNameFor(model => model.StartDate)</th>
+            <th class="t1 fwcolork">@Html.DisplayNameFor(model => model.EndDate)</th>
+            <th class="t1 fwcolork">Expand</th>
         </tr>
     </thead>
     <tbody>
@@ -21,20 +21,20 @@
             if (item.EndDate.CompareTo(DateTime.Now) < 0)
             {
                 <tr id="@itemId" class="tbr fwcolork moduleClickable">
-                    <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Name)</td>
-                    <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.Description)</td>
-                    <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.StartDate)</td>
-                    <td class="t1 fwcolor">@Html.DisplayFor(modelItem => item.EndDate)</td>
-                    <td class="t1 fwcolor expandState">+</td>
+                    <td class="t1 fwcolork">@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td class="t1 fwcolork">@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td class="t1 fwcolork">@Html.DisplayFor(modelItem => item.StartDate)</td>
+                    <td class="t1 fwcolork">@Html.DisplayFor(modelItem => item.EndDate)</td>
+                    <td class="t1 fwcolork expandState">+</td>
                 </tr>
                 
                 foreach (var activity in item.Activities)
                 {
                     <tr class="tbr activity hidden @itemId">
-                    <td class="t1 fwcolor">@Html.DisplayFor(modelItem => activity.Name)</td>
-                    <td class="t1 fwcolor">@Html.DisplayFor(modelItem => activity.Description)</td>
-                    <td class="t1 fwcolor">@Html.DisplayFor(modelItem => activity.StartDate)</td>
-                    <td class="t1 fwcolor">@Html.DisplayFor(modelItem => activity.EndDate)</td>
+                    <td class="t1 fwcolork">@Html.DisplayFor(modelItem => activity.Name)</td>
+                    <td class="t1 fwcolork">@Html.DisplayFor(modelItem => activity.Description)</td>
+                    <td class="t1 fwcolork">@Html.DisplayFor(modelItem => activity.StartDate)</td>
+                    <td class="t1 fwcolork">@Html.DisplayFor(modelItem => activity.EndDate)</td>
                     
                 </tr>
                 }

@@ -30,7 +30,17 @@ public class ModulesController : Controller
                                       .GetAllAsync(courseId);
 
         var modulesToReturn = mapper.Map<IEnumerable<ModuleViewModel>>(modules);
-        return View(modulesToReturn);
+
+        string? courseName = default!;
+        if (courseId is not null)
+        {
+            var course = await unitOfWork.CourseRepoG.GetAsync(courseId.Value);
+            courseName = course?.Name;
+        }
+
+        IndexModuleViewModel modelToReturn = new() { CourseId = courseId, CourseName = courseName, Modules = modulesToReturn };
+
+        return View(modelToReturn);
     }
 
     // GET: Modules/Details/5
