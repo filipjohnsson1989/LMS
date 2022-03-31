@@ -10,10 +10,12 @@
 
 
 <div class="alluvem">
-    <h2>LMS Administration</h2>
+    <h2>LMS Administration Course</h2>
     <div class="headBar">
-        <a asp-action="Create">Create New</a>
+        <a asp-controller="Courses" asp-action="Create">Create New Course</a>
+        <a class="active" asp-controller="Courses">Course</a>
         <a asp-controller="Modules">Modules</a>
+        <a asp-controller="Activities">Activities</a>
     </div>
 
     @*Here is where you would put an Ajax partial, If you make them with this template they will work with my js code.*@
@@ -61,8 +63,9 @@
                     </td>
                     <td></td>
                 </tr>
-                
+
             }
         </tbody>
     </table>
+    @*this is the end of a partial*@
 </div>

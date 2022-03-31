@@ -7,11 +7,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Course</h4>
-    <hr />
+
+<div class="alluvem">
+    <div class="edit">
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -32,10 +31,11 @@
             @Html.DisplayFor(model => model.StartDate)
         </dd>
     </dl>
+    <div>
+        <a class="btn createBtn" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        <a class="btn createBtn" asp-action="Index">Back to List</a>
+    </div>
+        <partial name="/Views/Shared/Admin/Document/_DocumentsListPartial.cshtml" for=@Model.Documents />
+    </div>
 </div>
-<partial name="/Views/Shared/Admin/Document/_DocumentsListPartial.cshtml" for=@Model.Documents />
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
