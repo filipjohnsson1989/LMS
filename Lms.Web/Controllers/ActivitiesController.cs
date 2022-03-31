@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Lms.Core.ViewModels.Activities;
 using Lms.Web.Extensions;
+using Lms.Core.ViewModels.Modules;
 
 namespace Lms.Web.Controllers;
 
@@ -53,9 +54,19 @@ public class ActivitiesController : Controller
     }
 
     // GET: Activities/Create
-    public IActionResult Create()
+    public async Task<IActionResult> Create(int? moduleId)
     {
-        return View();
+        if (moduleId is null)
+            return View();
+
+        var module = await unitOfWork.ActivityRepoG
+            .GetAsync(moduleId.Value);
+
+        var moduleModel = mapper.Map<SearchModuleViewModel>(module)!;
+
+        CreateEditActivityViewModel modelToReturn = new() { Module = moduleModel };
+        TempData["ModuleIdForCreateActivity"] = moduleId.Value;
+        return View(modelToReturn);
     }
 
     // POST: Activities/Create
