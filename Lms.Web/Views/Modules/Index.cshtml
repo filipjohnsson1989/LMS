@@ -9,62 +9,73 @@
     var modules = Model.Modules;
 }
 
+<div class="alluvem">
+    @if (Model.CourseId is not null)
+    {
+        <h2>@Html.DisplayFor(model => Model.CourseName)</h2>
+    }
 
-@if (Model.CourseId is not null)
-{
-    <h1>@Html.DisplayFor(model => Model.CourseName)</h1>
-}
-
-<p>
-    <a asp asp-controller="Activities">Activities</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameForInnerType((ModuleViewModel model) => model.CourseName)
-            </th>
-            <th>
-                @Html.DisplayNameForInnerType((ModuleViewModel model) => model.Name)
-            </th>     
-            <th>      
-                @Html.DisplayNameForInnerType((ModuleViewModel model) => model.Description)
-            </th>     
-            <th>      
-                @Html.DisplayNameForInnerType((ModuleViewModel model) => model.StartDate)
-            </th>     
-            <th>      
-                @Html.DisplayNameForInnerType((ModuleViewModel model) => model.EndDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Modules)
-        {
+    <div class="headBar">
+        <h2>LMS Administration Modules</h2>
+        <a asp-controller="Courses" asp-action="Create">Create New Course</a>
+        <a asp-controller="Courses">Course</a>
+        <a class="active" asp-controller="Modules">Modules</a>
+        <a asp-controller="Activities">Activities</a>
+    </div>
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CourseName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    <a asp-controller="Activities" asp-action="Create" asp-route-activityId="@item.Id">Create Activity</a>
-                </td>
+                <th>
+                    @Html.DisplayNameForInnerType((ModuleViewModel model) => model.CourseName)
+                </th>
+                <th>
+                    @Html.DisplayNameForInnerType((ModuleViewModel model) => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameForInnerType((ModuleViewModel model) => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameForInnerType((ModuleViewModel model) => model.EndDate)
+                </th>
+                <th>
+                    Expand
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Modules)
+            {
+                <tr class="courseBody">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td class="expandState">+</td>
+                </tr>
+                <tr class="expandCard hidden">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                    <td>
+                        <a asp-controller="Activities" asp-action="Create" asp-route-activityId="@item.Id">Create Activity</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
