@@ -4,15 +4,17 @@
 @model IEnumerable<Lms.Core.ViewModels.Courses.CourseViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Admin";
 }
 
-<h1>Index</h1>
 
-<p>
+
+<div class="alluvem">
+    <h2>LMS Administration</h2>
+<div class="headBar">
     <a asp-action="Create">Create New</a>
     <a asp-controller="Modules">Modules</a>
-</p>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -57,3 +59,4 @@
         }
     </tbody>
 </table>
+</div>

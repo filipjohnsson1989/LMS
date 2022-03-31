@@ -115,3 +115,16 @@
     color:white;
     
 }
+.alluvem table {
+    color: white !important;
+}
+.alluvem h2 {
+    color: white !important;
+    text-align: center;
+    border-bottom: 1px solid white;
+}
+.headBar {
+
+   align-content: center;
+   text-align: center;
+}
