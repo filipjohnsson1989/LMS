@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "/Views/Shared/_AdminLayout.cshtml";
+    Layout = "/Views/Shared/Admin/_AdminLayout.cshtml";
 }
 @model Lms.Core.ViewModels.Modules.CreateEditModuleViewModel
 
@@ -19,7 +19,7 @@
 
             <div class="form-group">
                 <label asp-for="Course" class="control-label"></label>
-                <partial name="_CourseInput" for="Course" />
+                <partial name="/Views/Shared/Admin/Course/_CourseInput.cshtml" for="Course" />
                 <span asp-validation-for="Course.Id" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -44,7 +44,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="UploadFiles" class="control-label"></label>
-                <partial name="_DocumentInputAdminPartial" for=UploadFiles />
+                <partial name="/Views/Shared/Admin/Document/_DocumentInputPartial.cshtml" for=UploadFiles />
                 <span asp-validation-for="UploadFiles" class="text-danger"></span>
             </div>
             <div class="form-group">

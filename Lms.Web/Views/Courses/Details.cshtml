@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "/Views/Shared/_AdminLayout.cshtml";
+    Layout = "/Views/Shared/Admin/_AdminLayout.cshtml";
 }
 @model Lms.Core.ViewModels.Courses.CourseViewModel
 
@@ -33,7 +33,7 @@
         </dd>
     </dl>
 </div>
-<partial name="_DocumentsListAdminPartial" for=@Model.Documents />
+<partial name="/Views/Shared/Admin/Document/_DocumentsListPartial.cshtml" for=@Model.Documents />
 
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |

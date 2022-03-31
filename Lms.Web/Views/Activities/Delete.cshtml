@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "/Views/Shared/_AdminLayout.cshtml";
+    Layout = "/Views/Shared/Admin/_AdminLayout.cshtml";
 }
 @model Lms.Core.ViewModels.Activities.ActivityViewModel
 
@@ -58,5 +58,5 @@
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
-<partial name="_DocumentsListAdminPartial" for=@Model.Documents />
+<partial name="/Views/Shared/Admin/Document/_DocumentsListPartial.cshtml" for=@Model.Documents />
 
