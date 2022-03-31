@@ -1,4 +1,4 @@
-﻿using Lms.Data;
+using Lms.Data;
 using Lms.Data.Repositories;
 using Lms.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Lms.Data.Services;
 using Lms.Core.Interfaces.Services;
+using Lms.Data.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

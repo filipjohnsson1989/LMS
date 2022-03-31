@@ -1,14 +1,17 @@
 ﻿@page
 @model DeletePersonalDataModel
+<head>
+    <link rel="stylesheet" href="~/css/Manage.css" asp-append-version="true" />
+</head>
 @{
     ViewData["Title"] = "Delete Personal Data";
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
-
-<h3>@ViewData["Title"]</h3>
+<div class="Manage_Div_Bg">
+<h3 class="Fcol_white">@ViewData["Title"]</h3>
 
 <div class="alert alert-warning" role="alert">
-    <p>
+    <p class="Fcol_white">
         <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
     </p>
 </div>
@@ -27,7 +30,7 @@
         <button class="w-100 btn btn-lg btn-danger" type="submit">Delete data and close my account</button>
     </form>
 </div>
-
+</div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
