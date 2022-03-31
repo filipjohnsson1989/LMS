@@ -40,8 +40,8 @@ public class CoursesController : Controller
     // GET: Courses
     public async Task<IActionResult> Index()
     {
-        var courses = await unitOfWork.CourseRepoG
-                                    .GetAllAsync();
+        var courses = await ((CourseRepositoryG) unitOfWork.CourseRepoG)
+                                    .GetAllInculdeDocumentsAndModulesAsync();
         var coursesToReturn = mapper.Map<IEnumerable<CourseViewModel>>(courses);
         return View(coursesToReturn);
     }

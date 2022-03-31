@@ -16,4 +16,13 @@ public class CourseRepositoryG : GenericRepository<Course>
 
     }
 
+    public async Task<IEnumerable<Course>> GetAllInculdeDocumentsAndModulesAsync()
+    {
+        return await context.Courses
+            .Include(course => course.Documents)
+            .Include(course => course.Modules)
+            .ToListAsync();
+
+    }
+
 }
