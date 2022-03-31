@@ -1,13 +1,17 @@
 ﻿@page
 @using Microsoft.AspNetCore.Http.Features
 @model TwoFactorAuthenticationModel
+<head>
+    <link rel="stylesheet" href="~/css/Manage.css" asp-append-version="true" />
+</head>
 @{
     ViewData["Title"] = "Two-factor authentication (2FA)";
     ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
 }
-
+<div class="Manage_Div_Bg">
+    <div class="Fcol_white">
 <partial name="_StatusMessage" for="StatusMessage" />
-<h3>@ViewData["Title"]</h3>
+<h3 >@ViewData["Title"]</h3>
 @{
     var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
     @if (consentFeature?.CanTrack ?? true)
@@ -60,12 +64,13 @@
     else
     {
         <div class="alert alert-danger">
-            <strong>Privacy and cookie policy have not been accepted.</strong>
-            <p>You must accept the policy before you can enable two factor authentication.</p>
+            <strong >Privacy and cookie policy have not been accepted.</strong>
+            <p >You must accept the policy before you can enable two factor authentication.</p>
         </div>
     }
 }
-
+</div>
+</div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
