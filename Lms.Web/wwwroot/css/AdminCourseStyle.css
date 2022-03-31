@@ -115,3 +115,34 @@
     color:white;
     
 }
+.alluvem table {
+    color: white !important;
+}
+.alluvem h2 {
+    color: white !important;
+    text-align: center;
+    border-bottom: 1px solid white;
+}
+.headBar {
+
+   align-content: center;
+   text-align: center;
+}
+.alluvem a:hover {
+    color: white;
+    background-color: #56433C;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+}
+.alluvem a {
+    margin: 0.1rem;
+}
+.courseBody:hover {
+    background-color: #305763;
+    cursor: pointer;
+}
+.expandCard {
+    background-color: ThreeDDarkShadow;
+    font-size: 0.8rem;
+}

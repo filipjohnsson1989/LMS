@@ -14,7 +14,7 @@
 }
 
 .fwcolork {
-    color: white;
+    color: white !important;
 }
 
 .tbl {
