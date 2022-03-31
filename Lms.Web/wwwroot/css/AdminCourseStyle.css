@@ -146,3 +146,52 @@
     background-color: ThreeDDarkShadow;
     font-size: 0.8rem;
 }
+.createStuff {
+   color: white;
+   padding: 1rem;
+    
+}
+.createBtn:hover {
+    background-color: #724C3E !important;
+    color: white;
+    box-shadow: none !important; 
+}
+.createBtn {
+    background-color: #56433C;
+    margin: 0.2rem;
+    color: white;
+}
+.alluvem button {
+    background: #724C3E !important;
+    color: white;
+}
+.alluvem .fc-view-container {
+    background: grey;
+}
+m .fc-header  {
+    color: black;
+}
+.alluvem .fc-today {
+    background-color: white !important;
+    color: black;
+}
+.alluvem div #calender {
+    border: 4px inset grey;
+    background: linear-gradient(#484948, #0E0F0E) !important;
+}
+.alluvem .fc-day-grid-event:hover {
+    outline: none !important;
+    box-shadow: none !important;
+}
+.alluvem a .fc-content {
+    background: linear-gradient(#368DA9, #16637C) !important;
+    outline: none;
+    font-size: 1rem;
+    height: 20px !important;
+}
+.alluvem .fc-day-grid-event {
+    border-block: none;
+    outline: none;
+    border: 1px solid black !important;
+
+}
