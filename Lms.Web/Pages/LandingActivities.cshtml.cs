@@ -37,28 +37,29 @@ public class ActivitiesModel : PageModel
         string weekFilter = searchString;
         string activityTypeFilter = activityFilter;
         string expiredActivities = history;
-
         ////if all inputs are null then reset all saved search and filters
         if (sortOrder == null && searchString == null && activityFilter == null && history == null)
         {
             TempData["WeekFilter"] = null;
             TempData["HistoryFilter"] = History = expiredActivities == "False" ? "True" : "False";
             TempData["ActivityFilter"] = IsChecked = activityTypeFilter == "False" ? "True" : "False";
-            TempData["NameSort"] = NameSort = sorting == "Name" ? "name_desc" : "Name";
-            TempData["DateSort"] = DateSort = sorting == "Date" ? "date_desc" : "Date";
+            TempData["DateSort"] = DateSort = sorting =  "Date";
+            TempData["NameSort"] = NameSort = "Name";
         }
         if (!string.IsNullOrEmpty(sorting))
         {
-            TempData["NameSort"] = NameSort = sorting == "Name" ? "name_desc" : "Name";
             TempData["DateSort"] = DateSort = sorting == "Date" ? "date_desc" : "Date";
+            TempData["NameSort"] = NameSort = sorting == "Name" ? "name_desc" : "Name";
+            
         }
         else
         {
             if (TempData["NameSort"] != null)
             {
-                NameSort = sorting = TempData.Peek("NameSort").ToString();
-                DateSort = sorting = TempData.Peek("NameSort").ToString();
+                NameSort = sorting = TempData.Peek("NameSort").ToString() == "Name" ? "name_desc" : "Name"; ;
             }
+            else if (TempData["DateSort"] != null)
+                DateSort = sorting = TempData.Peek("DateSort").ToString() == "Date" ? "date_desc" : "Date";
 
         }
         if (!string.IsNullOrEmpty(activityTypeFilter))
@@ -97,7 +98,7 @@ public class ActivitiesModel : PageModel
 
         CurrentUser = await userManager.GetUserAsync(User);
 
-        CurrentFilter = searchString;
+        //CurrentFilter = searchString;
         Activities = await db.Activities.Where(a => a.ModuleId == id).OrderBy(a => a.EndDate).Include(a => a.ActivityType).Include(a => a.Documents).ToListAsync();
         if (User.IsInRole("Student"))
         {
@@ -144,24 +145,27 @@ public class ActivitiesModel : PageModel
             Activities = Activities.Where(s => myCal.GetWeekOfYear(s.EndDate, CalendarWeekRule.FirstDay, DayOfWeek.Monday) == int.Parse(CurrentFilter)).ToList();
         }
 
-
         switch (sorting)
         {
             case "name_desc":
                 Activities = Activities.OrderByDescending(s => s.Name).ToList();
+                TempData["DateSort"] = null;
                 break;
             case "Name":
                 Activities = Activities.OrderBy(s => s.Name).ToList();
+                TempData["DateSort"] = null;
                 break;
             case "date_desc":
                 Activities = Activities.OrderByDescending(s => s.EndDate).ToList();
+                TempData["NameSort"] = null;
                 break;
-
             case "Date":
                 Activities = Activities.OrderBy(s => s.EndDate).ToList();
+                TempData["NameSort"] = null;
                 break;
             default:
                 Activities = Activities.OrderBy(s => s.EndDate).ToList();
+                TempData["NameSort"] = null;
                 break;
         }
         return Page();

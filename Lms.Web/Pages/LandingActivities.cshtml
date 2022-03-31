@@ -62,6 +62,7 @@
                 {
                     i = activity.Id;
                     var activityId = $"activity{i}";
+                    var students = await service.GetStudentListAsync(i);
 
 
                     var due = activity.EndDate - time;
@@ -71,46 +72,54 @@
 
                     if (activity.ActivityType.Id == 2)
                     {
-                        var students = await service.GetStudentListAsync(i);
 
 
-                            //Assignment
-                            <li class="card card-assignment p-1" id="@activityId">
+
+                        //Assignment
+                        <li class="card card-assignment p-1" id="@activityId">
+
+
                             <div class="infoButton">
                                 <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
                                 <p class="activityType"><strong>@Html.DisplayFor(model => activity.ActivityType.Name)</strong></p>
                                 <p class="card-header"><strong>Starts:</strong> @startDate</p>
                                 <p class="card-header"><strong>Ends:</strong> @endDate </p>
-                                <div class="card-header"><strong>Due in: </strong>@dueTime</div><div class="expandState">+</div></div>
-                                <div class="card-footer container hidden expandCard">
-                                    <strong>About:</strong> @activity.Description
-                                    <div class="documents">
-                                        <strong>Documents:</strong>
-                                        @await Html.PartialAsync("_UploadFilePartial", new UploadFileViewModel{ActivityId = i})
+
+                                <div class="card-header"><strong>Due in: </strong>@dueTime</div><div class="expandState">+</div>
+                            </div>
+                            <div class="card-footer container hidden expandCard">
+                                <strong>About:</strong> @activity.Description
+                                <div class="documents">
+                                    <strong>Documents:</strong>
+                                    @await Html.PartialAsync("_UploadFilePartial", new UploadFileViewModel{ActivityId = i})
+
 
 
                                     <strong>Activity Documents:</strong>
+
 
                                     @foreach (var doc in activity.Documents)
                                     {
                                         if (!students.Contains(doc.User))
                                         {
 
-                                                var docId = doc.Id;
-                                                <ul class="list-group docs">
-                                                    <li>
-                                                        <p>Name: @doc.Name</p>
-                                                        <p>Type:  @doc.ContentType</p>
-                                                        <p>Upload Time: @doc.UploadDate</p>
-                                                        <a asp-controller="ActivityTypes" asp-action="Download" asp-route-id="@docId">Download</a>
-                                                        @if (User.IsInRole("Teacher"))
-                                                        {
-                                                            @await Html.PartialAsync("_DeleteFilePartial", new DeleteFileViewModel{DocumentId = docId})
-                                                        }
-                                                    </li>
-                                                </ul>
-                                            }
+                                            var docId = doc.Id;
+                                            <ul class="list-group docs">
+                                                <li>
+                                                    <p>Name: @doc.Name</p>
+                                                    <p>Type:  @doc.ContentType</p>
+                                                    <p>Upload Time: @doc.UploadDate</p>
+                                                    <a asp-controller="ActivityTypes" asp-action="Download" asp-route-id="@docId">Download</a>
+                                                    @if (User.IsInRole("Teacher"))
+                                                    {
+                                                        @await Html.PartialAsync("_DeleteFilePartial", new DeleteFileViewModel{DocumentId = docId})
+                                                    }
+                                                </li>
+                                            </ul>
+
+
                                         }
+                                    }
 
 
 
@@ -118,6 +127,7 @@
                                     <strong>Student's Documents:</strong>
                                     @if (User.IsInRole("Teacher"))
                                     {
+
 
                                         var deadline = activity.EndDate;
                                         @foreach (var student in students)
@@ -132,21 +142,22 @@
                                                     {
                                                         totalDocuments++;
 
-                                                            var docId = doc.Id;
-                                                            <li>
-                                                                <p>Name: @doc.Name</p>
-                                                                <p>Type:  @doc.ContentType</p>
-                                                                <p>Upload Time: @doc.UploadDate</p>
-                                                                <a asp-controller="ActivityTypes" asp-action="Download" asp-route-id="@docId">Download</a>
-                                                                @await Html.PartialAsync("_DeleteFilePartial", new DeleteFileViewModel{DocumentId = docId})
-                                                            </li>
-                                                        }
+
+                                                        var docId = doc.Id;
+                                                        <li>
+                                                            <p>Name: @doc.Name</p>
+                                                            <p>Type:  @doc.ContentType</p>
+                                                            <p>Upload Time: @doc.UploadDate</p>
+                                                            <a asp-controller="ActivityTypes" asp-action="Download" asp-route-id="@docId">Download</a>
+                                                            @await Html.PartialAsync("_DeleteFilePartial", new DeleteFileViewModel{DocumentId = docId})
+                                                        </li>
                                                     }
-                                                    @if (totalDocuments == 0)
+                                                }
+                                                @if (totalDocuments == 0)
+                                                {
+                                                    @if (deadline >= time)
                                                     {
-                                                        @if (deadline >= time)
-                                                        {
-                                                            <li> Missing</li>
+                                                        <li> Missing</li>
 
                                                     }
                                                     @if (deadline < time)
@@ -154,6 +165,7 @@
                                                         <li> Late</li>
                                                     }
                                                 }
+
 
                                             </ul>
                                         }
@@ -167,15 +179,16 @@
                                                 {
                                                     var docId = doc.Id;
 
-                                                        <li>
-                                                            <p>Name: @doc.Name</p>
-                                                            <p>Type:  @doc.ContentType</p>
-                                                            <p>Upload Time: @doc.UploadDate</p>
-                                                            <a asp-controller="ActivityTypes" asp-action="Download" asp-route-id="@docId">Download</a>
-                                                            @await Html.PartialAsync("_DeleteFilePartial", new DeleteFileViewModel{DocumentId = docId})
-                                                        </li>
-                                                    }
+                                                    <li>
+                                                        <p>Name: @doc.Name</p>
+                                                        <p>Type:  @doc.ContentType</p>
+                                                        <p>Upload Time: @doc.UploadDate</p>
+                                                        <a asp-controller="ActivityTypes" asp-action="Download" asp-route-id="@docId">Download</a>
+                                                        @await Html.PartialAsync("_DeleteFilePartial", new DeleteFileViewModel{DocumentId = docId})
+                                                    </li>
                                                 }
+                                            }
+
 
                                         </ul>
                                     }
@@ -185,24 +198,59 @@
                         </li>
 
 
-                        }
-                        else
-                        {
-                            //not assignment
-                            <li class="card p-1" id="@activityId">
+
+                    }
+                    else
+                    {
+                        //not assignment
+                        <li class="card p-1" id="@activityId">
+
                             <div class="infoButton">
                                 <p class="card-header"><strong>Title:</strong> @Html.DisplayFor(model => activity.Name)</p>
                                 <p class="activityType"><strong>@Html.DisplayFor(model => activity.ActivityType.Name)</strong></p>
                                 <p class="card-header"><strong>Starts:</strong> @startDate</p>
-                                <p class="card-header"><strong>Ends:</strong> @endDate  <div class="expandState">+</div></p></div>
-                                <div class="card-footer hidden expandCard">
-                                    <strong>About:</strong> @activity.Description
+
+                                <p class="card-header"><strong>Ends:</strong> @endDate  <div class="expandState">+</div></p>
+                            </div>
+                            <div class="card-footer hidden expandCard">
+                                <strong>About:</strong> @activity.Description
+                                <div class="documents">
+                                    <strong>Activity Documents:</strong>
+                                    @if (User.IsInRole("Teacher"))
+                                    {
+                                        @await Html.PartialAsync("_UploadFilePartial", new UploadFileViewModel{ActivityId = i})
+                                    }
+
+                                    @foreach (var doc in activity.Documents)
+                                    {
+                                        if (!students.Contains(doc.User))
+                                        {
+
+                                            var docId = doc.Id;
+                                            <ul class="list-group docs">
+                                                <li>
+                                                    <p>Name: @doc.Name</p>
+                                                    <p>Type:  @doc.ContentType</p>
+                                                    <p>Upload Time: @doc.UploadDate</p>
+                                                    <a asp-controller="ActivityTypes" asp-action="Download" asp-route-id="@docId">Download</a>
+                                                    @if (User.IsInRole("Teacher"))
+                                                    {
+                                                        @await Html.PartialAsync("_DeleteFilePartial", new DeleteFileViewModel{DocumentId = docId})
+                                                    }
+                                                </li>
+                                            </ul>
+
+
+                                        }
+                                    }
                                 </div>
-                            </li>
-                        }
+                            </div>
+                        </li>
+
                     }
                 }
             }
+
         </ul>
         <div class="col weeks-card">
             <ul id="weeks">
