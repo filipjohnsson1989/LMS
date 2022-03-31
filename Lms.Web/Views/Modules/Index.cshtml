@@ -9,14 +9,13 @@
     var modules = Model.Modules;
 }
 
-<h1>Index</h1>
+
 @if (Model.CourseId is not null)
 {
     <h1>@Html.DisplayFor(model => Model.CourseName)</h1>
 }
 
 <p>
-    <a asp-action="Create">Create New</a>
     <a asp asp-controller="Activities">Activities</a>
 </p>
 <table class="table">
