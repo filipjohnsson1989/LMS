@@ -273,7 +273,6 @@ public class ModulesController : Controller
 
 
     [HttpGet]
-    [Route("Modules/ModuleTimeLine/")]
     public async Task<IActionResult> ModuleTimeLine()
     {
         int courseId = (int)TempData["CourseIdForCreateModule"];

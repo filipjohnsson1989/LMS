@@ -302,7 +302,6 @@ public class CoursesController : Controller
     }
 
     [HttpGet]
-    [Route("Courses/CourseTimeLine/")]
     public async Task<IActionResult> CourseTimeLine()
     {
         var courses = await unitOfWork.courseRepo.GetAllCourses();
