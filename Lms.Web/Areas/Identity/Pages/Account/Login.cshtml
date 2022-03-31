@@ -2,6 +2,7 @@
 @model LoginModel
 <head>
     <link rel="stylesheet" href="~/css/Login.css" asp-append-version="true" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 @*@{
     ViewData["Title"] = "Log in";
@@ -89,19 +90,22 @@
       <form   id="account" method="post">
         <h3>Login Here</h3>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div >
-                    <label asp-for="Input.UserName" class="form-label">Username</label>
-                    <input asp-for="Input.UserName" placeholder="Username" class="form-control" autocomplete="username" aria-required="true" />
+                <div class="login_field" >
+                    <i class="login_icon fas fa-user"></i>
+                    <input asp-for="Input.UserName" placeholder="Username" class="form-control login_input" autocomplete="username" aria-required="true" />
                     
                     <span asp-validation-for="Input.UserName" class="text-danger"></span>
                 </div>
-                <div >
-                    <label asp-for="Input.Password" class="form-label"></label>
-                    <input asp-for="Input.Password" placeholder="Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                <div class="login_field">
+                    <i class="login_icon fas fa-lock"></i>
+                    <input asp-for="Input.Password" placeholder="Password" class="form-control login_input" autocomplete="current-password" aria-required="true" />
                     
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
-               <button>Log In</button>
+               <button class="button login_submit">
+					<span class="button_text">Log In Now</span>
+					<i class="button_icon fas fa-chevron-right"></i>
+				</button>		
     </form>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
